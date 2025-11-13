@@ -3,6 +3,8 @@ package com.example.projectcalculationtool.Repository;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.List;
+
 @Repository
 public class MemberRepository implements CRUDInterface{
 
@@ -10,6 +12,26 @@ public class MemberRepository implements CRUDInterface{
 
     public MemberRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+
+    }
+
+    @Override
+    public void create(Object o) {
+
+    }
+
+    @Override
+    public List<Object> getAll() {
+        return List.of();
+    }
+
+    @Override
+    public void update(Object o) {
+
+    }
+
+    @Override
+    public void delete(int id) {
 
     }
 }
