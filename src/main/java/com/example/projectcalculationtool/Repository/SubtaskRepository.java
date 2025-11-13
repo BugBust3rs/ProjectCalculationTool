@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class SubtaskRepository implements CRUDInterface{
+public class SubtaskRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -15,22 +15,22 @@ public class SubtaskRepository implements CRUDInterface{
 
     }
 
-    @Override
-    public void create(Object o) {
+
+    public void create() {
 
     }
 
-    @Override
+
     public List<Object> getAll() {
         return List.of();
     }
 
-    @Override
+
     public void update(Object o) {
 
     }
 
-    @Override
+
     public void delete(int id) {
 
     }

@@ -1,12 +1,13 @@
 package com.example.projectcalculationtool.Repository;
 
+import com.example.projectcalculationtool.Model.Project;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class ProjectRepository implements CRUDInterface{
+public class ProjectRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -15,22 +16,22 @@ public class ProjectRepository implements CRUDInterface{
 
     }
 
-    @Override
-    public void create(Object o) {
+
+    public void create(Project project) {
 
     }
 
-    @Override
+
     public List<Object> getAll() {
         return List.of();
     }
 
-    @Override
+
     public void update(Object o) {
 
     }
 
-    @Override
+
     public void delete(int id) {
 
     }

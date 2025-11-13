@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class TaskRepository implements CRUDInterface{
+public class TaskRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -15,22 +15,21 @@ public class TaskRepository implements CRUDInterface{
 
     }
 
-    @Override
-    public void create(Object o) {
+    public void create() {
 
     }
 
-    @Override
+
     public List<Object> getAll() {
         return List.of();
     }
 
-    @Override
+
     public void update(Object o) {
 
     }
 
-    @Override
+
     public void delete(int id) {
 
     }
