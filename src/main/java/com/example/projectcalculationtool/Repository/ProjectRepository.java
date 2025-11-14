@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -23,7 +24,7 @@ public class ProjectRepository {
     }
 
 
-    public List<Project> getAllProjectsWithMemberId(int memberId) {
+    public List<Project> getAllProjectsWithMemberId(int memberId)  {
 
         final String sql = """
                 Select p.project_id, p.title, p.description, p.estimated_time

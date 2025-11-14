@@ -12,22 +12,25 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
 
-    public ProjectService(ProjectRepository projectRepository){
+    public ProjectService(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
     }
 
-    public List<Project> getAllProjectsWithMemberId(int memberId){
-       return projectRepository.getAllProjectsWithMemberId(memberId);
-     }
+    public List<Project> getAllProjectsWithMemberId(int memberId) {
+        return projectRepository.getAllProjectsWithMemberId(memberId);
+    }
 
-    public boolean isMembersproject(int projectId, int memberId) {
-        List<Project> membersprojects = projectRepository.getAllProjectsWithMemberId(memberId);
-        for (Project project : membersprojects){
-            if (project.getProjectId() == projectId){
-                return true;
-            }
-        }
-        return false;
+    public boolean memberHasProject(int projectId, int memberId) {
+        List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
+        return projects
+                .stream()
+                .anyMatch(project -> project.getProjectId() == projectId);
+//        for (Project project : membersprojects){
+//            if (project.getProjectId() == projectId){
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     public void deleteProject(int projectId) {

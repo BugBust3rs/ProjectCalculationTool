@@ -37,7 +37,7 @@ public class ProjectController {
     @PostMapping("/deleteProject/{projectId}")
     public String deleteWishlist(@PathVariable int projectId, HttpSession session) {
         int memberId = (int) session.getAttribute("memberId");
-//        if (!isLoggedIn(session) || !projectService.isMembersproject(projectId, memberId)) {
+//        if (!isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
 //            return "redirect:/login";
 //        }
         projectService.deleteProject(projectId);

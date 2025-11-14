@@ -1,7 +1,10 @@
 package com.example.projectcalculationtool.Controller;
 
 import com.example.projectcalculationtool.Service.ProjectService;
+import com.mysql.cj.Session;
+import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -26,29 +30,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class ProjectControllerTest {
 
+
+
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean
     private ProjectService projectService;
 
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
+    @BeforeAll
+    static void setUp(){
     }
 
     @Test
     void shouldShowDashboard() throws Exception {
-        mockMvc.perform(get("/dashboard"))
+        mockMvc.perform(get("/dashboard")
+                        .sessionAttr("memberId", 1))
                 .andExpect(status().isOk())
                 .andExpect(view().name("dashboard"));
     }
 
     @Test
-    void deleteWishlist() {
-
+    void deleteWishlist() throws Exception{
+        mockMvc.perform(post("/deleteProject/{projectId}",  1).sessionAttr("memberId", 1))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/dashboard"));
     }
 }
