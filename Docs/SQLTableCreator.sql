@@ -29,7 +29,7 @@ CREATE TABLE member_project
     PRIMARY KEY (member_id, project_id),
     FOREIGN KEY (member_id)
         REFERENCES member (member_id) ON DELETE CASCADE,
-    FOREIGN KEY (member_id)
+    FOREIGN KEY (project_id)
         REFERENCES project (project_id) ON DELETE CASCADE
 );
 
