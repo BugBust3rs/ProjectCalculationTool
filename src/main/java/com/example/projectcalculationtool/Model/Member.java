@@ -5,7 +5,7 @@ public class Member {
     private int memberId;
     private String name;
     private String email;
-    private String Password;
+    private String password;
 
     public Member(){}
 
@@ -34,11 +34,11 @@ public class Member {
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 
 

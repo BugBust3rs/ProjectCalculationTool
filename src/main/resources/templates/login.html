@@ -1,11 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <title>ProjectPlanner</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<div class="emoji-clouds"></div>
+<div class="container">
+    <form th:action="@{/projectplanner/login}">
+        <button class="close-btn">&times;</button>
+    </form>
+    <h1>
+        Log ind
+    </h1>
 
+    <form action="#" th:action="@{entrance}" th:object="${member}" method="post">
+        <table>
+            <tr>
+                <td>
+                    Email:
+                </td>
+                <td>
+                    <input required type="text" placeholder="Email" th:field="*{email}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Adgangskode:
+                </td>
+                <td>
+                    <input required type="password" placeholder="Adgangskode" th:field="*{password}">
+                </td>
+            </tr>
+
+
+        </table>
+        <button type="submit" class="button">Log ind</button>
+    </form>
+    <form th:action="@{/projectplanner/createUser}">
+        <button class="button primary">Opret profil</button>
+    </form>
+
+</div>
 </body>
 </html>
