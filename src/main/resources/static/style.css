@@ -50,11 +50,13 @@ header h1:hover {
     width: 250px;
     text-decoration: none;
     color: inherit;
+    position: relative;
 }
 
 .project-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
 }
 
 .project-title {
@@ -85,9 +87,26 @@ header h1:hover {
 .create-link:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    background-color: #2563EB;
 }
 
 .dashboard-title {
     display: flex;
     justify-content: center;
+}
+
+button.remove-button {
+    background-color: #7F2F2F;
+    border: 1px solid #fff;
+    border-radius: 25px;
+    padding: 10px;
+    color: white;
+    justify-content: end;
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+}
+button.remove-button:hover {
+    cursor: pointer;
+    background-color: #6B1F1F;
 }
