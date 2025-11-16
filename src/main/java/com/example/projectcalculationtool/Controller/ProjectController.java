@@ -27,7 +27,7 @@ public class ProjectController {
 //        if (!isLoggedIn(session)) {
 //            return "redirect:/login";
 //        }
-
+        session.setAttribute("memberId", 1);
         int memberId = (int) session.getAttribute("memberId");
         List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
         model.addAttribute("projects", projects);
