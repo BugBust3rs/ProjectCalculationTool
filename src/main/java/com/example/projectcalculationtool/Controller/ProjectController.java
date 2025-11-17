@@ -27,7 +27,8 @@ public class ProjectController {
 //        if (!isLoggedIn(session)) {
 //            return "redirect:/login";
 //        }
-
+        //husk og fjern session.setattr den er for at kunne teste
+        session.setAttribute("memberId", 1);
         int memberId = (int) session.getAttribute("memberId");
         List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
         model.addAttribute("projects", projects);
@@ -35,7 +36,7 @@ public class ProjectController {
     }
 
     @PostMapping("/deleteProject/{projectId}")
-    public String deleteWishlist(@PathVariable int projectId, HttpSession session) {
+    public String deleteProject(@PathVariable int projectId, HttpSession session) {
         int memberId = (int) session.getAttribute("memberId");
 //        if (!isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
 //            return "redirect:/login";

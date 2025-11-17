@@ -7,5 +7,42 @@
 </head>
 <body>
 
+<header>
+    <a href="/dashboard" class="header-link">
+        <h1>Project Calculation Tool</h1>
+    </a>
+</header>
+<div class="body-content">
+    <div class="dashboard-title">
+        <h1>Your projects</h1>
+
+        <div th:if="${#lists.isEmpty(projects)}">
+            <p>You don't have any projects yet.</p>
+        </div>
+
+        <a href="/createProject" class="create-link">
+            Create new project
+        </a>
+    </div>
+
+    <div class="projects-grid" th:if="${!#lists.isEmpty(projects)}">
+        <div class="project-card"
+             th:each="project : ${projects}"
+             th:onclick="|window.location.href='/projects/${project.projectId}'|">
+
+            <div class="project-title" th:text="${project.title}"></div>
+            <div class="project-meta">
+                <p th:text="${project.description}"></p>
+                <p th:text="${project.estimatedTime}"></p>
+            </div>
+            <form th:action="@{/deleteProject/{projectId}(projectId=${project.projectId})}"
+                  method="post">
+                <button type="submit" class="remove-button">Remove</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>
