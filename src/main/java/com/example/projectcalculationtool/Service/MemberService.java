@@ -16,10 +16,10 @@ public class MemberService {
         this.repository = repository;
     }
 
-    public Member login(String email, String pw) {
+    public Member getMember(String email, String password) {
         List<Member> members = repository.getMembers();
         for (Member member : members){
-            if (member.getEmail().equals(email) && member.getPassword().equals(pw)){
+            if (member.getEmail().equals(email) && member.getPassword().equals(password)){
                 return member;
             }
         }
@@ -28,7 +28,6 @@ public class MemberService {
 
     public boolean doesMemberExists(String email){
         List<Member> members = repository.getMembers();
-
         for(Member member : members){
             if(member.getEmail().equals(email)){
                 return  true;
