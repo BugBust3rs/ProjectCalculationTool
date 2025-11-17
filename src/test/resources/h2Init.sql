@@ -1,11 +1,11 @@
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
-DROP TABLE IF EXISTS member;
-DROP TABLE IF EXISTS project;
-DROP TABLE IF EXISTS member_project;
-DROP TABLE IF EXISTS task;
 DROP TABLE IF EXISTS subTask;
+DROP TABLE IF EXISTS task;
+DROP TABLE IF EXISTS member_project;
+DROP TABLE IF EXISTS project;
+DROP TABLE IF EXISTS member;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
@@ -32,7 +32,7 @@ CREATE TABLE member_project
     PRIMARY KEY (member_id, project_id),
     FOREIGN KEY (member_id)
         REFERENCES member (member_id) ON DELETE CASCADE,
-    FOREIGN KEY (member_id)
+    FOREIGN KEY (project_id)
         REFERENCES project (project_id) ON DELETE CASCADE
 );
 
@@ -49,8 +49,8 @@ CREATE TABLE task
 
 CREATE TABLE subTask
 (
-    subtask_ID     INT AUTO_INCREMENT PRIMARY KEY,
-    task_ID        INT,
+    subtask_id     INT AUTO_INCREMENT PRIMARY KEY,
+    task_id        INT,
     title          VARCHAR(200),
     description    VARCHAR(200),
     estimated_time INT,
@@ -63,7 +63,7 @@ CREATE TABLE subTask
 ------------------------------------
 INSERT INTO member (name, email, password)
 VALUES
-    ('Alice Johnson', 'alice@example.com', 'password123'),
+    ('Adam Hoppe', 'adam@hoppe.dk', '1234'),
     ('Bob Smith', 'bob@example.com', 'password456');
 
 ------------------------------------
