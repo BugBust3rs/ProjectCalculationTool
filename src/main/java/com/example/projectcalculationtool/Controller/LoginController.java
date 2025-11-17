@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
@@ -19,20 +19,21 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String showLogin() {
+    public String showLogin(Model model) {
+        Member member = new Member();
+        model.addAttribute("member", member);
         return "login";
     }
 
     @PostMapping("/login")
-    public String handleLogin(@RequestParam("email") String email,
-                              @RequestParam("password") String password,
+    public String handleLogin(@ModelAttribute Member member,
                               HttpSession session,
                               Model model) {
 
         // kigger i DB gennem service
-        Member member = memberService.getMember(email, password);
+        Member member2 = memberService.getMember(member.getEmail(), member.getPassword());
 
-        if (member == null) {
+        if (member2 == null) {
             model.addAttribute("error", "Forkert email eller password");
             return "login";
         }
