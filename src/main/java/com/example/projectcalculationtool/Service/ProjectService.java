@@ -26,12 +26,6 @@ public class ProjectService {
         return projects
                 .stream()
                 .anyMatch(project -> project.getProjectId() == projectId);
-//        for (Project project : membersprojects){
-//            if (project.getProjectId() == projectId){
-//                return true;
-//            }
-//        }
-//        return false;
     }
 
     public void deleteProject(int projectId) {

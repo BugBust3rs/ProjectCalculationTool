@@ -44,7 +44,7 @@ CREATE TABLE task
         REFERENCES project (project_id) ON DELETE CASCADE
 );
 
-CREATE TABLE subTask
+CREATE TABLE subtask
 (
     subtask_ID     INT AUTO_INCREMENT PRIMARY KEY,
     task_ID        INT,

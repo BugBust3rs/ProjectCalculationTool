@@ -20,8 +20,8 @@ public class TaskRepository{
 
     }
 
-    public List<Task> getAllTasks() {
-        final String sql = "SELECT * FROM task";
+    public List<Task> getAllTasksWithProjectId(int projectId) {
+        final String sql = "SELECT * FROM task WHERE project_id = ?";
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             Task task = new Task();
@@ -31,7 +31,7 @@ public class TaskRepository{
             task.setTitle(rs.getString("title"));
             task.setDescription(rs.getString("description"));
             return task;
-        });
+        }, projectId);
     }
 
 
