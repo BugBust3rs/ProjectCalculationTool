@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.Repository;
 
+import com.example.projectcalculationtool.Model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +20,18 @@ public class TaskRepository{
 
     }
 
+    public List<Task> getAllTasks() {
+        final String sql = "SELECT * FROM task";
 
-    public List<Object> getAll() {
-        return List.of();
+        return jdbcTemplate.query(sql, (rs, rowNum) -> {
+            Task task = new Task();
+            task.setTaskId(rs.getInt("task_id"));
+            task.setProjectId(rs.getInt("project_id"));
+            task.setEstimatedTime(rs.getInt("estimated_time"));
+            task.setTitle(rs.getString("title"));
+            task.setDescription(rs.getString("description"));
+            return task;
+        });
     }
 
 
