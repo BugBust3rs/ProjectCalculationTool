@@ -3,7 +3,7 @@
 
 ## Team 
 
-- Peter Marbel, Niinyah, developer 🫃
+- Peter Marbell, Niinyah, developer 🫃
 - Philip raissnia, Silverspit, developer
 - Josefine Hørlin, Josefinehoerlin, scrum master sprint 1
 - Adam Hoppe, AdamHoppe98, developer
