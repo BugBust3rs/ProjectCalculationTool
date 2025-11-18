@@ -6,6 +6,22 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<header>
+    <a href="/dashboard" class="header-link">
+        <h1>Project Calculation Tool</h1>
+    </a>
+</header>
+<div class="body-content">
+    <div class="dashboard-title">
+<!--        <h1 th:text="tasks for + ${projectTitle}"></h1>-->
+
+        <a th:href="@{/createTask/{projectId}(projectId=${projectId})}" class="create-link">
+            Create new task
+        </a>
+    </div>
+
+
+</div>
 
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.Service;
 
 import com.example.projectcalculationtool.Model.Project;
+import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,15 @@ public class ProjectService {
 
     public void deleteProject(int projectId) {
         projectRepository.delete(projectId);
+    }
+
+    public Project getProject(int projectId, int memberId) {
+        List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
+        for (Project project : projects){
+            if (project.getProjectId() == projectId){
+                return project;
+            }
+        }
+        return null;
     }
 }

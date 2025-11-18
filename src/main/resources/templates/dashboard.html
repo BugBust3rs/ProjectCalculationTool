@@ -28,7 +28,7 @@
     <div class="projects-grid" th:if="${!#lists.isEmpty(projects)}">
         <div class="project-card"
              th:each="project : ${projects}"
-             th:onclick="|window.location.href='/projects/${project.projectId}'|">
+             th:onclick="|window.location.href='@{/taskOverview/{projectId}(projectId=${project.projectId})}'|">
 
             <div class="project-title" th:text="${project.title}"></div>
             <div class="project-meta">

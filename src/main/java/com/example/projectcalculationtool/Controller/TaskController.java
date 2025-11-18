@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.Controller;
 
+import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Service.ProjectService;
 import com.example.projectcalculationtool.Service.TaskService;
@@ -28,7 +29,10 @@ public class TaskController {
 ////            return "redirect:/login";
 ////
 //        }
+        Project project = projectService.getProject(projectId, memberId);
         List<Task> tasks = taskService.getTasks(projectId);
+        model.addAttribute("projectTitle", project.getTitle());
+        model.addAttribute("projectId", project.getProjectId());
         model.addAttribute("tasks",tasks);
         return "taskOverview";
     }
