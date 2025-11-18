@@ -7,7 +7,7 @@
 </head>
 <body>
 <div>
-    <h1>Tilføj et ønske</h1>
+    <h1>Add a Project</h1>
     <form action="#" th:action="@{createProject}" th:object="${project}" method="post">
         <table>
             <tr>
@@ -15,7 +15,7 @@
                     Project
                 </td>
                 <td>
-                    <input type="text" placeholder="Dit ønske" th:field="*{title}">
+                    <input type="text" placeholder="Name Project" th:field="*{title}">
                 </td>
             </tr>
             <tr>
@@ -23,7 +23,7 @@
                     Description
                 </td>
                 <td>
-                    <input type="text" placeholder="fx. farve eller størrelse osv." th:field="*{description}">
+                    <input type="text" placeholder="Write something" th:field="*{description}">
                 </td>
             </tr>
             <tr>
@@ -31,7 +31,7 @@
                     Estimated Time
                 </td>
                 <td>
-                    <input type="text" placeholder="DKK" th:field="*{estimatedTime}">
+                    <input type="text" placeholder="In days" th:field="*{estimatedTime}">
                 </td>
             </tr>
 
@@ -39,7 +39,7 @@
 
         <button type="submit" class="button">Create</button>
     </form>
-    <form th:action="@{project/{wishlistId}(wishlistId=${wish.getWishlistId()})}">
+    <form th:action="@{project/{projectId}(projecttId=${project.getProjectId()})}">
         <button type="submit" class="button">Cancel</button>
     </form>
 </div>
