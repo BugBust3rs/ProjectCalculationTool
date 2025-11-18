@@ -47,20 +47,19 @@ public class ProjectController {
     @GetMapping("/createProject")
     public String createProject(Model model, HttpSession session) {
         Project project = new Project();
-        Member member = (Member) session.getAttribute("member");
-        project.setProjectId(member.getChosenProject());
         model.addAttribute("project", project);
 
         return "createProject";
     }
 
     @PostMapping("/createProject")
-    public String createProject(ModelAttribute Project project, HttpSession session) {
+    public String createProject(@ModelAttribute Project project, HttpSession session) {
 
-        if (!isLoggedIn(session)) {
-            return "redirect:/login";
-        }
-        projectService.saveProject(project);
+//        if (!isLoggedIn(session)) {
+//            return "redirect:/login";
+//        }
+        int memberId = (int) session.getAttribute("memberId");
+        projectService.saveProject(project, memberId);
         return "redirect:/dashboard" + project.getProjectId();
 
     }

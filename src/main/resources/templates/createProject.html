@@ -6,6 +6,42 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<div>
+    <h1>Tilføj et ønske</h1>
+    <form action="#" th:action="@{createProject}" th:object="${project}" method="post">
+        <table>
+            <tr>
+                <td>
+                    Project
+                </td>
+                <td>
+                    <input type="text" placeholder="Dit ønske" th:field="*{title}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Description
+                </td>
+                <td>
+                    <input type="text" placeholder="fx. farve eller størrelse osv." th:field="*{description}">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Estimated Time
+                </td>
+                <td>
+                    <input type="text" placeholder="DKK" th:field="*{estimatedTime}">
+                </td>
+            </tr>
 
+        </table>
+
+        <button type="submit" class="button">Create</button>
+    </form>
+    <form th:action="@{project/{wishlistId}(wishlistId=${wish.getWishlistId()})}">
+        <button type="submit" class="button">Cancel</button>
+    </form>
+</div>
 </body>
 </html>
