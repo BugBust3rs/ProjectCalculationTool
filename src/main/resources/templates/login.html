@@ -2,10 +2,64 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
+    <title>Login</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+
+<header>
+    <a href="/dashboard" class="header-link">
+        <h1>Project Calculation Tool</h1>
+    </a>
+</header>
+
+<div class="body-content">
+    <div class="dashboard-title">
+        <h1>Login</h1>
+        <p>Sign in to access your projects</p>
+    </div>
+
+    <!-- You can reuse the grid + card styling from the dashboard -->
+    <div class="projects-grid">
+        <div class="project-card">
+
+            <!-- Optional: show an error message if login failed -->
+            <div th:if="${loginError}" class="error-message">
+                <p th:text="${loginError}">Invalid email or password.</p>
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email"
+                           type="email"
+                           name="email"
+                           placeholder="Enter your email"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password"
+                           type="password"
+                           name="password"
+                           placeholder="Enter your password"
+                           required>
+                </div>
+
+                <button type="submit" class="create-link">
+                    Login
+                </button>
+            </form>
+
+            <!-- Optional: link to create a user -->
+            <p class="small-text">
+                Don't have an account?
+                <a href="/createMember">Create one here</a>
+            </p>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
