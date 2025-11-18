@@ -5,7 +5,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
+<body class="login-page">
 
 <header>
     <a href="/dashboard" class="header-link">
@@ -16,14 +16,11 @@
 <div class="body-content">
     <div class="dashboard-title">
         <h1>Login</h1>
-        <p>Sign in to access your projects</p>
     </div>
 
-    <!-- You can reuse the grid + card styling from the dashboard -->
     <div class="projects-grid">
         <div class="project-card">
 
-            <!-- Optional: show an error message if login failed -->
             <div th:if="${loginError}" class="error-message">
                 <p th:text="${loginError}">Invalid email or password.</p>
             </div>
@@ -34,6 +31,7 @@
                     <input id="email"
                            type="email"
                            name="email"
+                           class="input-field"
                            placeholder="Enter your email"
                            required>
                 </div>
@@ -43,6 +41,7 @@
                     <input id="password"
                            type="password"
                            name="password"
+                           class="input-field"
                            placeholder="Enter your password"
                            required>
                 </div>
@@ -52,7 +51,6 @@
                 </button>
             </form>
 
-            <!-- Optional: link to create a user -->
             <p class="small-text">
                 Don't have an account?
                 <a href="/createMember">Create one here</a>

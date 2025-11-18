@@ -110,3 +110,50 @@ button.remove-button:hover {
     cursor: pointer;
     background-color: #6B1F1F;
 }
+
+
+.login-page .body-content {
+    display: block;
+    margin-top: 150px;
+}
+
+.login-page .projects-grid {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.login-page .project-card {
+    max-width: 420px;
+    width: 100%;
+    padding: 2rem;
+}
+
+
+.login-page .form-group {
+    margin-bottom: 16px;
+}
+
+.login-page .input-field {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ffffff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #1f3446;
+    color: lightgray;
+}
+
+.login-page .input-field:focus {
+    outline: none;
+    border-color: #5da9e9;
+    box-shadow: 0 0 0 2px rgba(93, 169, 233, 0.25);
+}
+
+
+.login-page .project-card:hover {
+    transform: none;
+    box-shadow: none;
+    cursor: default;
+}
