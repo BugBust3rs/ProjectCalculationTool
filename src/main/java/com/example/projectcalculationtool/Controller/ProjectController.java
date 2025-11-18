@@ -2,6 +2,7 @@ package com.example.projectcalculationtool.Controller;
 
 import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Project;
+import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.ProjectService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -15,30 +16,31 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
-
-    public ProjectController(ProjectService projectService) {
+    private final LoginService loginService;
+    public ProjectController(ProjectService projectService, LoginService loginService) {
         this.projectService = projectService;
+        this.loginService = loginService;
     }
 
     @GetMapping("/dashboard")
     public String getDashboard(Model model, HttpSession session) {
-//        if (!isLoggedIn(session)) {
-//            return "redirect:/login";
-//        }
-        //husk og fjern session.setattr den er for at kunne teste
-        session.setAttribute("memberId", 1);
+        if (!loginService.isLoggedIn(session)) {
+            return "redirect:/login";
+        }
+
         int memberId = (int) session.getAttribute("memberId");
         List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
         model.addAttribute("projects", projects);
         return "dashboard";
     }
 
+
     @PostMapping("/deleteProject/{projectId}")
     public String deleteProject(@PathVariable int projectId, HttpSession session) {
         int memberId = (int) session.getAttribute("memberId");
-//        if (!isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
-//            return "redirect:/login";
-//        }
+        if (!loginService.isLoggedIn(session)|| !projectService.memberHasProject(projectId, memberId)) {
+            return "redirect:/login";
+        }
         projectService.deleteProject(projectId);
         return "redirect:/dashboard";
 
