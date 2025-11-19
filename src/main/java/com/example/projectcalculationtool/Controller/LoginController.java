@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.example.projectcalculationtool.Service.MemberService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class LoginController {
@@ -73,9 +74,10 @@ public class LoginController {
     }
 
 
-@PostMapping("/register")
-public String registerMember(@ModelAttribute Member member) {
+    @PostMapping("/register")
+    public String registerMember(@ModelAttribute Member member, RedirectAttributes redirectAttributes) {
     if (memberService.doesMemberExists(member.getEmail())) {
+        redirectAttributes.addFlashAttribute("message", "Email already in use");
         return "redirect:/createMember";
     }
     memberService.createMember(member);

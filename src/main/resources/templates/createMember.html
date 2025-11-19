@@ -15,11 +15,13 @@
 </header>
 
 <div class="body-content">
-    <form th:action="@{landingPage}">
+    <form th:action="@{dashboard}">
         <button class="close-btn" >&times;</button>
     </form>
 
-
+    <div th:if="${message}">
+        <p th:text="${message}"></p>
+    </div>
     <form action="#" th:action="@{/register}" th:object="${member}" method="post">
         <table>
             <tr>
