@@ -88,6 +88,7 @@ header h1:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     background-color: #2563EB;
+    cursor: pointer;
 }
 
 .dashboard-title {
@@ -156,4 +157,28 @@ button.remove-button:hover {
     transform: none;
     box-shadow: none;
     cursor: default;
+}
+
+.create-project-body {
+    margin-top: 150px;
+    display: flex;
+    justify-content: center;
+}
+
+.create-cancel{
+    text-decoration: none;
+    color: white;
+    border: 1px solid #fff;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #3B82F6;
+    margin: 25px;
+    font-size: 12px;
+}
+
+.create-cancel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    background-color: #2563EB;
+    cursor: pointer;
 }

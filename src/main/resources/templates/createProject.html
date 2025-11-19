@@ -6,9 +6,19 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<div>
-    <h1>Add a Project</h1>
-    <form action="#" th:action="@{createProject}" th:object="${project}" method="post">
+<header>
+    <a href="/dashboard" class="header-link">
+        <h1>Project Calculation Tool</h1>
+    </a>
+    <a href="/logout" class="create-link">
+        logout
+    </a>
+</header>
+<div class="create-project-body">
+    <div class="project-title">
+        <h1>Add a Project</h1>
+    </div>
+    <form action="#" th:action="@{/createProject}" th:object="${project}" method="post">
         <table>
             <tr>
                 <td>
@@ -31,16 +41,16 @@
                     Estimated Time
                 </td>
                 <td>
-                    <input type="text" placeholder="In days" th:field="*{estimatedTime}">
+                    <input type="number" placeholder="In days" th:field="*{estimatedTime}">
                 </td>
             </tr>
 
         </table>
 
-        <button type="submit" class="button">Create</button>
-    </form>
-    <form th:action="@{project/{projectId}(projecttId=${project.getProjectId()})}">
-        <button type="submit" class="button">Cancel</button>
+        <button type="submit" class="create-link">Create</button>
+        <a href="/dashboard" class="create-cancel">
+            Cancel
+        </a>
     </form>
 </div>
 </body>
