@@ -46,8 +46,8 @@ CREATE TABLE task
 
 CREATE TABLE subtask
 (
-    subtask_ID     INT AUTO_INCREMENT PRIMARY KEY,
-    task_ID        INT,
+    subtask_id     INT AUTO_INCREMENT PRIMARY KEY,
+    task_id        INT,
     title          VARCHAR(200),
     description    VARCHAR(200),
     estimated_time INT,

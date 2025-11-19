@@ -15,17 +15,37 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final SubtaskRepository subtaskRepository;
 
-    public TaskService(TaskRepository taskRepository, SubtaskRepository subtaskRepository){
+    public TaskService(TaskRepository taskRepository, SubtaskRepository subtaskRepository) {
         this.taskRepository = taskRepository;
         this.subtaskRepository = subtaskRepository;
     }
 
     public List<Task> getTasks(int projectId) {
         List<Task> tasks = taskRepository.getAllTasksWithProjectId(projectId);
-        for (Task task : tasks){
+        for (Task task : tasks) {
             task.setSubtasks(subtaskRepository.getAllSubtasksWithTaskId(task.getTaskId()));
         }
 
         return tasks;
+    }
+
+    public Task getTaskById(int taskId) {
+        return taskRepository.getTaskById(taskId);
+    }
+
+    public void deleteTask(int taskId) {
+        taskRepository.deleteTaskById(taskId);
+    }
+
+    public Subtask getSubtaskById(int subtaskId) {
+        return subtaskRepository.getSubtaskById(subtaskId);
+    }
+
+    public void deleteSubtask(int subtaskId) {
+        subtaskRepository.deleteSubTaskById(subtaskId);
+    }
+
+    public int getProjectId(int subtaskId) {
+        return getTaskById(getSubtaskById(subtaskId).getTaskId()).getProjectId();
     }
 }

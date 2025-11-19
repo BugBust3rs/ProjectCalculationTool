@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -37,6 +38,31 @@ public class TaskController {
         model.addAttribute("tasks",tasks);
 
         return "taskOverview";
+    }
+
+    @PostMapping("/deleteTask/{taskId}")
+    public String deleteTask(@PathVariable int taskId, HttpSession session){
+        int memberId = (int) session.getAttribute("memberId");
+        Task task = taskService.getTaskById(taskId);
+//        if (!isLoggedIn(session) || !projectService.memberHasProject(task.getProjectId(), memberId)) {
+////            return "redirect:/login";
+////
+//        }
+        taskService.deleteTask(taskId);
+        return "redirect:/taskOverview/" + task.getProjectId();
+    }
+
+    @PostMapping("/deleteSubtask/{subtaskId}")
+    public String deleteSubtask(@PathVariable int subtaskId, HttpSession session){
+        int memberId = (int) session.getAttribute("memberId");
+        int projectId = taskService.getProjectId(subtaskId);
+//        if (!isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
+////            return "redirect:/login";
+////
+//        }
+        taskService.deleteSubtask(subtaskId);
+
+        return "redirect:/taskOverview/" + projectId;
     }
 }
 
