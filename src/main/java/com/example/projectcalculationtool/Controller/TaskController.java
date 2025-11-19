@@ -32,8 +32,10 @@ public class TaskController {
 ////
 //        }
         Project project = projectService.getProject(projectId, memberId);
-        List<Task> tasks = taskService.getTasks(projectId);
+        List<Task> tasks = taskService.getTasksByProkectId(projectId);
+        int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
         model.addAttribute("projectTitle", project.getTitle());
+        model.addAttribute("overallEstimatedTime", overallEstimatedTime);
         model.addAttribute("projectId", project.getProjectId());
         model.addAttribute("tasks",tasks);
 

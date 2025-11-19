@@ -21,10 +21,13 @@
 
 
     </div>
+    <h3 th:text="'Estimated time for all tasks and subtasks: ' + ${overallEstimatedTime} + ' hours'"></h3>
     <ol class="tasklist" >
        <li th:each="task : ${tasks}" class="task">
            <h3 th:text="${task.title}"/>
            <p th:text="${task.description}"/>
+
+           <p th:text="'Estimated time: ' + ${task.estimatedTime} + ' hours'"/>
            <form th:action="@{/deleteTask/{taskId}(taskId=${task.taskId})}"
                  method="post">
                <button type="submit" class="remove-task">Remove</button>
@@ -36,6 +39,7 @@
                <li th:each="subtask : ${task.getSubtasks()}" class="task">
                    <h3 th:text="${subtask.title}"/>
                    <p th:text="${subtask.description}"/>
+                   <p th:text="'Estimated time: ' + ${subtask.estimatedTime} + ' hours'"/>
                    <form th:action="@{/deleteSubtask/{subtaskId}(subtaskId=${subtask.subtaskID})}"
                          method="post">
                        <button type="submit" class="remove-task">Remove</button>

@@ -20,7 +20,7 @@ public class TaskService {
         this.subtaskRepository = subtaskRepository;
     }
 
-    public List<Task> getTasks(int projectId) {
+    public List<Task> getTasksByProkectId(int projectId) {
         List<Task> tasks = taskRepository.getAllTasksWithProjectId(projectId);
         for (Task task : tasks) {
             task.setSubtasks(subtaskRepository.getAllSubtasksWithTaskId(task.getTaskId()));
@@ -47,5 +47,20 @@ public class TaskService {
 
     public int getProjectId(int subtaskId) {
         return getTaskById(getSubtaskById(subtaskId).getTaskId()).getProjectId();
+    }
+
+    public int getOverallEstimatedTime(int projectId) {
+        List<Task> tasks = getTasksByProkectId(projectId);
+        int overallEstimatedTime = 0;
+        for (Task task : tasks){
+            if (task.getSubtasks() == null){
+                overallEstimatedTime += task.getEstimatedTime();
+            } else {
+                for (Subtask subtask : task.getSubtasks()){
+                    overallEstimatedTime += subtask.getEstimatedTime();
+                }
+            }
+        }
+        return overallEstimatedTime;
     }
 }
