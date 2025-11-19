@@ -47,7 +47,8 @@ header h1:hover {
     border: 1px solid #fff;
     border-radius: 36px;
     padding: 1rem;
-    width: 250px;
+    width: 300px;
+    height: 125px;
     text-decoration: none;
     color: inherit;
     position: relative;
