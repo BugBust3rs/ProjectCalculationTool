@@ -38,9 +38,9 @@ public class TaskController {
 
     @GetMapping("/createTask/{projectId}")
     public String createTask(@PathVariable int projectId, Model model, HttpSession session) {
-//        if (!loginService.isLoggedIn(session)) {
-//            return "redirect:/login";
-//        }
+        if (!loginService.isLoggedIn(session)) {
+            return "redirect:/login";
+        }
         Task task = new Task();
         task.setProjectId(projectId);
 //        int memberid = (int) session.getAttribute("memberId");
@@ -65,10 +65,10 @@ public class TaskController {
     @GetMapping("/taskOverview/{projectId}")
     public String getTaskOverview(@PathVariable int projectId, Model model, HttpSession session) {
         int memberId = (int) session.getAttribute("memberId");
-//        if (!isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
-////            return "redirect:/login";
-////
-//        }
+        if (!loginService.isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
+//            return "redirect:/login";
+//
+        }
         Project project = projectService.getProject(projectId, memberId);
         List<Task> tasks = taskService.getTasksByProjectId(projectId);
         int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
@@ -84,10 +84,10 @@ public class TaskController {
     public String deleteTask(@PathVariable int taskId, HttpSession session){
         int memberId = (int) session.getAttribute("memberId");
         Task task = taskService.getTaskById(taskId);
-//        if (!isLoggedIn(session) || !projectService.memberHasProject(task.getProjectId(), memberId)) {
-////            return "redirect:/login";
-////
-//        }
+        if (!loginService.isLoggedIn(session) || !projectService.memberHasProject(task.getProjectId(), memberId)) {
+//            return "redirect:/login";
+//
+        }
         taskService.deleteTask(taskId);
         return "redirect:/taskOverview/" + task.getProjectId();
     }
@@ -96,10 +96,10 @@ public class TaskController {
     public String deleteSubtask(@PathVariable int subtaskId, HttpSession session){
         int memberId = (int) session.getAttribute("memberId");
         int projectId = taskService.getProjectId(subtaskId);
-//        if (!isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
-////            return "redirect:/login";
-////
-//        }
+        if (!loginService.isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
+//            return "redirect:/login";
+//
+        }
         taskService.deleteSubtask(subtaskId);
 
         return "redirect:/taskOverview/" + projectId;

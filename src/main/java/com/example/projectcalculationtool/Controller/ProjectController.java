@@ -24,11 +24,9 @@ public class ProjectController {
 
     @GetMapping("/dashboard")
     public String getDashboard(Model model, HttpSession session) {
-//        if (!loginService.isLoggedIn(session)) {
-//            return "redirect:/login";
-//        }
-        // husk og fjern
-        session.setAttribute("memberId", 1);
+        if (!loginService.isLoggedIn(session)) {
+            return "redirect:/login";
+        }
 
         int memberId = (int) session.getAttribute("memberId");
         List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
@@ -59,9 +57,9 @@ public class ProjectController {
     @PostMapping("/createProject")
     public String createProject(@ModelAttribute Project project, HttpSession session) {
 
-//        if (!isLoggedIn(session)) {
-//            return "redirect:/login";
-//        }
+        if (!loginService.isLoggedIn(session)) {
+            return "redirect:/login";
+        }
         int memberId = (int) session.getAttribute("memberId");
         projectService.saveProject(project, memberId);
         return "redirect:/dashboard";
