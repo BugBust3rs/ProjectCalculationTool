@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.Service;
 
 import com.example.projectcalculationtool.Model.Project;
+import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,9 @@ import java.util.List;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final JdbcTemplate jdbcTemplate;
 
-    public ProjectService(ProjectRepository projectRepository, JdbcTemplate jdbcTemplate) {
+    public ProjectService(ProjectRepository projectRepository) {
         this.projectRepository = projectRepository;
-        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Project> getAllProjectsWithMemberId(int memberId) {
@@ -27,16 +26,20 @@ public class ProjectService {
         return projects
                 .stream()
                 .anyMatch(project -> project.getProjectId() == projectId);
-//        for (Project project : membersprojects){
-//            if (project.getProjectId() == projectId){
-//                return true;
-//            }
-//        }
-//        return false;
     }
 
     public void deleteProject(int projectId) {
         projectRepository.delete(projectId);
+    }
+
+    public Project getProject(int projectId, int memberId) {
+        List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
+        for (Project project : projects){
+            if (project.getProjectId() == projectId){
+                return project;
+            }
+        }
+        return null;
     }
 
     public void saveProject(Project project, int memberId){
