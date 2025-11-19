@@ -1,8 +1,10 @@
 package com.example.projectcalculationtool.Controller;
 
+import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.MemberService;
 import com.example.projectcalculationtool.Model.Member;
 import jakarta.servlet.http.HttpSession;
+import org.apache.juli.logging.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class LoginController {
 
     private final MemberService memberService;
+    private final LoginService loginService;
 
-    public LoginController(MemberService memberService) {
+    public LoginController(MemberService memberService, LoginService loginService) {
         this.memberService = memberService;
+        this.loginService = loginService;
+
     }
 
     @GetMapping("/login")
@@ -50,7 +55,8 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate();
+        loginService.InvalidateSession(session);
         return "redirect:/login";
     }
+
 }
