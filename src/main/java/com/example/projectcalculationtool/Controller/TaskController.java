@@ -24,9 +24,9 @@ public class TaskController {
 
     @GetMapping("/createTask/{projectId}")
     public String createTask(@PathVariable int projectId, Model model, HttpSession session) {
-        if (!loginService.isLoggedIn(session)) {
-            return "redirect:/login";
-        }
+//        if (!loginService.isLoggedIn(session)) {
+//            return "redirect:/login";
+//        }
         Task task = new Task();
         task.setProjectId(projectId);
 //        int memberid = (int) session.getAttribute("memberId");
@@ -41,9 +41,10 @@ public class TaskController {
             return "redirect:/login";
         }
 
+        taskService.createTask(task);
+
         // gemme tasken i task repo
 //        taskService.add
-//        return "redirect:/taskOverview/" + task.getProjectId();
         return "redirect:/taskOverview/" + task.getProjectId();
     }
 }
