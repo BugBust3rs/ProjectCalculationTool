@@ -1,12 +1,22 @@
 package com.example.projectcalculationtool.Model;
 
+import java.util.List;
+
 public class Task {
     private int taskId;
     private String title;
     private String description;
     private int estimatedTime;
     private int projectId;
+    private List<Subtask> subtasks;
 
+    public List<Subtask> getSubtasks() {
+        return subtasks;
+    }
+
+    public void setSubtasks(List<Subtask> subtasks) {
+        this.subtasks = subtasks;
+    }
 
     public Task() {}
 
