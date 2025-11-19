@@ -2,18 +2,20 @@ package com.example.projectcalculationtool.Service;
 
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final JdbcTemplate jdbcTemplate;
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, JdbcTemplate jdbcTemplate) {
         this.projectRepository = projectRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Project> getAllProjectsWithMemberId(int memberId) {
@@ -36,4 +38,10 @@ public class ProjectService {
     public void deleteProject(int projectId) {
         projectRepository.delete(projectId);
     }
+
+    public void saveProject(Project project, int memberId){
+        projectRepository.addProject(project, memberId);
+    }
+
+
 }
