@@ -2,8 +2,14 @@ package com.example.projectcalculationtool.Repository;
 
 import com.example.projectcalculationtool.Model.Project;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Repository
@@ -50,5 +56,26 @@ public class ProjectRepository {
     public void delete(int projectId) {
         String SQL = "DELETE FROM project WHERE project_id = ?";
         jdbcTemplate.update(SQL, projectId);
+    }
+    @Transactional
+    public void addProject(Project project, int memberId){
+        String sql = "INSERT INTO project (project_id, title, description, estimatedTime) VALUES (?, ?, ?, ?)";
+        KeyHolder keyholder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, project.getProjectId());
+            ps.setString(2, project.getTitle());
+            ps.setString(3, project.getDescription());
+            ps.setInt(4, project.getEstimatedTime());
+            return ps;
+        }, keyholder);
+
+        int project_id = keyholder.getKey() != null ? keyholder.getKey().intValue() : -1;
+
+        String sqlMember_project = "INSERT INTO member_project (member_id, project_id) VALUES (?, ?)";
+
+        jdbcTemplate.update(sqlMember_project, memberId, project_id);
+
+
     }
 }

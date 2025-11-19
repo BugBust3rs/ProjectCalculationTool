@@ -26,8 +26,10 @@ public class TaskRepository{
 
     }
 
-    public void create() {
+    public void createTask(Task task) {
+        String sql = "INSERT INTO task (title, description, estimatedTime, project_id (?, ?, ?, ?)";
 
+        jdbcTemplate.update(sql,task.getTitle(), task.getDescription(), task.getEstimatedTime(), task.getProjectId());
     }
 
     public List<Task> getAllTasksWithProjectId(int projectId) {
