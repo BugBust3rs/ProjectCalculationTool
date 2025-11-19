@@ -51,22 +51,22 @@ VALUES
     (5, 'Job Scheduling', 'Configure cron-like scheduler', 14);
 
 
-INSERT INTO subTask (task_id, title, description, estimated_time)
+INSERT INTO subtask (task_id, title, description, estimated_time)
 VALUES
     (1, 'Wireframes', 'Low-fidelity screens', 5),
     (1, 'High-Fidelity Designs', 'Polished final UI', 10);
 
-INSERT INTO subTask (task_id, title, description, estimated_time)
+INSERT INTO subtask (task_id, title, description, estimated_time)
 VALUES
     (2, 'Navbar Component', 'Build responsive navbar', 4),
     (2, 'Homepage Section', 'Build hero + features', 6);
 
-INSERT INTO subTask (task_id, title, description, estimated_time)
+INSERT INTO subtask (task_id, title, description, estimated_time)
 VALUES
     (4, 'UI Layout', 'Login screen layout', 3),
     (4, 'Auth API', 'Integrate backend login', 5);
 
-INSERT INTO subTask (task_id, title, description, estimated_time)
+INSERT INTO subtask (task_id, title, description, estimated_time)
 VALUES
     (6, 'Remove Duplicates', 'Handle duplicate records', 4),
     (6, 'Normalize Fields', 'Ensure consistent data format', 6);

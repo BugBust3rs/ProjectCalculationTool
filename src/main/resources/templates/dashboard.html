@@ -31,12 +31,12 @@
     <div class="projects-grid" th:if="${!#lists.isEmpty(projects)}">
         <div class="project-card"
              th:each="project : ${projects}"
-             th:onclick="|window.location.href='/projects/${project.projectId}'|">
+             th:onclick="|window.location.href='@{/taskOverview/{projectId}(projectId=${project.projectId})}'|">
 
             <div class="project-title" th:text="${project.title}"></div>
             <div class="project-meta">
                 <p th:text="${project.description}"></p>
-                <p th:text="${project.estimatedTime}"></p>
+                <p th:text="'Estimated time for project in days : ' + ${project.estimatedTime}"></p>
             </div>
             <form th:action="@{/deleteProject/{projectId}(projectId=${project.projectId})}"
                   method="post">

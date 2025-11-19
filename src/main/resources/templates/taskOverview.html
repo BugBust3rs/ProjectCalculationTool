@@ -6,6 +6,51 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<header>
+    <a href="/dashboard" class="header-link">
+        <h1>Project Calculation Tool</h1>
+    </a>
+</header>
+<div class="body-content">
+    <div class="dashboard-title">
+        <h1 th:text="'tasks for ' + ${projectTitle} + ' project'"></h1>
+
+        <a th:href="@{/createTask/{projectId}(projectId=${projectId})}" class="create-link">
+            Create new task
+        </a>
+
+
+    </div>
+    <h3 th:text="'Estimated time for all tasks and subtasks: ' + ${overallEstimatedTime} + ' hours'"></h3>
+    <ol class="tasklist" >
+       <li th:each="task : ${tasks}" class="task">
+           <h3 th:text="${task.title}"/>
+           <p th:text="${task.description}"/>
+
+           <p th:text="'Estimated time: ' + ${task.estimatedTime} + ' hours'"/>
+           <form th:action="@{/deleteTask/{taskId}(taskId=${task.taskId})}"
+                 method="post">
+               <button type="submit" class="remove-task">Remove</button>
+           </form>
+           <a th:href="@{/createsubtask/{taskId}(taskId=${task.getTaskId()})}" class="create-subtask">
+               Create new subtask
+           </a>
+            <ol>
+               <li th:each="subtask : ${task.getSubtasks()}" class="task">
+                   <h3 th:text="${subtask.title}"/>
+                   <p th:text="${subtask.description}"/>
+                   <p th:text="'Estimated time: ' + ${subtask.estimatedTime} + ' hours'"/>
+                   <form th:action="@{/deleteSubtask/{subtaskId}(subtaskId=${subtask.subtaskID})}"
+                         method="post">
+                       <button type="submit" class="remove-task">Remove</button>
+                   </form>
+               </li>
+            </ol>
+       </li>
+    </ol>
+
+
+</div>
 
 </body>
 </html>
