@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.Repository;
 
+import com.example.projectcalculationtool.Model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +16,10 @@ public class TaskRepository{
 
     }
 
-    public void create() {
+    public void createTask(Task task) {
+        String sql = "INSERT INTO task (title, description, estimatedTime, project_id (?, ?, ?, ?)";
 
+        jdbcTemplate.update(sql,task.getTitle(), task.getDescription(), task.getEstimatedTime(), task.getProjectId());
     }
 
 
@@ -29,8 +32,4 @@ public class TaskRepository{
 
     }
 
-
-    public void delete(int id) {
-
-    }
 }
