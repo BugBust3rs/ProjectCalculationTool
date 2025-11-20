@@ -21,11 +21,15 @@ public class ProjectService {
         return projectRepository.getAllProjectsWithMemberId(memberId);
     }
 
-    public boolean memberHasProject(int projectId, int memberId) {
+    public boolean memberDoesNotHaveProject(int projectId, int memberId) {
         List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
-        return projects
-                .stream()
-                .anyMatch(project -> project.getProjectId() == projectId);
+        for (Project project : projects) {
+            if (project.getProjectId() == projectId){
+                return false;
+            }
+        }
+        return true;
+
     }
 
     public void deleteProject(int projectId) {

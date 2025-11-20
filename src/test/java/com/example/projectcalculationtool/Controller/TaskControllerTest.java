@@ -1,7 +1,7 @@
 package com.example.projectcalculationtool.Controller;
 
-import com.example.projectcalculationtool.Repository.ProjectRepository;
 import com.example.projectcalculationtool.Service.ProjectService;
+import com.example.projectcalculationtool.Service.TaskService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,31 +24,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Sql(scripts = "classpath:h2init.sql", executionPhase = BEFORE_TEST_METHOD)
 @SpringBootTest
 @AutoConfigureMockMvc
-class ProjectControllerTest {
-
-
+class TaskControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
 
-    @BeforeAll
-    static void setUp(){
-    }
 
     @Test
-    void shouldShowDashboard() throws Exception {
-        mockMvc.perform(get("/dashboard")
+    void shouldShowTaskOverview() throws Exception{
+        mockMvc.perform(get("/taskOverview/1")
                         .sessionAttr("memberId", 1))
                 .andExpect(status().isOk())
-                .andExpect(view().name("dashboard"));
+                .andExpect(view().name("taskOverview"));
     }
 
     @Test
-    void shouldDeleteProject() throws Exception{
-        mockMvc.perform(post("/deleteProject/{projectId}",  2)
+    void ShouldDeleteTask() throws Exception{
+        mockMvc.perform(post("/deleteTask/{taskId}", 1)
                         .sessionAttr("memberId", 1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/dashboard"));
+                .andExpect(view().name("redirect:/taskOverview/1"));
+    }
+
+    @Test
+    void ShouldDeleteSubtask() {
     }
 }

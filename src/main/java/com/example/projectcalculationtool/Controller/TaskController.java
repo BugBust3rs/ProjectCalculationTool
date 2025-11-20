@@ -65,9 +65,9 @@ public class TaskController {
     @GetMapping("/taskOverview/{projectId}")
     public String getTaskOverview(@PathVariable int projectId, Model model, HttpSession session) {
         int memberId = (int) session.getAttribute("memberId");
-        if (!loginService.isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
-//            return "redirect:/login";
-//
+        if (!loginService.isLoggedIn(session) || projectService.memberDoesNotHaveProject(projectId, memberId)) {
+            return "redirect:/login";
+
         }
         Project project = projectService.getProject(projectId, memberId);
         List<Task> tasks = taskService.getTasksByProjectId(projectId);
@@ -84,7 +84,7 @@ public class TaskController {
     public String deleteTask(@PathVariable int taskId, HttpSession session){
         int memberId = (int) session.getAttribute("memberId");
         Task task = taskService.getTaskById(taskId);
-        if (!loginService.isLoggedIn(session) || !projectService.memberHasProject(task.getProjectId(), memberId)) {
+        if (!loginService.isLoggedIn(session) || projectService.memberDoesNotHaveProject(task.getProjectId(), memberId)) {
 //            return "redirect:/login";
 //
         }
@@ -96,7 +96,7 @@ public class TaskController {
     public String deleteSubtask(@PathVariable int subtaskId, HttpSession session){
         int memberId = (int) session.getAttribute("memberId");
         int projectId = taskService.getProjectId(subtaskId);
-        if (!loginService.isLoggedIn(session) || !projectService.memberHasProject(projectId, memberId)) {
+        if (!loginService.isLoggedIn(session) || projectService.memberDoesNotHaveProject(projectId, memberId)) {
 //            return "redirect:/login";
 //
         }

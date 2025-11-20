@@ -4,7 +4,6 @@ import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.MemberService;
 import com.example.projectcalculationtool.Model.Member;
 import jakarta.servlet.http.HttpSession;
-import org.apache.juli.logging.Log;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

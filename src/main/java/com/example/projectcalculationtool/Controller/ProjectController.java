@@ -38,7 +38,7 @@ public class ProjectController {
     @PostMapping("/deleteProject/{projectId}")
     public String deleteProject(@PathVariable int projectId, HttpSession session) {
         int memberId = (int) session.getAttribute("memberId");
-        if (!loginService.isLoggedIn(session)|| !projectService.memberHasProject(projectId, memberId)) {
+        if (!loginService.isLoggedIn(session) || projectService.memberDoesNotHaveProject(projectId, memberId)) {
             return "redirect:/login";
         }
         projectService.deleteProject(projectId);
