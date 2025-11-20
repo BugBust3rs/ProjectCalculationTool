@@ -55,7 +55,7 @@ public class TaskService {
         subtaskRepository.deleteSubTaskById(subtaskId);
     }
 
-    public int getProjectId(int subtaskId) {
+    public int getProjectIdBySubtaskId(int subtaskId) {
         return getTaskById(getSubtaskById(subtaskId).getTaskId()).getProjectId();
     }
 
