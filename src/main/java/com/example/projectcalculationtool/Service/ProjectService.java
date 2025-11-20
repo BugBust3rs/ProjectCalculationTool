@@ -1,11 +1,9 @@
 package com.example.projectcalculationtool.Service;
 
+import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Project;
-import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -22,15 +20,15 @@ public class ProjectService {
         return projectRepository.getAllProjectsWithMemberId(memberId);
     }
 
-    public boolean memberDoesNotHaveProject(int projectId, int memberId) {
+    public void checkIfMembersProject(int projectId, int memberId, String exceptionMessage) {
         List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
 
         for (Project project : projects) {
             if (project.getProjectId() == projectId){
-                return false;
+                return;
             }
         }
-        return true;
+        throw new UnauthorizedAccessException(exceptionMessage);
 
     }
 

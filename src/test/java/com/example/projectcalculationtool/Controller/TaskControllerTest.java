@@ -1,22 +1,16 @@
 package com.example.projectcalculationtool.Controller;
 
+import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Project;
-import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.ProjectService;
 import com.example.projectcalculationtool.Service.TaskService;
-import jakarta.servlet.http.HttpSession;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -24,7 +18,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -55,8 +48,6 @@ class TaskControllerTest {
         project.setTitle("Website Redesign");
         List<Task> tasks = taskService.getTasksByProjectId(1);
 
-        when(projectService.memberDoesNotHaveProject(1, 1)).thenReturn(false);
-        when(loginService.isLoggedIn(any(HttpSession.class))).thenReturn(true);
         when(projectService.getProject(1,1)).thenReturn(project);
         when(taskService.getTasksByProjectId(1)).thenReturn(tasks);
 
@@ -72,8 +63,6 @@ class TaskControllerTest {
         Task task = new Task();
         task.setProjectId(1);
 
-        when(loginService.isLoggedIn(any(HttpSession.class))).thenReturn(true);
-        when(projectService.memberDoesNotHaveProject(1, 1)).thenReturn(false);
         when(taskService.getTaskById(1)).thenReturn(task);
 
         mockMvc.perform(post("/deleteTask/{taskId}", 1)
@@ -92,8 +81,6 @@ class TaskControllerTest {
     @Test
     void ShouldDeleteSubtask() throws Exception{
 
-        when(projectService.memberDoesNotHaveProject(1, 1)).thenReturn(false);
-        when(loginService.isLoggedIn(any(HttpSession.class))).thenReturn(true);
         when(taskService.getProjectIdBySubtaskId(1)).thenReturn(1);
 
         mockMvc.perform(post("/deleteSubtask/{subtaskId}", 1)
@@ -113,16 +100,19 @@ class TaskControllerTest {
     void shouldNotDeleteTask() throws Exception{
         Task task = new Task();
         task.setProjectId(1);
+        int memberId = 2;
+        int taskId = 1;
         when(taskService.getTaskById(1)).thenReturn(task);
-        // member does NOT own project 2
-        when(projectService.memberDoesNotHaveProject(1, 2)).thenReturn(true);
-        when(loginService.isLoggedIn(any(HttpSession.class))).thenReturn(false);
+        //when member not allowed to delete others task, throw exception
+        doThrow(new UnauthorizedAccessException("You do not have permission to delete this task."))
+                .when(projectService)
+                .checkIfMembersProject(eq(task.getProjectId()), eq(memberId), anyString());
 
 
-        mockMvc.perform(post("/deleteTask/{taskId}", 1)
-                        .sessionAttr("memberId", 2))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/login"));
+        mockMvc.perform(post("/deleteTask/{taskId}", taskId)
+                        .sessionAttr("memberId", memberId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("error/unauthorized"));
 
         // Make sure delete was NOT called
         verify(taskService, never()).deleteTask(anyInt());
@@ -131,16 +121,19 @@ class TaskControllerTest {
 
     @Test
     void shouldNotDeleteSubtask() throws Exception{
+        int projectId = 1;
+        int subtaskId = 1;
+        int memberId = 2;
+        when(taskService.getProjectIdBySubtaskId(subtaskId)).thenReturn(projectId);
+        //when member not allowed to delete others subtask, throw exception
+        doThrow(new UnauthorizedAccessException("You do not have permission to delete this task."))
+                .when(projectService)
+                .checkIfMembersProject(eq(projectId), eq(memberId), anyString());
 
-        when(taskService.getProjectIdBySubtaskId(1)).thenReturn(1);
-        // member does NOT own project 2
-        when(projectService.memberDoesNotHaveProject(1, 2)).thenReturn(true);
-        when(loginService.isLoggedIn(any(HttpSession.class))).thenReturn(false);
-
-        mockMvc.perform(post("/deleteSubtask/{subtaskId}", 1)
-                        .sessionAttr("memberId", 2))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/login"));
+        mockMvc.perform(post("/deleteSubtask/{subtaskId}", subtaskId)
+                        .sessionAttr("memberId", memberId))
+                .andExpect(status().isOk())
+                .andExpect(view().name("error/unauthorized"));
 
         // Make sure delete was NOT called
         verify(taskService, never()).deleteSubtask(anyInt());

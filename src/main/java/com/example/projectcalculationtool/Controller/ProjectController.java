@@ -1,8 +1,5 @@
 package com.example.projectcalculationtool.Controller;
 
-import com.example.projectcalculationtool.Exceptions.NotLoggedInException;
-import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
-import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.ProjectService;
@@ -19,6 +16,7 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final LoginService loginService;
+
     public ProjectController(ProjectService projectService, LoginService loginService) {
         this.projectService = projectService;
         this.loginService = loginService;
@@ -26,12 +24,7 @@ public class ProjectController {
 
     @GetMapping("/dashboard")
     public String getDashboard(Model model, HttpSession session) {
-        if (!loginService.isLoggedIn(session)) {
-            throw new NotLoggedInException(
-                    "Your session expired"
-            );
-        }
-
+        loginService.checkIfLoggedIn(session);
         int memberId = (int) session.getAttribute("memberId");
         List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
         model.addAttribute("projects", projects);
@@ -41,17 +34,11 @@ public class ProjectController {
 
     @PostMapping("/deleteProject/{projectId}")
     public String deleteProject(@PathVariable int projectId, HttpSession session) {
-        if (!loginService.isLoggedIn(session)) {
-            throw new NotLoggedInException(
-                    "Your session expired"
-            );
-        }
+        loginService.checkIfLoggedIn(session);
         int memberId = (int) session.getAttribute("memberId");
-        if (projectService.memberDoesNotHaveProject(projectId, memberId)){
-            throw new UnauthorizedAccessException(
-                    "You do not have permission to delete this project."
-            );
-        }
+
+        projectService.checkIfMembersProject(
+                projectId, memberId, "You do not have permission to delete this project.");
 
         projectService.deleteProject(projectId);
         return "redirect:/dashboard";
@@ -60,11 +47,7 @@ public class ProjectController {
 
     @GetMapping("/createProject")
     public String createProject(Model model, HttpSession session) {
-        if (!loginService.isLoggedIn(session)) {
-            throw new NotLoggedInException(
-                    "Your session expired"
-            );
-        }
+        loginService.checkIfLoggedIn(session);
         Project project = new Project();
         model.addAttribute("project", project);
 
@@ -74,11 +57,7 @@ public class ProjectController {
     @PostMapping("/createProject")
     public String createProject(@ModelAttribute Project project, HttpSession session) {
 
-        if (!loginService.isLoggedIn(session)) {
-            throw new NotLoggedInException(
-                    "Your session expired"
-            );
-        }
+        loginService.checkIfLoggedIn(session);
         int memberId = (int) session.getAttribute("memberId");
         projectService.saveProject(project, memberId);
         return "redirect:/dashboard";
