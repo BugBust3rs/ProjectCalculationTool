@@ -5,6 +5,7 @@ import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class ProjectService {
 
     public boolean memberDoesNotHaveProject(int projectId, int memberId) {
         List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
+
         for (Project project : projects) {
             if (project.getProjectId() == projectId){
                 return false;

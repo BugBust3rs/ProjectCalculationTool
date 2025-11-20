@@ -1,5 +1,7 @@
 package com.example.projectcalculationtool.Controller;
 
+import com.example.projectcalculationtool.Exceptions.NotLoggedInException;
+import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Service.LoginService;
@@ -25,7 +27,9 @@ public class ProjectController {
     @GetMapping("/dashboard")
     public String getDashboard(Model model, HttpSession session) {
         if (!loginService.isLoggedIn(session)) {
-            return "redirect:/login";
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
         }
 
         int memberId = (int) session.getAttribute("memberId");
@@ -37,10 +41,18 @@ public class ProjectController {
 
     @PostMapping("/deleteProject/{projectId}")
     public String deleteProject(@PathVariable int projectId, HttpSession session) {
-        int memberId = (int) session.getAttribute("memberId");
-        if (!loginService.isLoggedIn(session) || projectService.memberDoesNotHaveProject(projectId, memberId)) {
-            return "redirect:/login";
+        if (!loginService.isLoggedIn(session)) {
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
         }
+        int memberId = (int) session.getAttribute("memberId");
+        if (projectService.memberDoesNotHaveProject(projectId, memberId)){
+            throw new UnauthorizedAccessException(
+                    "You do not have permission to delete this project."
+            );
+        }
+
         projectService.deleteProject(projectId);
         return "redirect:/dashboard";
 
@@ -48,6 +60,11 @@ public class ProjectController {
 
     @GetMapping("/createProject")
     public String createProject(Model model, HttpSession session) {
+        if (!loginService.isLoggedIn(session)) {
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
+        }
         Project project = new Project();
         model.addAttribute("project", project);
 
@@ -58,7 +75,9 @@ public class ProjectController {
     public String createProject(@ModelAttribute Project project, HttpSession session) {
 
         if (!loginService.isLoggedIn(session)) {
-            return "redirect:/login";
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
         }
         int memberId = (int) session.getAttribute("memberId");
         projectService.saveProject(project, memberId);

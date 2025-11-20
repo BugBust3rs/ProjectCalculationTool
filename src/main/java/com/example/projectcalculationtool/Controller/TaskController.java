@@ -1,5 +1,7 @@
 package com.example.projectcalculationtool.Controller;
 
+import com.example.projectcalculationtool.Exceptions.NotLoggedInException;
+import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.TaskService;
@@ -39,7 +41,9 @@ public class TaskController {
     @GetMapping("/createTask/{projectId}")
     public String createTask(@PathVariable int projectId, Model model, HttpSession session) {
         if (!loginService.isLoggedIn(session)) {
-            return "redirect:/login";
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
         }
         Task task = new Task();
         task.setProjectId(projectId);
@@ -52,7 +56,9 @@ public class TaskController {
     @PostMapping("/createTask")
     public String createTask(@ModelAttribute Task task, HttpSession session) {
         if (!loginService.isLoggedIn(session)) {
-            return "redirect:/login";
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
         }
 
         taskService.createTask(task);
@@ -65,7 +71,9 @@ public class TaskController {
     @GetMapping("/createSubtask/{taskId}")
     public String createSubTask(@PathVariable int taskId, Model model, HttpSession session) {
         if (!loginService.isLoggedIn(session)) {
-            return "redirect:/login";
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
         }
         Subtask subtask = new Subtask();
         subtask.setTaskId(taskId);
@@ -78,7 +86,9 @@ public class TaskController {
     @PostMapping("/createSubtask/{projectId}")
     public String createSubTask(@PathVariable int projectId, @ModelAttribute Subtask subtask, HttpSession session) {
         if (!loginService.isLoggedIn(session)) {
-            return "redirect:/login";
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
         }
 
         taskService.createSubtask(subtask);
@@ -87,10 +97,16 @@ public class TaskController {
 
     @GetMapping("/taskOverview/{projectId}")
     public String getTaskOverview(@PathVariable int projectId, Model model, HttpSession session) {
+        if ((!loginService.isLoggedIn(session))) {
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
+        }
         int memberId = (int) session.getAttribute("memberId");
-        if ((!loginService.isLoggedIn(session))|| projectService.memberDoesNotHaveProject(projectId, memberId)) {
-            return "redirect:/login";
-
+        if (projectService.memberDoesNotHaveProject(projectId, memberId)){
+            throw new UnauthorizedAccessException(
+                    "You do not have permission to see this project."
+            );
         }
         Project project = projectService.getProject(projectId, memberId);
         List<Task> tasks = taskService.getTasksByProjectId(projectId);
@@ -107,9 +123,15 @@ public class TaskController {
     public String deleteTask(@PathVariable int taskId, HttpSession session){
         int memberId = (int) session.getAttribute("memberId");
         Task task = taskService.getTaskById(taskId);
-        if ((!loginService.isLoggedIn(session)) || projectService.memberDoesNotHaveProject(task.getProjectId(), memberId)) {
-            return "redirect:/login";
-
+        if (!loginService.isLoggedIn(session)) {
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
+        }
+        if (projectService.memberDoesNotHaveProject(task.getProjectId(), memberId)){
+            throw new UnauthorizedAccessException(
+                    "You do not have permission to delete this task."
+            );
         }
         taskService.deleteTask(taskId);
         return "redirect:/taskOverview/" + task.getProjectId();
@@ -119,9 +141,15 @@ public class TaskController {
     public String deleteSubtask(@PathVariable int subtaskId, HttpSession session){
         int memberId = (int) session.getAttribute("memberId");
         int projectId = taskService.getProjectIdBySubtaskId(subtaskId);
-        if (!loginService.isLoggedIn(session) || projectService.memberDoesNotHaveProject(projectId, memberId)) {
-            return "redirect:/login";
-
+        if (!loginService.isLoggedIn(session)) {
+            throw new NotLoggedInException(
+                    "Your session expired"
+            );
+        }
+        if (projectService.memberDoesNotHaveProject(projectId, memberId)){
+            throw new UnauthorizedAccessException(
+                    "You do not have permission to delete this subtask."
+            );
         }
         taskService.deleteSubtask(subtaskId);
 
