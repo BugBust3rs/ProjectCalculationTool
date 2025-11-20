@@ -88,7 +88,7 @@ public class TaskController {
     @GetMapping("/taskOverview/{projectId}")
     public String getTaskOverview(@PathVariable int projectId, Model model, HttpSession session) {
         int memberId = (int) session.getAttribute("memberId");
-        if (!loginService.isLoggedIn(session) || projectService.memberDoesNotHaveProject(projectId, memberId)) {
+        if ((!loginService.isLoggedIn(session))|| projectService.memberDoesNotHaveProject(projectId, memberId)) {
             return "redirect:/login";
 
         }
