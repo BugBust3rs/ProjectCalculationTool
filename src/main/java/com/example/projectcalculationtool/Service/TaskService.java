@@ -73,7 +73,7 @@ public class TaskService {
         }
         return overallEstimatedTime;
     }
-
+    public void createSubtask(Subtask subtask) {subtaskRepository.createSubTask(subtask);}
     public void createTask(Task task) {
         taskRepository.createTask(task);
     }
