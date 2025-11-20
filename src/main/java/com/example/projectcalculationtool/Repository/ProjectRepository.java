@@ -59,7 +59,7 @@ public class ProjectRepository {
     }
     @Transactional
     public void addProject(Project project, int memberId){
-        String sql = "INSERT INTO project (project_id, title, description, estimatedTime) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO project (project_id, title, description, estimated_time) VALUES (?, ?, ?, ?)";
         KeyHolder keyholder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

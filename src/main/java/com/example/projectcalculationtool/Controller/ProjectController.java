@@ -61,12 +61,12 @@ public class ProjectController {
     @PostMapping("/createProject")
     public String createProject(@ModelAttribute Project project, HttpSession session) {
 
-//        if (!isLoggedIn(session)) {
-//            return "redirect:/login";
-//        }
+        if (!loginService.isLoggedIn(session)) {
+            return "redirect:/login";
+        }
         int memberId = (int) session.getAttribute("memberId");
         projectService.saveProject(project, memberId);
-        return "redirect:/dashboard" + project.getProjectId();
+        return "redirect:/dashboard";
 
     }
 
