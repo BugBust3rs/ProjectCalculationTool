@@ -2,10 +2,63 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>create subtask</title>
+    <title>create Subtask</title>
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
+<body class="login-page">
 
-</body>
-</html>
+
+<header>
+    <a href="/dashboard" class="header-link">
+        <h1>Project Calculation Tool</h1>
+    </a>
+</header>
+
+<div class="body-content">
+    <div class="dashboard-title">
+        <h1>Create Subtask</h1>
+    </div>
+
+    <div class="projects-grid">
+        <div class="create-card">
+            <form th:action="@{/createSubtask/{projectId}(projectId = ${projectId})}" method="post" th:object="${subtask}">
+                <div class="form-group">
+                    <label for="title">Subtask title</label>
+                    <input id="title"
+                           type="text"
+                           th:field="*{title}"
+                           class="input-field"
+                           placeholder="Enter subtask title"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description"
+                              th:field="*{description}"
+                              class="input-field"
+                              placeholder="Enter subtask description"
+                              required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="estimatedTime">Estimated time (hours)</label>
+                    <input id="estimatedTime"
+                           type="number"
+                           min="0"
+                           step="1"
+                           th:field="*{estimatedTime}"
+                           class="input-field"
+                           placeholder="e.g. 8"
+                           required>
+                </div>
+
+                <input id="projectId"
+                       type="hidden"
+                       th:field="*{taskId}">
+
+                <button type="submit" class="create-link">Create Subtask</button>
+            </form>
+        </div>
+    </div>
+</div>

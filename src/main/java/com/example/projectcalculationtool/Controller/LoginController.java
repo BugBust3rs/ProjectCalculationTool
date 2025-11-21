@@ -43,15 +43,15 @@ public class LoginController {
                               Model model) {
 
         // kigger i DB gennem service
-        Member member2 = memberService.getMember(member.getEmail(), member.getPassword());
+        Member memberFromDB = memberService.getMember(member.getEmail(), member.getPassword());
 
-        if (member2 == null) {
+        if (memberFromDB == null) {
             model.addAttribute("error", "Forkert email eller password");
             return "login";
         }
 
         // Laver en session med memberId
-        session.setAttribute("memberId", member.getMemberId());
+        session.setAttribute("memberId", memberFromDB.getMemberId());
 
         // giver en timeout tid som er sat til 300 sekunder
         session.setMaxInactiveInterval(300);

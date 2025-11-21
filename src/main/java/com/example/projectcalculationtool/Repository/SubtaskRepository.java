@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.Repository;
 
 import com.example.projectcalculationtool.Model.Subtask;
+import com.example.projectcalculationtool.Model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -26,11 +27,15 @@ public class SubtaskRepository {
 
     }
 
+    public void createSubTask(Subtask subtask) {
+        String sql = "INSERT INTO subtask (title, description, estimated_time, task_id) VALUES (?, ?, ?, ?)";
 
-    public void create() {
-
+        jdbcTemplate.update(sql,
+                subtask.getTitle(),
+                subtask.getDescription(),
+                subtask.getEstimatedTime(),
+                subtask.getTaskId());
     }
-
 
     public List<Subtask> getAllSubtasksWithTaskId(int taskId) {
         final String sql = "SELECT * FROM subTask WHERE task_id = ?";
@@ -38,11 +43,9 @@ public class SubtaskRepository {
         return jdbcTemplate.query(sql, subtaskRowMapper, taskId);
     }
 
-
     public void update(Object o) {
 
     }
-
 
     public void delete(int id) {
 
