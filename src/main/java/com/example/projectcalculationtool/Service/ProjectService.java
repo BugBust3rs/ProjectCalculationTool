@@ -23,7 +23,8 @@ public class ProjectService {
 
     public void checkIfMembersProject(int projectId, int memberId, String exceptionMessage) {
         try {
-            projectRepository.getProjectWithProjectIdAndMemberId(projectId, memberId);
+            // if member does not have project, jdbcTemplate.queryForObject throws a DataAccessException
+            projectRepository.memberHasProject(projectId, memberId);
         } catch (DataAccessException e){
             throw new UnauthorizedAccessException(exceptionMessage);
         }
