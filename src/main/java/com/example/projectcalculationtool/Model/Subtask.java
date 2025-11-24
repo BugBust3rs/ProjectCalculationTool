@@ -6,6 +6,8 @@ public class Subtask {
     private String description;
     private int estimatedTime;
     private int taskId;
+    private int memberId;
+    private String memberName;
 
     public Subtask () {}
 
@@ -48,4 +50,12 @@ public class Subtask {
     public void setTaskId(int taskId) {
         this.taskId = taskId;
     }
+
+    public int getMemberId() { return memberId; }
+
+    public void setMemberId(int memberId) { this.memberId = memberId; }
+
+    public String getMemberName() { return memberName;}
+
+    public void setMemberName (String memberName) { this.memberName = memberName; }
 }

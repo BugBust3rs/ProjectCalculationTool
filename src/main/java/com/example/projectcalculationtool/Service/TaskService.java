@@ -17,10 +17,12 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final SubtaskRepository subtaskRepository;
+    private final MemberService memberService;
 
-    public TaskService(TaskRepository taskRepository, SubtaskRepository subtaskRepository) {
+    public TaskService(TaskRepository taskRepository, SubtaskRepository subtaskRepository, MemberService memberService) {
         this.taskRepository = taskRepository;
         this.subtaskRepository = subtaskRepository;
+        this.memberService = memberService;
     }
 
     public List<Task> getTasksByProjectId(int projectId) {
@@ -35,7 +37,18 @@ public class TaskService {
                 task.setEstimatedTime(overallEstimatedTimeForSubtasks);
             }
         }
+        List<Task> tasksWithMemberName = getTasksWithMemberName(tasks);
 
+        return tasks;
+    }
+
+    private List<Task> getTasksWithMemberName(List<Task> tasks) {
+        for (Task task : tasks){
+            task.setMemberName(memberService.getMemberName(task.getMemberId()));
+            for (Subtask subtask : task.getSubtasks()){
+                subtask.setMemberName(memberService.getMemberName(subtask.getMemberId()));
+            }
+        }
         return tasks;
     }
 
@@ -77,4 +90,6 @@ public class TaskService {
     public void createTask(Task task) {
         taskRepository.createTask(task);
     }
+
+
 }

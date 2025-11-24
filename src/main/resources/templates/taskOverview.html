@@ -27,6 +27,8 @@
            <h3 th:text="${task.title}"/>
            <p th:text="${task.description}"/>
 
+<!--           for hver tasks skal du kunne se hvem det er -->
+
            <p th:text="'Estimated time: ' + ${task.estimatedTime} + ' hours'"/>
            <form th:action="@{/deleteTask/{taskId}(taskId=${task.taskId})}"
                  method="post">

@@ -19,6 +19,7 @@ public class SubtaskRepository {
         subtask.setEstimatedTime(rs.getInt("estimated_time"));
         subtask.setTitle(rs.getString("title"));
         subtask.setDescription(rs.getString("description"));
+        subtask.setMemberId(rs.getInt("member_id"));
         return subtask;
     };
 
@@ -28,13 +29,14 @@ public class SubtaskRepository {
     }
 
     public void createSubTask(Subtask subtask) {
-        String sql = "INSERT INTO subtask (title, description, estimated_time, task_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO subtask (title, description, estimated_time, task_id, member_id) VALUES (?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sql,
                 subtask.getTitle(),
                 subtask.getDescription(),
                 subtask.getEstimatedTime(),
-                subtask.getTaskId());
+                subtask.getTaskId(),
+                subtask.getMemberId());
     }
 
     public List<Subtask> getAllSubtasksWithTaskId(int taskId) {

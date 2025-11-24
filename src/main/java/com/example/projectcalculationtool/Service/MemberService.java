@@ -26,4 +26,8 @@ public class MemberService {
 
         return null;
     }
+
+    public String getMemberName(int memberId) {
+        return null;
+    }
 }
