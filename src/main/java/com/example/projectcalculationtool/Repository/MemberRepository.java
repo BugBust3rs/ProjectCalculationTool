@@ -1,11 +1,14 @@
 package com.example.projectcalculationtool.Repository;
 
+import com.example.projectcalculationtool.Model.Member;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.example.projectcalculationtool.Model.Member;
 import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.sql.ResultSet;
 import java.util.List;
 
 @Repository
@@ -30,9 +33,27 @@ public class MemberRepository {
         }
     };
 
+    public void create(Member member) {
+        String sql = "INSERT INTO member (member_id, name, email, password(?, ?, ?, ?)";
+
+        jdbcTemplate.update(sql, member.getName(), member.getEmail(), member.getPassword());
+    }
+
+
+    public List<Object> getAll() {
+        return List.of();
+    }
+
+
 
     public List<Member> getMembers(){
-        String sql = "SELECT * FROM Member";
+        String sql = "SELECT * FROM member";
         return jdbcTemplate.query(sql, memberRowMapper);
     }
+
+
+    public void delete(int id) {
+
+    }
+
 }

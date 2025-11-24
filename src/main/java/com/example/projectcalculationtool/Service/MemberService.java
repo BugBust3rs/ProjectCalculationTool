@@ -30,4 +30,20 @@ public class MemberService {
     public String getMemberName(int memberId) {
         return null;
     }
+
+    public boolean doesMemberExists(String email) {
+
+        List<Member> members = memberRepository.getMembers();
+
+        for (Member member : members) {
+            if (member.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void createMember(Member member) {
+        memberRepository.create(member);
+    }
 }
