@@ -1,11 +1,16 @@
 package com.example.projectcalculationtool.Repository;
 
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.example.projectcalculationtool.Model.Member;
 import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -34,5 +39,22 @@ public class MemberRepository {
     public List<Member> getMembers(){
         String sql = "SELECT * FROM Member";
         return jdbcTemplate.query(sql, memberRowMapper);
+    }
+
+    public Member saveMember(Member member){
+        String sql = "INSERT INTO Member (name, email, password) VALUES (?, ?, ?)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update((con -> {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, member.getEmail());
+            ps.setString(2, member.getName());
+            ps.setString(3, member.getPassword());
+            return ps;
+        }), keyHolder);
+
+        member.setMemberId(keyHolder.getKey().intValue());
+        return member;
     }
 }

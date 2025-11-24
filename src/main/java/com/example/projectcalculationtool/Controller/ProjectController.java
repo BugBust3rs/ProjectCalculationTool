@@ -35,6 +35,7 @@ public class ProjectController {
         int memberId = (int) session.getAttribute("memberId");
         List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
         model.addAttribute("projects", projects);
+
         return "dashboard";
     }
 
@@ -70,18 +71,6 @@ public class ProjectController {
 
     }
 
-    @PostMapping("/taskOverview{email}")
-    public String inviteMemberToProject(@PathVariable String email, HttpSession session) {
 
-        //        if (!isLoggedIn(session)) {
-//            return "redirect:/login";
-//        }
-
-        int memberId = (int) session.getAttribute("memberId");
-        Member member = memberService.addMemberToProject(email);
-        List<Member> members = projectService.getMembersOnProject(email);
-        me
-
-    }
 
 }

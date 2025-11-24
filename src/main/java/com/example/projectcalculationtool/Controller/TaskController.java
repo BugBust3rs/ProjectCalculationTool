@@ -1,13 +1,9 @@
 package com.example.projectcalculationtool.Controller;
 
-import com.example.projectcalculationtool.Model.Task;
-import com.example.projectcalculationtool.Service.LoginService;
-import com.example.projectcalculationtool.Service.TaskService;
+import com.example.projectcalculationtool.Model.*;
+import com.example.projectcalculationtool.Service.*;
 import jakarta.servlet.http.HttpSession;
-import com.example.projectcalculationtool.Model.Project;
-import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
-import com.example.projectcalculationtool.Service.ProjectService;
 import com.example.projectcalculationtool.Service.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -29,11 +25,12 @@ public class TaskController {
     private final LoginService loginService;
     private final TaskService taskService;
     private final ProjectService projectService;
-
-    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService) {
+    private final MemberService memberService;
+    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService, MemberService memberService) {
         this.loginService = loginService;
         this.taskService = taskService;
         this.projectService = projectService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/createTask/{projectId}")
@@ -99,7 +96,8 @@ public class TaskController {
         model.addAttribute("overallEstimatedTime", overallEstimatedTime);
         model.addAttribute("projectId", project.getProjectId());
         model.addAttribute("tasks",tasks);
-
+        Member member = new Member();
+        model.addAttribute("member", member);
         return "taskOverview";
     }
 
@@ -125,6 +123,33 @@ public class TaskController {
         }
         taskService.deleteSubtask(subtaskId);
 
+        return "redirect:/taskOverview/" + projectId;
+    }
+
+    @PostMapping("/inviteMember/{projectId}")
+    public String inviteMemberToProject(@PathVariable int projectId, @ModelAttribute Member member, HttpSession session) {
+
+        if (!loginService.isLoggedIn(session)) {
+            return "redirect:/login";
+        }
+
+        int memberId = (int) session.getAttribute("memberId");
+
+
+        // add member to the project by email
+        // hvis member er == null så return til taskoverview med en bruger findes ikke message,
+        // lav et tjek om memberen allerede har projektet.
+        Member m = memberService.getMemberWithEmail(member.getEmail());
+
+        if(m == null ){
+            return "redirect:/taskOverview/";
+        }
+
+
+        // associate member to the chosen project
+        projectService.addMemberToProject(projectId, m.getMemberId());
+
+        // Redirect to project overview page
         return "redirect:/taskOverview/" + projectId;
     }
 
