@@ -50,17 +50,17 @@ public class ProjectRepository {
         return jdbcTemplate.query(sql, projectRowMapper, memberId);
     }
 
-    public Project getProjectWithProjectId(int projectId)  {
-        final String sql = "SELECT * FROM project where project_id = ?";
-//        final String sql = """
-//                Select p.project_id, p.title, p.description, p.estimated_time
-//                FROM member_project mp
-//                    JOIN project p ON p.project_id = mp.project_id
-//                         WHERE member_id = ?
-//                """;
+    public Project getProjectWithProjectIdAndMemberId(int projectId,int memberId)  {
+//        final String sql = "SELECT * FROM project where project_id = ?";
+        final String sql = """
+                Select p.project_id, p.title, p.description, p.estimated_time
+                FROM member_project mp
+                    JOIN project p ON p.project_id = mp.project_id
+                         WHERE member_id = ? AND p.project_id = ?
+                """;
 
 
-        return jdbcTemplate.queryForObject(sql, projectRowMapper, projectId);
+        return jdbcTemplate.queryForObject(sql, projectRowMapper,memberId , projectId);
     }
 
     public void update(Object o) {

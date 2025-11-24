@@ -3,6 +3,7 @@ package com.example.projectcalculationtool.Service;
 import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,17 +22,9 @@ public class ProjectService {
     }
 
     public void checkIfMembersProject(int projectId, int memberId, String exceptionMessage) {
-//        List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
-//
-//        for (Project project : projects) {
-//            if (project.getProjectId() == projectId){
-//                return;
-//            }
-//        }
-//        throw new UnauthorizedAccessException(exceptionMessage);
-
-        Project project = projectRepository.getProjectWithProjectId(projectId);
-        if (project == null){
+        try {
+            projectRepository.getProjectWithProjectIdAndMemberId(projectId, memberId);
+        } catch (DataAccessException e){
             throw new UnauthorizedAccessException(exceptionMessage);
         }
 
@@ -43,15 +36,15 @@ public class ProjectService {
 
     public Project getProject(int projectId, int memberId) {
         List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
-        for (Project project : projects){
-            if (project.getProjectId() == projectId){
+        for (Project project : projects) {
+            if (project.getProjectId() == projectId) {
                 return project;
             }
         }
         return null;
     }
 
-    public void saveProject(Project project, int memberId){
+    public void saveProject(Project project, int memberId) {
         projectRepository.addProject(project, memberId);
     }
 
