@@ -17,10 +17,9 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -59,7 +58,7 @@ class ProjectControllerTest {
     void shouldDeleteProject() throws Exception{
 
 
-        mockMvc.perform(post("/deleteProject/{projectId}",  2)
+        mockMvc.perform(delete("/deleteProject/{projectId}",  2)
                         .sessionAttr("memberId", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/dashboard"));
@@ -78,7 +77,7 @@ class ProjectControllerTest {
                 .when(projectService)
                 .checkIfMembersProject(eq(2), eq(2), anyString());
 
-        mockMvc.perform(post("/deleteProject/{projectId}",  2)
+        mockMvc.perform(delete("/deleteProject/{projectId}",  2)
                         .sessionAttr("memberId", 2))
                 .andExpect(status().isOk())
                 .andExpect(view().name("error/unauthorized"));
