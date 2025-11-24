@@ -5,7 +5,69 @@
     <title>create member</title>
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
 
+<body class="login-page">
+
+<header>
+    <a href="/dashboard" class="header-link">
+        <h1>Project Calculation Tool</h1>
+    </a>
+</header>
+
+<div class="body-content">
+    <div class="dashboard-title">
+        <h1>Create Member</h1>
+    </div>
+
+        <div class="projects-grid">
+            <div class="project-card">
+
+                <div th:if="${message}">
+                    <p th:text="${message}"></p>
+                </div>
+
+
+    <form th:action="@{dashboard}" class="close-btn-form">
+        <button class="close-btn" >&times;</button>
+    </form>
+
+    <form th:action="@{/createMember}" th:object="${member}" method="post">
+        <div class="form-group">
+            <label >Name</label>
+            <input id="name"
+                   type="name"
+                   name="name"
+                   class="input-field"
+                   placeholder="Enter your name"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email"
+                   type="email"
+                   name="email"
+                   class="input-field"
+                   placeholder="Enter your email"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password"
+                   type="password"
+                   name="password"
+                   class="input-field"
+                   placeholder="Enter your password"
+                   required>
+        </div>
+
+        <button type="submit" class="create-link">
+            Create member
+        </button>
+    </form>
+         </div>
+        </div>
+    </div>
 </body>
 </html>

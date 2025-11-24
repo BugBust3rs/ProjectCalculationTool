@@ -1,5 +1,7 @@
 package com.example.projectcalculationtool.Service;
 
+import com.example.projectcalculationtool.Model.Member;
+import com.example.projectcalculationtool.Repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import com.example.projectcalculationtool.Model.Member;
@@ -7,6 +9,8 @@ import com.example.projectcalculationtool.Repository.MemberRepository;
 
 import java.util.List;
 
+
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -26,4 +30,22 @@ public class MemberService {
 
         return null;
     }
+
+    public boolean doesMemberExists(String email) {
+
+        List<Member> members = memberRepository.getMembers();
+
+        for (Member member : members) {
+            if (member.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void createMember(Member member) {
+        memberRepository.create(member);
+    }
 }
+
+
