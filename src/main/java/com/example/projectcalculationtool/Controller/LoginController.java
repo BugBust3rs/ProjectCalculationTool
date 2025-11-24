@@ -1,21 +1,14 @@
 package com.example.projectcalculationtool.Controller;
 
+import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.MemberService;
-import com.example.projectcalculationtool.Model.Member;
 import jakarta.servlet.http.HttpSession;
-import org.apache.juli.logging.Log;
-import com.example.projectcalculationtool.Model.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import com.example.projectcalculationtool.Service.MemberService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
