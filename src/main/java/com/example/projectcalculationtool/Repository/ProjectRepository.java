@@ -52,6 +52,13 @@ public class ProjectRepository {
 
     public Project getProjectWithProjectId(int projectId)  {
         final String sql = "SELECT * FROM project where project_id = ?";
+//        final String sql = """
+//                Select p.project_id, p.title, p.description, p.estimated_time
+//                FROM member_project mp
+//                    JOIN project p ON p.project_id = mp.project_id
+//                         WHERE member_id = ?
+//                """;
+
 
         return jdbcTemplate.queryForObject(sql, projectRowMapper, projectId);
     }

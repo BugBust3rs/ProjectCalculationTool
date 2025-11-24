@@ -29,7 +29,7 @@ public class ProjectService {
 //            }
 //        }
 //        throw new UnauthorizedAccessException(exceptionMessage);
-//
+
         Project project = projectRepository.getProjectWithProjectId(projectId);
         if (project == null){
             throw new UnauthorizedAccessException(exceptionMessage);
