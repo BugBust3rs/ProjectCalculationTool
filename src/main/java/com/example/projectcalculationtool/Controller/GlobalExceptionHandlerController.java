@@ -16,6 +16,7 @@ public class GlobalExceptionHandlerController {
         return "error/unauthorized";
     }
 
+
     @ExceptionHandler(NotLoggedInException.class)
     public String handleNotLoggedIn(NotLoggedInException ex, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("sessionExpiredMsg", ex.getMessage());

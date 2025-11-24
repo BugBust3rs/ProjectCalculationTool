@@ -2,6 +2,7 @@ package com.example.projectcalculationtool.Repository;
 
 import com.example.projectcalculationtool.Model.Project;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,15 @@ import java.util.List;
 public class ProjectRepository {
 
     private final JdbcTemplate jdbcTemplate;
+
+    private final RowMapper<Project> projectRowMapper = (rs, rowNum) -> {
+        Project project = new Project();
+        project.setProjectId(rs.getInt("project_id"));
+        project.setTitle(rs.getString("title"));
+        project.setDescription(rs.getString("description"));
+        project.setEstimatedTime(rs.getInt("estimated_time"));
+        return project;
+    };
 
     public ProjectRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -37,16 +47,14 @@ public class ProjectRepository {
                          WHERE member_id = ?
                 """;
 
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            Project project = new Project();
-            project.setProjectId(rs.getInt("project_id"));
-            project.setTitle(rs.getString("title"));
-            project.setDescription(rs.getString("description"));
-            project.setEstimatedTime(rs.getInt("estimated_time"));
-            return project;
-        }, memberId);
+        return jdbcTemplate.query(sql, projectRowMapper, memberId);
     }
 
+    public Project getProjectWithProjectId(int projectId)  {
+        final String sql = "SELECT * FROM project where project_id = ?";
+
+        return jdbcTemplate.queryForObject(sql, projectRowMapper, projectId);
+    }
 
     public void update(Object o) {
 

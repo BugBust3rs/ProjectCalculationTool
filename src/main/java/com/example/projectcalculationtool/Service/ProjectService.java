@@ -21,14 +21,19 @@ public class ProjectService {
     }
 
     public void checkIfMembersProject(int projectId, int memberId, String exceptionMessage) {
-        List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
-
-        for (Project project : projects) {
-            if (project.getProjectId() == projectId){
-                return;
-            }
+//        List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
+//
+//        for (Project project : projects) {
+//            if (project.getProjectId() == projectId){
+//                return;
+//            }
+//        }
+//        throw new UnauthorizedAccessException(exceptionMessage);
+//
+        Project project = projectRepository.getProjectWithProjectId(projectId);
+        if (project == null){
+            throw new UnauthorizedAccessException(exceptionMessage);
         }
-        throw new UnauthorizedAccessException(exceptionMessage);
 
     }
 
