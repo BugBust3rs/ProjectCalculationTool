@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.Service;
 
+import com.example.projectcalculationtool.Exceptions.MemberAlreadyAddedException;
 import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Project;
@@ -62,7 +63,7 @@ public class ProjectService {
         try {
             projectRepository.addMemberToProject(projectId, memberId);
         } catch (DataAccessException e) {
-            throw new RuntimeException(e);
+            throw new MemberAlreadyAddedException("Member already added to that project", projectId);
         }
     }
 

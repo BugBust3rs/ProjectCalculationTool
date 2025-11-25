@@ -39,4 +39,8 @@ public class MemberService {
         }
         return null;
     }
+
+    public List<Member> getMembersWithProjectId(int projectId){
+        return memberRepository.getMembersWithProjectId(projectId);
+    }
 }

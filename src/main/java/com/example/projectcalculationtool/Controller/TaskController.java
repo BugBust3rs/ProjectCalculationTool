@@ -86,10 +86,12 @@ public class TaskController {
         Project project = projectService.getProject(projectId, memberId);
         List<Task> tasks = taskService.getTasksByProjectId(projectId);
         int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
+        List<Member> members = memberService.getMembersWithProjectId(projectId);
         model.addAttribute("projectTitle", project.getTitle());
         model.addAttribute("overallEstimatedTime", overallEstimatedTime);
         model.addAttribute("projectId", project.getProjectId());
         model.addAttribute("tasks",tasks);
+        model.addAttribute("members", members);
         Member member = new Member();
         model.addAttribute("member", member);
         return "taskOverview";
@@ -126,9 +128,7 @@ public class TaskController {
     @PostMapping("/inviteMember/{projectId}")
     public String inviteMemberToProject(@PathVariable int projectId, @ModelAttribute Member member, HttpSession session) {
 
-        if (!loginService.isLoggedIn(session)) {
-            return "redirect:/login";
-        }
+        loginService.checkIfLoggedIn(session);
 
         int memberId = (int) session.getAttribute("memberId");
 

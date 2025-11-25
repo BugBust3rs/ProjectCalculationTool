@@ -25,8 +25,9 @@
 
             <form th:action="@{/createProject}" th:object="${project}" method="post">
                 <div class="form-group">
-                    <label> Project </label>
+                    <label for="name"> Project </label>
                     <input name="name"
+                           id="name"
                            placeholder="Enter Project Name"
                            th:field="*{title}"
                            class="input-field"
