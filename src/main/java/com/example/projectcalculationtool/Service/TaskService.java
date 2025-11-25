@@ -20,10 +20,16 @@ public class TaskService {
     }
 
     public List<Task> getTasksByProjectId(int projectId) {
-        List<Task> tasks = taskRepository.getAllTasksWithProjectId(projectId);
+        List<Task> tasks = setTasksEstimatedTime(taskRepository.getAllTasksWithProjectId(projectId));
+
+
+        return tasks;
+    }
+    private List<Task> setTasksEstimatedTime(List<Task> tasks){
         for (Task task : tasks) {
-            task.setSubtasks(subtaskRepository.getAllSubtasksWithTaskId(task.getTaskId()));
-            if (!task.getSubtasks().isEmpty()){
+            List<Subtask> subtasks = subtaskRepository.getAllSubtasksWithTaskId(task.getTaskId());
+            task.setSubtasks(subtasks);
+            if (!subtasks.isEmpty()){
                 int overallEstimatedTimeForSubtasks = 0;
                 for (Subtask subtask : task.getSubtasks()){
                     overallEstimatedTimeForSubtasks += subtask.getEstimatedTime();
@@ -31,10 +37,8 @@ public class TaskService {
                 task.setEstimatedTime(overallEstimatedTimeForSubtasks);
             }
         }
-
         return tasks;
     }
-
     public Task getTaskById(int taskId) {
         return taskRepository.getTaskById(taskId);
     }
@@ -51,8 +55,11 @@ public class TaskService {
         subtaskRepository.deleteSubTaskById(subtaskId);
     }
 
-    public int getProjectId(int subtaskId) {
-        return getTaskById(getSubtaskById(subtaskId).getTaskId()).getProjectId();
+    public int getProjectIdBySubtaskId(int subtaskId) {
+        Subtask subtask = getSubtaskById(subtaskId);
+        Task task = getTaskById(subtask.getTaskId());
+
+        return task.getProjectId();
     }
 
     public int getOverallEstimatedTime(int projectId) {
@@ -69,7 +76,11 @@ public class TaskService {
         }
         return overallEstimatedTime;
     }
-    public void createSubtask(Subtask subtask) {subtaskRepository.createSubTask(subtask);}
+
+    public void createSubtask(Subtask subtask) {
+        subtaskRepository.createSubTask(subtask);
+    }
+
     public void createTask(Task task) {
         taskRepository.createTask(task);
     }

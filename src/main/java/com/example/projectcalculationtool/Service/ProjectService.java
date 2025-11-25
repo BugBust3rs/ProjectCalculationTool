@@ -1,7 +1,9 @@
 package com.example.projectcalculationtool.Service;
 
+import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +21,14 @@ public class ProjectService {
         return projectRepository.getAllProjectsWithMemberId(memberId);
     }
 
-    public boolean memberHasProject(int projectId, int memberId) {
-        List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
-        return projects
-                .stream()
-                .anyMatch(project -> project.getProjectId() == projectId);
+    public void checkIfMembersProject(int projectId, int memberId, String exceptionMessage) {
+        try {
+            // if member does not have project, jdbcTemplate.queryForObject throws a DataAccessException
+            projectRepository.memberHasProject(projectId, memberId);
+        } catch (DataAccessException e){
+            throw new UnauthorizedAccessException(exceptionMessage);
+        }
+
     }
 
     public void deleteProject(int projectId) {
@@ -32,15 +37,15 @@ public class ProjectService {
 
     public Project getProject(int projectId, int memberId) {
         List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
-        for (Project project : projects){
-            if (project.getProjectId() == projectId){
+        for (Project project : projects) {
+            if (project.getProjectId() == projectId) {
                 return project;
             }
         }
         return null;
     }
 
-    public void saveProject(Project project, int memberId){
+    public void saveProject(Project project, int memberId) {
         projectRepository.addProject(project, memberId);
     }
 
