@@ -7,6 +7,7 @@ import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,17 +26,10 @@ public class ProjectService {
     }
 
     public void checkIfMembersProject(int projectId, int memberId, String exceptionMessage) {
-//        List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
-//
-//        for (Project project : projects) {
-//            if (project.getProjectId() == projectId){
-//                return;
-//            }
-//        }
-//        throw new UnauthorizedAccessException(exceptionMessage);
-
-        Project project = projectRepository.getProjectWithProjectId(projectId);
-        if (project == null){
+        try {
+            // if member does not have project, jdbcTemplate.queryForObject throws a DataAccessException
+            projectRepository.memberHasProject(projectId, memberId);
+        } catch (DataAccessException e){
             throw new UnauthorizedAccessException(exceptionMessage);
         }
 

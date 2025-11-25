@@ -36,7 +36,7 @@ public class ProjectController {
     }
 
 
-    @PostMapping("/deleteProject/{projectId}")
+    @DeleteMapping("/deleteProject/{projectId}")
     public String deleteProject(@PathVariable int projectId, HttpSession session) {
         loginService.checkIfLoggedIn(session);
         int memberId = (int) session.getAttribute("memberId");
@@ -44,10 +44,12 @@ public class ProjectController {
         projectService.checkIfMembersProject(
                 projectId, memberId, "You do not have permission to delete this project.");
 
+
         projectService.deleteProject(projectId);
         return "redirect:/dashboard";
 
     }
+
 
     @GetMapping("/createProject")
     public String createProject(Model model, HttpSession session) {
