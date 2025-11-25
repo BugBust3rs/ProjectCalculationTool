@@ -248,3 +248,7 @@ button.remove-task:hover {
     color: inherit;
     position: relative;
 }
+
+.error-msg{
+    color: red;
+}

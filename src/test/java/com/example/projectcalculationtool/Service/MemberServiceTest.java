@@ -20,7 +20,7 @@ class MemberServiceTest {
 
     @Test
     void loginReturnsMemberOnValidCredentials() {
-        Member member = memberService.login("adam@hoppe.dk", "1234");
+        Member member = memberService.getMember("adam@hoppe.dk", "1234");
 
         assertNotNull(member);
         assertEquals("Adam Hoppe", member.getName());
@@ -29,7 +29,7 @@ class MemberServiceTest {
 
     @Test
     void loginReturnsNullOnInvalidCredentials() {
-        Member member = memberService.login("ForkertEmail@adam.dk", "1234");
+        Member member = memberService.getMember("ForkertEmail@adam.dk", "1234");
 
         assertNull(member);
     }
