@@ -55,6 +55,8 @@ public class TaskController {
             return "redirect:/login";
         }
 
+        int memberId = (int) session.getAttribute("memberId");
+        task.setMemberId(memberId);
         taskService.createTask(task);
 
         // gemme tasken i task repo

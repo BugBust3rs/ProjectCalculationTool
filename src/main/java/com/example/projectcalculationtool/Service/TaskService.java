@@ -29,23 +29,22 @@ public class TaskService {
         List<Task> tasks = taskRepository.getAllTasksWithProjectId(projectId);
         for (Task task : tasks) {
             task.setSubtasks(subtaskRepository.getAllSubtasksWithTaskId(task.getTaskId()));
-            if (!task.getSubtasks().isEmpty()){
+            if (!task.getSubtasks().isEmpty()) {
                 int overallEstimatedTimeForSubtasks = 0;
-                for (Subtask subtask : task.getSubtasks()){
+                for (Subtask subtask : task.getSubtasks()) {
                     overallEstimatedTimeForSubtasks += subtask.getEstimatedTime();
                 }
                 task.setEstimatedTime(overallEstimatedTimeForSubtasks);
             }
         }
-        List<Task> tasksWithMemberName = getTasksWithMemberName(tasks);
 
-        return tasks;
+        return setMemberNameOnTasks(tasks);
     }
 
-    private List<Task> getTasksWithMemberName(List<Task> tasks) {
-        for (Task task : tasks){
+    private List<Task> setMemberNameOnTasks(List<Task> tasks) {
+        for (Task task : tasks) {
             task.setMemberName(memberService.getMemberName(task.getMemberId()));
-            for (Subtask subtask : task.getSubtasks()){
+            for (Subtask subtask : task.getSubtasks()) {
                 subtask.setMemberName(memberService.getMemberName(subtask.getMemberId()));
             }
         }
@@ -75,18 +74,22 @@ public class TaskService {
     public int getOverallEstimatedTime(int projectId) {
         List<Task> tasks = getTasksByProjectId(projectId);
         int overallEstimatedTime = 0;
-        for (Task task : tasks){
-            if (task.getSubtasks().isEmpty()){
+        for (Task task : tasks) {
+            if (task.getSubtasks().isEmpty()) {
                 overallEstimatedTime += task.getEstimatedTime();
             } else {
-                for (Subtask subtask : task.getSubtasks()){
+                for (Subtask subtask : task.getSubtasks()) {
                     overallEstimatedTime += subtask.getEstimatedTime();
                 }
             }
         }
         return overallEstimatedTime;
     }
-    public void createSubtask(Subtask subtask) {subtaskRepository.createSubTask(subtask);}
+
+    public void createSubtask(Subtask subtask) {
+        subtaskRepository.createSubTask(subtask);
+    }
+
     public void createTask(Task task) {
         taskRepository.createTask(task);
     }
