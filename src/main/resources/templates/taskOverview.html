@@ -20,6 +20,16 @@
         </a>
 
 
+        <form th:action="@{/inviteMember/{projectId}(projectId=${projectId})}" th:object="${member}" method="post"
+              class="create-form create-form--below">
+            <div th:if="${memberAlreadyAddedMsg}" class="error-msg">
+                <p th:text="${memberAlreadyAddedMsg}">Member already added</p>
+            </div>
+            <input th:field="*{email}" placeholder="Ny ønskeliste..." class="create-input"/>
+            <button type="submit" class="create-button">Invite member</button>
+        </form>
+
+
     </div>
     <h3 th:text="'Estimated time for all tasks and subtasks: ' + ${overallEstimatedTime} + ' hours'"></h3>
     <ol class="tasklist" >

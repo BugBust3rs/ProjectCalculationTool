@@ -60,3 +60,5 @@ CREATE TABLE subtask
     FOREIGN KEY (member_id) ON DELETE CASCADE
         REFERENCES member (member_id)
 );
+
+

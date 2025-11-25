@@ -2,6 +2,7 @@ package com.example.projectcalculationtool.Controller;
 
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Service.LoginService;
+import com.example.projectcalculationtool.Service.MemberService;
 import com.example.projectcalculationtool.Service.ProjectService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,12 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final LoginService loginService;
+    private final MemberService memberService;
 
-    public ProjectController(ProjectService projectService, LoginService loginService) {
+    public ProjectController(ProjectService projectService, LoginService loginService, MemberService memberService) {
         this.projectService = projectService;
         this.loginService = loginService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/dashboard")
@@ -28,6 +31,7 @@ public class ProjectController {
         int memberId = (int) session.getAttribute("memberId");
         List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
         model.addAttribute("projects", projects);
+
         return "dashboard";
     }
 
@@ -65,5 +69,7 @@ public class ProjectController {
         return "redirect:/dashboard";
 
     }
+
+
 
 }

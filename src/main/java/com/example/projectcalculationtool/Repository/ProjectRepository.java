@@ -90,4 +90,9 @@ public class ProjectRepository {
 
 
     }
+
+    public void addMemberToProject(int projectId, int memberId) {
+        String sql = "INSERT INTO member_project (member_id, project_id) VALUES (?, ?)";
+        jdbcTemplate.update(sql, memberId, projectId);
+    }
 }

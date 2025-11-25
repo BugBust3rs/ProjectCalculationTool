@@ -1,5 +1,8 @@
 package com.example.projectcalculationtool.Controller;
 
+import com.example.projectcalculationtool.Model.*;
+import com.example.projectcalculationtool.Service.*;
+import jakarta.servlet.http.HttpSession;
 import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Service.LoginService;
@@ -92,11 +95,14 @@ public class TaskController {
         Project project = projectService.getProject(projectId, memberId);
         List<Task> tasks = taskService.getTasksByProjectId(projectId);
         int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
+        List<Member> members = memberService.getMembersWithProjectId(projectId);
         model.addAttribute("projectTitle", project.getTitle());
         model.addAttribute("overallEstimatedTime", overallEstimatedTime);
         model.addAttribute("projectId", project.getProjectId());
         model.addAttribute("tasks",tasks);
-
+        model.addAttribute("members", members);
+        Member member = new Member();
+        model.addAttribute("member", member);
         return "taskOverview";
     }
 
@@ -125,6 +131,31 @@ public class TaskController {
 
         taskService.deleteSubtask(subtaskId);
 
+        return "redirect:/taskOverview/" + projectId;
+    }
+
+    @PostMapping("/inviteMember/{projectId}")
+    public String inviteMemberToProject(@PathVariable int projectId, @ModelAttribute Member member, HttpSession session) {
+
+        loginService.checkIfLoggedIn(session);
+
+        int memberId = (int) session.getAttribute("memberId");
+
+
+        // add member to the project by email
+        // hvis member er == null så return til taskoverview med en bruger findes ikke message,
+        // lav et tjek om memberen allerede har projektet.
+        Member m = memberService.getMemberWithEmail(member.getEmail());
+
+        if(m == null ){
+            return "redirect:/taskOverview/";
+        }
+
+
+        // associate member to the chosen project
+        projectService.addMemberToProject(projectId, m.getMemberId());
+
+        // Redirect to project overview page
         return "redirect:/taskOverview/" + projectId;
     }
 
