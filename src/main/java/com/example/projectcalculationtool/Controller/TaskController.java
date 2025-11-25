@@ -1,7 +1,9 @@
 package com.example.projectcalculationtool.Controller;
 
+import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Service.LoginService;
+import com.example.projectcalculationtool.Service.MemberService;
 import com.example.projectcalculationtool.Service.TaskService;
 import jakarta.servlet.http.HttpSession;
 import com.example.projectcalculationtool.Model.Project;
@@ -23,11 +25,13 @@ public class TaskController {
     private final LoginService loginService;
     private final TaskService taskService;
     private final ProjectService projectService;
+    private final MemberService memberService;
 
-    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService) {
+    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService, MemberService memberService) {
         this.loginService = loginService;
         this.taskService = taskService;
         this.projectService = projectService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/createTask/{projectId}")
@@ -37,6 +41,7 @@ public class TaskController {
         task.setProjectId(projectId);
 //        int memberid = (int) session.getAttribute("memberId");
         model.addAttribute("task", task);
+        List<Member> members = memberService.getMembersWithProjectId();
         return "createTask";
 
     }
@@ -47,6 +52,7 @@ public class TaskController {
 
         int memberId = (int) session.getAttribute("memberId");
         task.setMemberId(memberId);
+
         taskService.createTask(task);
 
         // gemme tasken i task repo
@@ -62,6 +68,7 @@ public class TaskController {
         model.addAttribute("subtask", subtask);
         Task task = taskService.getTaskById(taskId);
         model.addAttribute("projectId", task.getProjectId());
+        List<Member> members = memberService.getMembersWithProjectId(task.getProjectId());
         return "createSubtask";
     }
 
