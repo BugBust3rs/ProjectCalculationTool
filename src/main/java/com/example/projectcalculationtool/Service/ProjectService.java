@@ -1,9 +1,7 @@
 package com.example.projectcalculationtool.Service;
 
 import com.example.projectcalculationtool.Model.Project;
-import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

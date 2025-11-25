@@ -1,6 +1,5 @@
 package com.example.projectcalculationtool.Controller;
 
-import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.ProjectService;

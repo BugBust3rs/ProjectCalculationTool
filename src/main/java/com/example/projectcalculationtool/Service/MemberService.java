@@ -4,12 +4,6 @@ import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
-import com.example.projectcalculationtool.Model.Member;
-import com.example.projectcalculationtool.Repository.MemberRepository;
-
-import java.util.List;
-
-
 import java.util.List;
 
 @Service

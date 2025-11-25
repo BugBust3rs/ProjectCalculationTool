@@ -1,14 +1,12 @@
 package com.example.projectcalculationtool.Repository;
 
 import com.example.projectcalculationtool.Model.Member;
-import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
-import com.example.projectcalculationtool.Model.Member;
 import org.springframework.jdbc.core.RowMapper;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
