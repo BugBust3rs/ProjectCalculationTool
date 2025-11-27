@@ -34,22 +34,13 @@ public class LoginController {
     public String handleLogin(@ModelAttribute Member member,
                               HttpSession session,
                               Model model) {
-
-        // kigger i DB gennem service
         Member memberFromDB = memberService.getMember(member.getEmail(), member.getPassword());
-
         if (memberFromDB == null) {
             model.addAttribute("error", "Forkert email eller password");
             return "login";
         }
-
-        // Laver en session med memberId
         session.setAttribute("memberId", memberFromDB.getMemberId());
-
-        // giver en timeout tid som er sat til 300 sekunder
         session.setMaxInactiveInterval(300);
-
-        // redirecter til dashboard hvis login lykkes
         return "redirect:/dashboard";
     }
 
