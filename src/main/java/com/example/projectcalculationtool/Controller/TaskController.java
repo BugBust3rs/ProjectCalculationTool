@@ -84,14 +84,18 @@ public class TaskController {
                 projectId, memberId, "You do not have permission to see this project.");
 
         Project project = projectService.getProject(projectId, memberId);
-        List<Task> tasks = taskService.getTasksByProjectId(projectId);
-        int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
-        List<Member> members = memberService.getMembersWithProjectId(projectId);
         model.addAttribute("projectTitle", project.getTitle());
-        model.addAttribute("overallEstimatedTime", overallEstimatedTime);
         model.addAttribute("projectId", project.getProjectId());
+
+        int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
+        model.addAttribute("overallEstimatedTime", overallEstimatedTime);
+
+        List<Task> tasks = taskService.getTasksByProjectId(projectId);
         model.addAttribute("tasks",tasks);
+
+        List<Member> members = memberService.getMembersWithProjectId(projectId);
         model.addAttribute("members", members);
+
         Member member = new Member();
         model.addAttribute("member", member);
         return "taskOverview";

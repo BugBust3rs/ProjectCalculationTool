@@ -39,7 +39,7 @@ public class MemberRepository {
     };
 
     public void create(Member member) {
-        String sql = "INSERT INTO member (member_id, name, email, password(?, ?, ?, ?)";
+        String sql = "INSERT INTO member (name, email, password) VALUES (?, ?, ?)";
 
         jdbcTemplate.update(sql, member.getName(), member.getEmail(), member.getPassword());
     }
@@ -57,7 +57,7 @@ public class MemberRepository {
     }
 
     public Member saveMember(Member member){
-        String sql = "INSERT INTO Member (name, email, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO member (name, email, password) VALUES (?, ?, ?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 

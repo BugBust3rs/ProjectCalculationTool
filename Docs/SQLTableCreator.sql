@@ -19,7 +19,7 @@ CREATE TABLE project
     project_id     INT AUTO_INCREMENT PRIMARY KEY,
     title          VARCHAR(200),
     description    VARCHAR(200),
-    estimated_time INT
+
 );
 
 CREATE TABLE member_project

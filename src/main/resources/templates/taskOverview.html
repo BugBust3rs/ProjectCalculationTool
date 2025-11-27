@@ -21,42 +21,56 @@
 
 
         <form th:action="@{/inviteMember/{projectId}(projectId=${projectId})}" th:object="${member}" method="post"
-              class="create-form create-form--below">
-            <div th:if="${memberAlreadyAddedMsg}" class="error-msg">
-                <p th:text="${memberAlreadyAddedMsg}">Member already added</p>
+              class="member-list-form">
+            <div class="invite-member-box">
+                <div th:if="${memberAlreadyAddedMsg}" class="error-msg">
+                    <p th:text="${memberAlreadyAddedMsg}">Member already added</p>
+                </div>
+                <input th:field="*{email}" placeholder="Write an email" class="create-input"/>
+                <button type="submit" class="add-member-button">Invite member</button>
             </div>
-            <input th:field="*{email}" placeholder="Ny ønskeliste..." class="create-input"/>
-            <button type="submit" class="create-button">Invite member</button>
+            <br>
+            <label >
+                Members in project:
+            </label>
+
+            <ol class="invte-member-list">
+                <li th:each="member : ${members}">
+                    <p th:text="${member.getEmail()}"></p>
+                </li>
+            </ol>
+
+
         </form>
 
 
     </div>
     <h3 th:text="'Estimated time for all tasks and subtasks: ' + ${overallEstimatedTime} + ' hours'"></h3>
-    <ol class="tasklist" >
-       <li th:each="task : ${tasks}" class="task">
-           <h3 th:text="${task.title}"/>
-           <p th:text="${task.description}"/>
+    <ol class="tasklist">
+        <li th:each="task : ${tasks}" class="task">
+            <h3 th:text="${task.title}"/>
+            <p th:text="${task.description}"/>
 
-           <p th:text="'Estimated time: ' + ${task.estimatedTime} + ' hours'"/>
-           <form th:action="@{/deleteTask/{taskId}(taskId=${task.taskId})}"
-                 method="post">
-               <button type="submit" class="remove-task">Remove</button>
-           </form>
-           <a th:href="@{/createSubtask/{taskId}(taskId=${task.getTaskId()})}" class="create-subtask">
-               Create new subtask
-           </a>
+            <p th:text="'Estimated time: ' + ${task.estimatedTime} + ' hours'"/>
+            <form th:action="@{/deleteTask/{taskId}(taskId=${task.taskId})}"
+                  method="post">
+                <button type="submit" class="remove-task">Remove</button>
+            </form>
+            <a th:href="@{/createSubtask/{taskId}(taskId=${task.getTaskId()})}" class="create-subtask">
+                Create new subtask
+            </a>
             <ol>
-               <li th:each="subtask : ${task.getSubtasks()}" class="task">
-                   <h3 th:text="${subtask.title}"/>
-                   <p th:text="${subtask.description}"/>
-                   <p th:text="'Estimated time: ' + ${subtask.estimatedTime} + ' hours'"/>
-                   <form th:action="@{/deleteSubtask/{subtaskId}(subtaskId=${subtask.subtaskID})}"
-                         method="post">
-                       <button type="submit" class="remove-task">Remove</button>
-                   </form>
-               </li>
+                <li th:each="subtask : ${task.getSubtasks()}" class="task">
+                    <h3 th:text="${subtask.title}"/>
+                    <p th:text="${subtask.description}"/>
+                    <p th:text="'Estimated time: ' + ${subtask.estimatedTime} + ' hours'"/>
+                    <form th:action="@{/deleteSubtask/{subtaskId}(subtaskId=${subtask.subtaskID})}"
+                          method="post">
+                        <button type="submit" class="remove-task">Remove</button>
+                    </form>
+                </li>
             </ol>
-       </li>
+        </li>
     </ol>
 
 

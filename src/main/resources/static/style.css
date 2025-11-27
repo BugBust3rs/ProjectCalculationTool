@@ -83,6 +83,34 @@ header h1:hover {
     border-radius: 25px;
     background-color: #3B82F6;
     margin: 25px;
+    height: 25px;
+}
+
+.create-link-subtask {
+
+    text-decoration: none;
+    color: white;
+    border: 1px solid #fff;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #3B82F6;
+    top: 5px;
+    right: 5px;
+    margin-right: 100px;
+}
+
+
+
+.create-project {
+    text-decoration: none;
+    color: white;
+    border: 1px solid #fff;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #3B82F6;
+    margin: 12px;
+    font-size: 12px;
+
 }
 
 .create-link:hover {
@@ -96,6 +124,8 @@ header h1:hover {
     display: flex;
     justify-content: center;
 }
+
+
 
 button.remove-button {
     background-color: #7F2F2F;
@@ -188,6 +218,7 @@ button.remove-button:hover {
     margin-right: 100px;
 }
 
+
 .create-subtask:hover {
     background-color: #2563EB;
 }
@@ -251,4 +282,57 @@ button.remove-task:hover {
 
 .error-msg{
     color: red;
+}
+
+.add-member-button{
+    color: white;
+    border: 1px solid #fff;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #3B82F6;
+    margin: 0;
+    font-size: 1em;
+}
+
+.member-list-form {
+    border: 1px solid #fff;
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.invte-member-list {
+    padding-left: 25px;
+    padding-top: 0;
+    max-height: 100px;
+    overflow: auto;
+    padding-right: 1rem;
+}
+
+.invite-member-box {
+    margin-bottom: 0;
+}
+
+.create-input {
+    height: 30px;
+    border: 1px solid #fff;
+    border-radius: 25px;
+    padding-left: 7px;
+    font-size: 1em;
+}
+
+.login-link {
+    text-decoration: none;
+    color: white;
+    border: 1px solid #fff;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #3B82F6;
+    margin: 25px;
+}
+
+.login-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    background-color: #2563EB;
+    cursor: pointer;
 }
