@@ -22,7 +22,6 @@ public class ProjectRepository {
         project.setProjectId(rs.getInt("project_id"));
         project.setTitle(rs.getString("title"));
         project.setDescription(rs.getString("description"));
-        project.setEstimatedTime(rs.getInt("estimated_time"));
         return project;
     };
 
@@ -40,7 +39,7 @@ public class ProjectRepository {
     public List<Project> getAllProjectsWithMemberId(int memberId)  {
 
         final String sql = """
-                Select p.project_id, p.title, p.description, p.estimated_time
+                Select p.project_id, p.title, p.description
                 FROM member_project mp 
                     JOIN project p ON p.project_id = mp.project_id 
                          WHERE member_id = ?
@@ -51,7 +50,7 @@ public class ProjectRepository {
 
     public void memberHasProject(int projectId,int memberId)  {
         final String sql = """
-                Select p.project_id, p.title, p.description, p.estimated_time
+                Select p.project_id, p.title, p.description
                 FROM member_project mp
                     JOIN project p ON p.project_id = mp.project_id
                          WHERE member_id = ? AND p.project_id = ?
@@ -70,14 +69,13 @@ public class ProjectRepository {
     }
     @Transactional
     public void addProject(Project project, int memberId){
-        String sql = "INSERT INTO project (project_id, title, description, estimated_time) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO project (project_id, title, description) VALUES (?, ?, ?)";
         KeyHolder keyholder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, project.getProjectId());
             ps.setString(2, project.getTitle());
             ps.setString(3, project.getDescription());
-            ps.setInt(4, project.getEstimatedTime());
             return ps;
         }, keyholder);
 
@@ -88,5 +86,10 @@ public class ProjectRepository {
         jdbcTemplate.update(sqlMember_project, memberId, project_id);
 
 
+    }
+
+    public void addMemberToProject(int projectId, int memberId) {
+        String sql = "INSERT INTO member_project (member_id, project_id) VALUES (?, ?)";
+        jdbcTemplate.update(sql, memberId, projectId);
     }
 }

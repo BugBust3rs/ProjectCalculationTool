@@ -31,7 +31,7 @@
         <button class="close-btn" >&times;</button>
     </form>
 
-    <form th:action="@{/createMember}" th:object="${member}" method="post">
+    <form th:action="@{/register}" th:object="${member}" method="post">
         <div class="form-group">
             <label >Name</label>
             <input id="name"
@@ -61,8 +61,11 @@
                    placeholder="Enter your password"
                    required>
         </div>
+        <input id="projectId"
+               type="hidden"
+               th:field="*{memberId}">
 
-        <button type="submit" class="create-link">
+        <button type="submit" class="login-link">
             Create member
         </button>
     </form>

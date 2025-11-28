@@ -20,10 +20,7 @@ public class TaskService {
     }
 
     public List<Task> getTasksByProjectId(int projectId) {
-        List<Task> tasks = setTasksEstimatedTime(taskRepository.getAllTasksWithProjectId(projectId));
-
-
-        return tasks;
+        return setTasksEstimatedTime(taskRepository.getAllTasksWithProjectId(projectId));
     }
     private List<Task> setTasksEstimatedTime(List<Task> tasks){
         for (Task task : tasks) {

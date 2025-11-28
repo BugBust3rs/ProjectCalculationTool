@@ -1,5 +1,8 @@
 package com.example.projectcalculationtool.Controller;
 
+import com.example.projectcalculationtool.Model.*;
+import com.example.projectcalculationtool.Service.*;
+import jakarta.servlet.http.HttpSession;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
@@ -24,11 +27,12 @@ public class TaskController {
     private final LoginService loginService;
     private final TaskService taskService;
     private final ProjectService projectService;
-
-    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService) {
+    private final MemberService memberService;
+    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService, MemberService memberService) {
         this.loginService = loginService;
         this.taskService = taskService;
         this.projectService = projectService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/createTask/{projectId}")
@@ -77,13 +81,20 @@ public class TaskController {
                 projectId, memberId, "You do not have permission to see this project.");
 
         Project project = projectService.getProject(projectId, memberId);
-        List<Task> tasks = taskService.getTasksByProjectId(projectId);
-        int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
         model.addAttribute("projectTitle", project.getTitle());
-        model.addAttribute("overallEstimatedTime", overallEstimatedTime);
         model.addAttribute("projectId", project.getProjectId());
+
+        int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
+        model.addAttribute("overallEstimatedTime", overallEstimatedTime);
+
+        List<Task> tasks = taskService.getTasksByProjectId(projectId);
         model.addAttribute("tasks",tasks);
 
+        List<Member> members = memberService.getMembersWithProjectId(projectId);
+        model.addAttribute("members", members);
+
+        Member member = new Member();
+        model.addAttribute("member", member);
         return "taskOverview";
     }
 
@@ -111,6 +122,31 @@ public class TaskController {
 
         taskService.deleteSubtask(subtaskId);
 
+        return "redirect:/taskOverview/" + projectId;
+    }
+
+    @PostMapping("/inviteMember/{projectId}")
+    public String inviteMemberToProject(@PathVariable int projectId, @ModelAttribute Member member, HttpSession session) {
+
+        loginService.checkIfLoggedIn(session);
+
+        int memberId = (int) session.getAttribute("memberId");
+
+
+        // add member to the project by email
+        // hvis member er == null så return til taskoverview med en bruger findes ikke message,
+        // lav et tjek om memberen allerede har projektet.
+        Member m = memberService.getMemberWithEmail(member.getEmail());
+
+        if(m == null ){
+            return "redirect:/taskOverview/";
+        }
+
+
+        // associate member to the chosen project
+        projectService.addMemberToProject(projectId, m.getMemberId());
+
+        // Redirect to project overview page
         return "redirect:/taskOverview/" + projectId;
     }
 
