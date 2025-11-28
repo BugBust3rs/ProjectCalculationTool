@@ -16,13 +16,23 @@ import java.util.List;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final TaskService taskService;
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, TaskService taskService) {
         this.projectRepository = projectRepository;
+        this.taskService = taskService;
     }
 
     public List<Project> getAllProjectsWithMemberId(int memberId) {
-        return projectRepository.getAllProjectsWithMemberId(memberId);
+        List<Project> projects = projectRepository.getAllProjectsWithMemberId(memberId);
+        return setOverallEstimatedTimeForEveryProject(projects);
+    }
+
+    private List<Project> setOverallEstimatedTimeForEveryProject(List<Project> projects){
+        for (Project project : projects){
+            project.setEstimatedTime(taskService.getOverallEstimatedTime(project.getProjectId()));
+        }
+        return projects;
     }
 
     public void checkIfMembersProject(int projectId, int memberId, String exceptionMessage) {
