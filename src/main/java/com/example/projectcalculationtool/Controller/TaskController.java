@@ -3,15 +3,17 @@ package com.example.projectcalculationtool.Controller;
 import com.example.projectcalculationtool.Model.*;
 import com.example.projectcalculationtool.Service.*;
 import jakarta.servlet.http.HttpSession;
-import com.example.projectcalculationtool.Model.Task;
-import com.example.projectcalculationtool.Service.TaskService;
-import jakarta.servlet.http.HttpSession;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Model.Subtask;
+import com.example.projectcalculationtool.Model.Task;
+import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.ProjectService;
+import com.example.projectcalculationtool.Service.TaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -38,7 +40,6 @@ public class TaskController {
         loginService.checkIfLoggedIn(session);
         Task task = new Task();
         task.setProjectId(projectId);
-//        int memberid = (int) session.getAttribute("memberId");
         model.addAttribute("task", task);
         return "createTask";
 
@@ -47,11 +48,7 @@ public class TaskController {
     @PostMapping("/createTask")
     public String createTask(@ModelAttribute Task task, HttpSession session) {
         loginService.checkIfLoggedIn(session);
-
         taskService.createTask(task);
-
-        // gemme tasken i task repo
-//        taskService.add
         return "redirect:/taskOverview/" + task.getProjectId();
     }
 
@@ -68,8 +65,8 @@ public class TaskController {
 
     @PostMapping("/createSubtask/{projectId}")
     public String createSubTask(@PathVariable int projectId, @ModelAttribute Subtask subtask, HttpSession session) {
-        loginService.checkIfLoggedIn(session);
 
+        loginService.checkIfLoggedIn(session);
         taskService.createSubtask(subtask);
         return "redirect:/taskOverview/" + projectId;
     }
@@ -122,7 +119,6 @@ public class TaskController {
 
         projectService.checkIfMembersProject(
                 projectId, memberId, "You do not have permission to delete this subtask.");
-
 
         taskService.deleteSubtask(subtaskId);
 

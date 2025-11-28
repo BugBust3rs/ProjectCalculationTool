@@ -1,15 +1,11 @@
 package com.example.projectcalculationtool.Service;
 
-import com.example.projectcalculationtool.Model.Task;
-import com.example.projectcalculationtool.Repository.TaskRepository;
-import org.springframework.jdbc.core.JdbcTemplate;
 import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Repository.SubtaskRepository;
 import com.example.projectcalculationtool.Repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
