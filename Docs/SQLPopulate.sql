@@ -4,13 +4,13 @@ VALUES
     ('Alice Johnson', 'alice@example.com', 'password123'),
     ('Bob Smith', 'bob@example.com', 'password456');
 
-INSERT INTO project (title, description, estimated_time)
+INSERT INTO project (title, description)
 VALUES
-    ('Website Redesign', 'Revamping company website', 120),
-    ('Mobile App', 'Building Android/iOS app', 200),
-    ('Data Migration', 'Migrating legacy database', 90),
-    ('API Integration', 'Integrating third-party APIs', 150),
-    ('Automation Tool', 'Internal automation utility', 80);
+    ('Website Redesign', 'Revamping company website'),
+    ('Mobile App', 'Building Android/iOS app'),
+    ('Data Migration', 'Migrating legacy database'),
+    ('API Integration', 'Integrating third-party APIs'),
+    ('Automation Tool', 'Internal automation utility');
 
 
 

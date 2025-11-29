@@ -44,7 +44,6 @@ class ProjectRepositoryTest {
         Project p = new Project();
         p.setTitle("Test Project");
         p.setDescription("Integration test project");
-        p.setEstimatedTime(12);
 
         int memberId = 1;
 
@@ -57,7 +56,6 @@ class ProjectRepositoryTest {
         //assertEquals(12, projectList.contains(p.getEstimatedTime()));
         assertTrue(projectList.stream().anyMatch(project -> "Test Project".equals(project.getTitle())));
         assertTrue(projectList.stream().anyMatch(project -> "Integration test project".equals(project.getDescription())));
-        assertTrue(projectList.stream().anyMatch(project -> 12 == project.getEstimatedTime()));
 
     }
 
