@@ -9,6 +9,16 @@ public class Task {
     private int estimatedTime;
     private int projectId;
     private List<Subtask> subtasks;
+    private Status status;
+
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public List<Subtask> getSubtasks() {
         return subtasks;

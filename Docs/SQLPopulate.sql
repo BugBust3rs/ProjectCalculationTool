@@ -25,48 +25,48 @@ VALUES
     (2,5);
 
 
-INSERT INTO task (project_id, title, description, estimated_time)
+INSERT INTO task (project_id, title, description, estimated_time, status)
 VALUES
-    (1, 'Design Mockups', 'Create UI/UX mockups', 20),
-    (1, 'Frontend Development', 'Implement new layout in React', 40);
+    (1, 'Design Mockups', 'Create UI/UX mockups', 20, 'BACKLOG'),
+    (1, 'Frontend Development', 'Implement new layout in React', 40, 'BACKLOG');
 
-INSERT INTO task (project_id, title, description, estimated_time)
+INSERT INTO task (project_id, title, description, estimated_time, status)
 VALUES
-    (2, 'Setup Project Structure', 'Initialize mobile app project', 10),
-    (2, 'Implement Login', 'Build authentication screen', 15);
+    (2, 'Setup Project Structure', 'Initialize mobile app project', 10, 'BACKLOG'),
+    (2, 'Implement Login', 'Build authentication screen', 15, 'BACKLOG');
 
-INSERT INTO task (project_id, title, description, estimated_time)
+INSERT INTO task (project_id, title, description, estimated_time, status)
 VALUES
-    (3, 'Export Legacy Data', 'Extract data from legacy system', 12),
-    (3, 'Transform Data', 'Clean and map dataset', 18);
+    (3, 'Export Legacy Data', 'Extract data from legacy system', 12, 'BACKLOG'),
+    (3, 'Transform Data', 'Clean and map dataset', 18, 'BACKLOG');
 
-INSERT INTO task (project_id, title, description, estimated_time)
+INSERT INTO task (project_id, title, description, estimated_time, status)
 VALUES
-    (4, 'OAuth Setup', 'Configure OAuth client', 8),
-    (4, 'API Request Handlers', 'Implement API calls', 25);
+    (4, 'OAuth Setup', 'Configure OAuth client', 8, 'BACKLOG'),
+    (4, 'API Request Handlers', 'Implement API calls', 25, 'BACKLOG');
 
-INSERT INTO task (project_id, title, description, estimated_time)
+INSERT INTO task (project_id, title, description, estimated_time, status)
 VALUES
-    (5, 'Script Setup', 'Prepare automation script structure', 6),
-    (5, 'Job Scheduling', 'Configure cron-like scheduler', 14);
+    (5, 'Script Setup', 'Prepare automation script structure', 6, 'BACKLOG'),
+    (5, 'Job Scheduling', 'Configure cron-like scheduler', 14, 'BACKLOG');
 
 
-INSERT INTO subtask (task_id, title, description, estimated_time)
+INSERT INTO subtask (task_id, title, description, estimated_time, status)
 VALUES
-    (1, 'Wireframes', 'Low-fidelity screens', 5),
-    (1, 'High-Fidelity Designs', 'Polished final UI', 10);
+    (1, 'Wireframes', 'Low-fidelity screens', 5, 'BACKLOG'),
+    (1, 'High-Fidelity Designs', 'Polished final UI', 10, 'BACKLOG');
 
-INSERT INTO subtask (task_id, title, description, estimated_time)
+INSERT INTO subtask (task_id, title, description, estimated_time, status)
 VALUES
-    (2, 'Navbar Component', 'Build responsive navbar', 4),
-    (2, 'Homepage Section', 'Build hero + features', 6);
+    (2, 'Navbar Component', 'Build responsive navbar', 4, 'BACKLOG'),
+    (2, 'Homepage Section', 'Build hero + features', 6, 'BACKLOG');
 
-INSERT INTO subtask (task_id, title, description, estimated_time)
+INSERT INTO subtask (task_id, title, description, estimated_time, status)
 VALUES
-    (4, 'UI Layout', 'Login screen layout', 3),
-    (4, 'Auth API', 'Integrate backend login', 5);
+    (4, 'UI Layout', 'Login screen layout', 3, 'BACKLOG'),
+    (4, 'Auth API', 'Integrate backend login', 5, 'BACKLOG');
 
-INSERT INTO subtask (task_id, title, description, estimated_time)
+INSERT INTO subtask (task_id, title, description, estimated_time, status)
 VALUES
-    (6, 'Remove Duplicates', 'Handle duplicate records', 4),
-    (6, 'Normalize Fields', 'Ensure consistent data format', 6);
+    (6, 'Remove Duplicates', 'Handle duplicate records', 4, 'BACKLOG'),
+    (6, 'Normalize Fields', 'Ensure consistent data format', 6, 'BACKLOG');

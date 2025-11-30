@@ -30,12 +30,6 @@ public class ProjectRepository {
 
     }
 
-
-    public void create(Project project) {
-
-    }
-
-
     public List<Project> getAllProjectsWithMemberId(int memberId)  {
 
         final String sql = """
@@ -56,10 +50,6 @@ public class ProjectRepository {
                          WHERE member_id = ? AND p.project_id = ?
                 """;
         jdbcTemplate.queryForObject(sql, projectRowMapper,memberId , projectId);
-    }
-
-    public void update(Object o) {
-
     }
 
 

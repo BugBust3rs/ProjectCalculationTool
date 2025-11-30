@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.Service;
 
+import com.example.projectcalculationtool.Model.Status;
 import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Repository.SubtaskRepository;
@@ -80,5 +81,12 @@ public class TaskService {
 
     public void createTask(Task task) {
         taskRepository.createTask(task);
+    }
+
+    public void updateTaskStatus(int taskId, Status status) {
+        taskRepository.updateTaskStatus(taskId, status);
+    }
+    public void updateSubtaskStatus(int subtaskId, Status status) {
+        subtaskRepository.updateSubtaskStatus(subtaskId, status);
     }
 }

@@ -12,10 +12,7 @@ import com.example.projectcalculationtool.Service.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +37,7 @@ public class TaskController {
         loginService.checkIfLoggedIn(session);
         Task task = new Task();
         task.setProjectId(projectId);
+        task.setStatus(Status.BACKLOG);
         model.addAttribute("task", task);
         return "createTask";
 
@@ -57,6 +55,7 @@ public class TaskController {
         loginService.checkIfLoggedIn(session);
         Subtask subtask = new Subtask();
         subtask.setTaskId(taskId);
+        subtask.setStatus(Status.BACKLOG);
         model.addAttribute("subtask", subtask);
         Task task = taskService.getTaskById(taskId);
         model.addAttribute("projectId", task.getProjectId());
@@ -89,6 +88,8 @@ public class TaskController {
 
         List<Task> tasks = taskService.getTasksByProjectId(projectId);
         model.addAttribute("tasks",tasks);
+
+        model.addAttribute("statuses", Status.values());
 
         List<Member> members = memberService.getMembersWithProjectId(projectId);
         model.addAttribute("members", members);
@@ -148,6 +149,38 @@ public class TaskController {
 
         // Redirect to project overview page
         return "redirect:/taskOverview/" + projectId;
+    }
+
+    @PostMapping("/saveTaskStatus")
+    public String updateTask(@RequestParam int taskId,
+                             @RequestParam Status status,
+                             @RequestParam int projectId, HttpSession session){
+        loginService.checkIfLoggedIn(session);
+        int memberId = (int) session.getAttribute("memberId");
+        projectService.checkIfMembersProject(
+                projectId, memberId, "You do not have permission to change this task.");
+
+        taskService.updateTaskStatus(taskId, status);
+
+        return "redirect:/taskOverview/" + projectId;
+
+
+    }
+
+    @PostMapping("/saveSubtaskStatus")
+    public String updateSubtask(@RequestParam int subtaskId,
+                                @RequestParam Status status,
+                                @RequestParam int projectId, HttpSession session){
+        loginService.checkIfLoggedIn(session);
+        int memberId = (int) session.getAttribute("memberId");
+        projectService.checkIfMembersProject(
+                projectId, memberId, "You do not have permission to change this task.");
+
+        taskService.updateSubtaskStatus(subtaskId, status);
+
+        return "redirect:/taskOverview/" + projectId;
+
+
     }
 
 

@@ -6,8 +6,18 @@ public class Subtask {
     private String description;
     private int estimatedTime;
     private int taskId;
+    private Status status;
 
     public Subtask () {}
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
 
     public int getSubtaskID() {
         return subtaskID;
