@@ -2,7 +2,6 @@ package com.example.projectcalculationtool.Repository;
 
 import com.example.projectcalculationtool.Model.Status;
 import com.example.projectcalculationtool.Model.Subtask;
-import com.example.projectcalculationtool.Model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;

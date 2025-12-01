@@ -2,9 +2,7 @@ package com.example.projectcalculationtool.Controller;
 
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Service.LoginService;
-import com.example.projectcalculationtool.Service.MemberService;
 import com.example.projectcalculationtool.Service.ProjectService;
-import com.example.projectcalculationtool.Service.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,14 +16,10 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final LoginService loginService;
-    private final MemberService memberService;
-    private final TaskService taskService;
 
-    public ProjectController(ProjectService projectService, LoginService loginService, MemberService memberService, TaskService taskService) {
+    public ProjectController(ProjectService projectService, LoginService loginService) {
         this.projectService = projectService;
         this.loginService = loginService;
-        this.memberService = memberService;
-        this.taskService = taskService;
     }
 
     @GetMapping("/dashboard")

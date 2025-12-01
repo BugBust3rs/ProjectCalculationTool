@@ -1,11 +1,8 @@
 package com.example.projectcalculationtool.Service;
 
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
 import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Repository.MemberRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

@@ -1,23 +1,18 @@
 package com.example.projectcalculationtool.Repository;
 
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import com.example.projectcalculationtool.Model.Member;
-import com.example.projectcalculationtool.Model.Task;
-import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class MemberRepository {
@@ -72,14 +67,14 @@ public class MemberRepository {
             return ps;
         }), keyHolder);
 
-        member.setMemberId(keyHolder.getKey().intValue());
+        member.setMemberId(Objects.requireNonNull(keyHolder.getKey()).intValue());
         return member;
     }
 
     public List<Member> getMembersWithProjectId(int projectId){
         final String sql = """
                 Select m.member_id , m.name, m.email, m.password
-                FROM member_project mp 
+                FROM member_project mp
                     JOIN member m ON m.member_id = mp.member_id 
                          WHERE project_id = ?
                 """;

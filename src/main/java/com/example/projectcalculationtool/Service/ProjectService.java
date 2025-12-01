@@ -1,12 +1,9 @@
 package com.example.projectcalculationtool.Service;
 
 import com.example.projectcalculationtool.Exceptions.MemberAlreadyAddedException;
-import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Repository.ProjectRepository;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
