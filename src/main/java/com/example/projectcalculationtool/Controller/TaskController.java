@@ -133,9 +133,7 @@ public class TaskController {
 
         projectService.checkIfMembersProject(
                 projectId, memberId, "You do not have permission to delete this subtask.");
-
         taskService.deleteSubtask(subtaskId);
-
         return "redirect:/taskOverview/" + projectId;
     }
 
@@ -172,9 +170,7 @@ public class TaskController {
         int memberId = (int) session.getAttribute("memberId");
         projectService.checkIfMembersProject(
                 projectId, memberId, "You do not have permission to change this task.");
-
         taskService.updateTaskStatus(taskId, status);
-
         return "redirect:/taskOverview/" + projectId;
 
 
@@ -188,9 +184,7 @@ public class TaskController {
         int memberId = (int) session.getAttribute("memberId");
         projectService.checkIfMembersProject(
                 projectId, memberId, "You do not have permission to change this task.");
-
         taskService.updateSubtaskStatus(subtaskId, status);
-
         return "redirect:/taskOverview/" + projectId;
 
 

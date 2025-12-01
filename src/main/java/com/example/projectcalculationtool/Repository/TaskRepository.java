@@ -75,6 +75,6 @@ public class TaskRepository {
     public List<Task> getAllTasksWithMemberId(int memberId) {
         final String sql = "SELECT * FROM task WHERE member_Id = ?";
 
-        return jdbcTemplate.query (sql, taskRowMapper,  memberId);
+        return jdbcTemplate.query(sql, taskRowMapper,  memberId);
     }
 }
