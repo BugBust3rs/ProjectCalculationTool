@@ -341,7 +341,7 @@ button.remove-task:hover {
     margin-bottom: 8px;
     gap: 16px;
     display: grid;
-    grid-template-columns: 30% 30% 30%;
+    grid-template-columns: 25% 25% 25% 25%;
     padding: 10px;
     align-items: center;
 }
