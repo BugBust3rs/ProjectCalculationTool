@@ -34,6 +34,7 @@ public class TaskController {
         task.setProjectId(projectId);
         task.setStatus(Status.BACKLOG);
         model.addAttribute("task", task);
+        model.addAttribute("memberId",session.getAttribute("memberId"));
         List<Member> members = memberService.getMembersWithProjectId(projectId);
         model.addAttribute("members", members);
         model.addAttribute("projectId", projectId);
@@ -61,7 +62,7 @@ public class TaskController {
         subtask.setStatus(Status.BACKLOG);
         model.addAttribute("subtask", subtask);
         Task task = taskService.getTaskById(taskId);
-
+        model.addAttribute("memberId",session.getAttribute("memberId"));
         model.addAttribute("projectId", task.getProjectId());
         List<Member> members = memberService.getMembersWithProjectId(task.getProjectId());
         model.addAttribute("members", members);
