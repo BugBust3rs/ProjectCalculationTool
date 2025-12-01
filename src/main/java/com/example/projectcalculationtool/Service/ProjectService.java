@@ -71,5 +71,9 @@ public class ProjectService {
         }
     }
 
+    public Project getProjectById(int projectId) {
+        return projectRepository.getProjectById(projectId);
+    }
+
 
 }

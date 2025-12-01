@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.Repository;
 
 import com.example.projectcalculationtool.Model.Project;
+import com.example.projectcalculationtool.Model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -16,7 +17,6 @@ import java.util.List;
 public class ProjectRepository {
 
     private final JdbcTemplate jdbcTemplate;
-
     private final RowMapper<Project> projectRowMapper = (rs, rowNum) -> {
         Project project = new Project();
         project.setProjectId(rs.getInt("project_id"));
@@ -29,12 +29,6 @@ public class ProjectRepository {
         this.jdbcTemplate = jdbcTemplate;
 
     }
-
-
-    public void create(Project project) {
-
-    }
-
 
     public List<Project> getAllProjectsWithMemberId(int memberId)  {
 
@@ -56,10 +50,6 @@ public class ProjectRepository {
                          WHERE member_id = ? AND p.project_id = ?
                 """;
         jdbcTemplate.queryForObject(sql, projectRowMapper,memberId , projectId);
-    }
-
-    public void update(Object o) {
-
     }
 
 
@@ -84,8 +74,12 @@ public class ProjectRepository {
         String sqlMember_project = "INSERT INTO member_project (member_id, project_id) VALUES (?, ?)";
 
         jdbcTemplate.update(sqlMember_project, memberId, project_id);
+    }
 
+    public Project getProjectById(int projectId) {
+        final String sql = "SELECT * FROM project WHERE project_id = ?";
 
+        return jdbcTemplate.queryForObject(sql, projectRowMapper,  projectId);
     }
 
     public void addMemberToProject(int projectId, int memberId) {

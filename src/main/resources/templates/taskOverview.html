@@ -11,9 +11,10 @@
         <h1>Project Calculation Tool</h1>
     </a>
 </header>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="body-content">
     <div class="dashboard-title">
-        <h1 th:text="'tasks for ' + ${projectTitle} + ' project'"></h1>
+        <h1 th:text="'Tasks for ' + ${projectTitle} + ' project'"></h1>
 
         <a th:href="@{/createTask/{projectId}(projectId=${projectId})}" class="create-link">
             Create new task
@@ -30,7 +31,7 @@
                 <button type="submit" class="add-member-button">Invite member</button>
             </div>
             <br>
-            <label >
+            <label>
                 Members in project:
             </label>
 
@@ -47,11 +48,45 @@
     </div>
     <h3 th:text="'Estimated time for all tasks and subtasks: ' + ${overallEstimatedTime} + ' hours'"></h3>
     <ol class="tasklist">
+        <li class="task task-header" aria-hidden="true">
+            <div class="task-info header-row">
+                <div class="task-text">Task</div>
+                <div class="task-text">Assigned to</div>
+                <div class="task-status">Estimated time</div>
+                <div class="task-status">Status</div>
+            </div>
+        </li>
         <li th:each="task : ${tasks}" class="task">
-            <h3 th:text="${task.title}"/>
-            <p th:text="${task.description}"/>
+            <div class="task-info">
+                <div class="task-text">
+                    <h3 th:text="${task.title}"></h3>
+                    <p th:text="${task.description}"></p>
+                </div>
+                <div class="task-status">
+                    <p th:if="${task.memberName != null}"
+                       th:text="${task.memberName}"></p>
+                </div>
+                <div class="task-status">
+                    <p th:text="${task.estimatedTime} + ' hours'"/>
+                </div>
+                <div class="task-status">
+                    <h4 th:text="${task.status.getLabel()}"></h4>
+                    <form th:action="@{/saveTaskStatus}" method="post">
+                        <input type="hidden" name="taskId" th:value="${task.taskId}"/>
+                        <input type="hidden" name="projectId" th:value="${projectId}"/>
+                        <select th:id="${task.taskId}" class="select-status"
+                                name="status">
+                            <option th:each="s : ${statuses}"
+                                    th:value="${s}"
+                                    th:text="${s.getLabel()}"
+                                    th:selected="${s} == ${task.status}">
+                            </option>
+                        </select>
 
-            <p th:text="'Estimated time: ' + ${task.estimatedTime} + ' hours'"/>
+                        <button type="submit" class="save-status">Save</button>
+                    </form>
+                </div>
+            </div>
             <form th:action="@{/deleteTask/{taskId}(taskId=${task.taskId})}"
                   method="post">
                 <button type="submit" class="remove-task">Remove</button>
@@ -61,9 +96,36 @@
             </a>
             <ol>
                 <li th:each="subtask : ${task.getSubtasks()}" class="task">
-                    <h3 th:text="${subtask.title}"/>
-                    <p th:text="${subtask.description}"/>
-                    <p th:text="'Estimated time: ' + ${subtask.estimatedTime} + ' hours'"/>
+                    <div class="task-info">
+                        <div class="task-text">
+                            <h3 th:text="${subtask.title}"></h3>
+                            <p th:text="${subtask.description}"></p>
+                        </div>
+                        <div class="task-status">
+                            <p th:if="${subtask.memberName != null}"
+                               th:text="${subtask.memberName}"></p>
+                        </div>
+                        <div class="task-status">
+                            <p th:text="${subtask.estimatedTime} + ' hours'"/>
+                        </div>
+                        <div class="task-status">
+                            <h4 th:text="${subtask.status.getLabel()}"></h4>
+                            <form th:action="@{/saveSubtaskStatus}" method="post">
+                                <input type="hidden" name="subtaskId" th:value="${subtask.subtaskID}"/>
+                                <input type="hidden" name="projectId" th:value="${projectId}"/>
+                                <select th:id="${subtask.subtaskID}" class="select-status"
+                                        name="status">
+                                    <option th:each="s : ${statuses}"
+                                            th:value="${s}"
+                                            th:text="${s.getLabel()}"
+                                            th:selected="${s} == ${subtask.status}">
+                                    </option>
+                                </select>
+
+                                <button type="submit" class="save-status">Save</button>
+                            </form>
+                        </div>
+                    </div>
                     <form th:action="@{/deleteSubtask/{subtaskId}(subtaskId=${subtask.subtaskID})}"
                           method="post">
                         <button type="submit" class="remove-task">Remove</button>

@@ -3,6 +3,8 @@ package com.example.projectcalculationtool.Repository;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import com.example.projectcalculationtool.Model.Member;
+import com.example.projectcalculationtool.Model.Task;
+import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -13,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.sql.Statement;
 import java.util.List;
 
@@ -89,4 +92,8 @@ public class MemberRepository {
 
     }
 
+    public Member getMember(int memberId) {
+        final String sql = "SELECT * FROM member WHERE member_id = ?";
+        return jdbcTemplate.queryForObject(sql, memberRowMapper,memberId);
+    }
 }

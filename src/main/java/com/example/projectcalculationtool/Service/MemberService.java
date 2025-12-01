@@ -1,10 +1,14 @@
 package com.example.projectcalculationtool.Service;
 
-import com.example.projectcalculationtool.Model.Member;
-import com.example.projectcalculationtool.Repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import com.example.projectcalculationtool.Model.Member;
+import com.example.projectcalculationtool.Repository.MemberRepository;
+
+import java.util.List;
+
 
 @Service
 public class MemberService {
@@ -22,6 +26,14 @@ public class MemberService {
             }
         }
 
+        return null;
+    }
+
+    public String getMemberName(int memberId) {
+        Member member = memberRepository.getMember(memberId);
+        if (member.getName() != null) {
+            return member.getName();
+        }
         return null;
     }
 
@@ -54,9 +66,7 @@ public class MemberService {
         return null;
     }
 
-    public List<Member> getMembersWithProjectId(int projectId){
+    public List<Member> getMembersWithProjectId(int projectId) {
         return memberRepository.getMembersWithProjectId(projectId);
     }
 }
-
-

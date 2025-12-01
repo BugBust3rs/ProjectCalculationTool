@@ -53,9 +53,25 @@
                            required>
                 </div>
 
+                <div class="form-group">
+                    <label for="memberId">Assigned member</label>
+                    <select id="memberId"
+                            class="input-field"
+                            th:field="*{memberId}">
+                        <option value="" disabled selected>-- Select member --</option>
+                        <option th:each="member : ${members}"
+                                th:value="${member.memberId}"
+                                th:text="${member.name}">
+                        </option>
+                    </select>
+                </div>
+
                 <input id="projectId"
                        type="hidden"
                        th:field="*{taskId}">
+                <input id="status"
+                       type="hidden"
+                       th:field="*{status}">
 
                 <button type="submit" class="create-link-subtask">Create Subtask</button>
             </form>

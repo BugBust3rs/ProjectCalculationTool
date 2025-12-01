@@ -3,6 +3,12 @@ package com.example.projectcalculationtool.Controller;
 import com.example.projectcalculationtool.Model.*;
 import com.example.projectcalculationtool.Service.*;
 import jakarta.servlet.http.HttpSession;
+import com.example.projectcalculationtool.Model.Member;
+import com.example.projectcalculationtool.Model.Task;
+import com.example.projectcalculationtool.Service.LoginService;
+import com.example.projectcalculationtool.Service.MemberService;
+import com.example.projectcalculationtool.Service.TaskService;
+import jakarta.servlet.http.HttpSession;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
@@ -12,10 +18,7 @@ import com.example.projectcalculationtool.Service.TaskService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,11 +31,15 @@ public class TaskController {
     private final TaskService taskService;
     private final ProjectService projectService;
     private final MemberService memberService;
-    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService, MemberService memberService) {
+    private final ProjectTaskHelperService projectTaskHelperService;
+
+    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService,
+                          MemberService memberService, ProjectTaskHelperService projectTaskHelperService) {
         this.loginService = loginService;
         this.taskService = taskService;
         this.projectService = projectService;
         this.memberService = memberService;
+        this.projectTaskHelperService = projectTaskHelperService;
     }
 
     @GetMapping("/createTask/{projectId}")
@@ -40,7 +47,12 @@ public class TaskController {
         loginService.checkIfLoggedIn(session);
         Task task = new Task();
         task.setProjectId(projectId);
+        task.setStatus(Status.BACKLOG);
         model.addAttribute("task", task);
+        List<Member> members = memberService.getMembersWithProjectId(projectId);
+        model.addAttribute("members", members);
+        model.addAttribute("projectId", projectId);
+
         return "createTask";
 
     }
@@ -48,6 +60,10 @@ public class TaskController {
     @PostMapping("/createTask")
     public String createTask(@ModelAttribute Task task, HttpSession session) {
         loginService.checkIfLoggedIn(session);
+
+        int memberId = (int) session.getAttribute("memberId");
+        task.setMemberId(memberId);
+
         taskService.createTask(task);
         return "redirect:/taskOverview/" + task.getProjectId();
     }
@@ -57,8 +73,13 @@ public class TaskController {
         loginService.checkIfLoggedIn(session);
         Subtask subtask = new Subtask();
         subtask.setTaskId(taskId);
+        subtask.setStatus(Status.BACKLOG);
         model.addAttribute("subtask", subtask);
         Task task = taskService.getTaskById(taskId);
+
+        model.addAttribute("projectId", task.getProjectId());
+        List<Member> members = memberService.getMembersWithProjectId(task.getProjectId());
+        model.addAttribute("members", members);
         model.addAttribute("projectId", task.getProjectId());
         return "createSubtask";
     }
@@ -67,6 +88,10 @@ public class TaskController {
     public String createSubTask(@PathVariable int projectId, @ModelAttribute Subtask subtask, HttpSession session) {
 
         loginService.checkIfLoggedIn(session);
+
+        int memberId = (int) session.getAttribute("memberId");
+        subtask.setMemberId(memberId);
+
         taskService.createSubtask(subtask);
         return "redirect:/taskOverview/" + projectId;
     }
@@ -83,6 +108,7 @@ public class TaskController {
         Project project = projectService.getProject(projectId, memberId);
         model.addAttribute("projectTitle", project.getTitle());
         model.addAttribute("projectId", project.getProjectId());
+        model.addAttribute("memberId", memberId);
 
         int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
         model.addAttribute("overallEstimatedTime", overallEstimatedTime);
@@ -90,11 +116,14 @@ public class TaskController {
         List<Task> tasks = taskService.getTasksByProjectId(projectId);
         model.addAttribute("tasks",tasks);
 
+        model.addAttribute("statuses", Status.values());
+
         List<Member> members = memberService.getMembersWithProjectId(projectId);
         model.addAttribute("members", members);
 
         Member member = new Member();
         model.addAttribute("member", member);
+
         return "taskOverview";
     }
 
@@ -148,6 +177,49 @@ public class TaskController {
 
         // Redirect to project overview page
         return "redirect:/taskOverview/" + projectId;
+    }
+
+    @PostMapping("/saveTaskStatus")
+    public String updateTask(@RequestParam int taskId,
+                             @RequestParam Status status,
+                             @RequestParam int projectId, HttpSession session){
+        loginService.checkIfLoggedIn(session);
+        int memberId = (int) session.getAttribute("memberId");
+        projectService.checkIfMembersProject(
+                projectId, memberId, "You do not have permission to change this task.");
+
+        taskService.updateTaskStatus(taskId, status);
+
+        return "redirect:/taskOverview/" + projectId;
+
+
+    }
+
+    @PostMapping("/saveSubtaskStatus")
+    public String updateSubtask(@RequestParam int subtaskId,
+                                @RequestParam Status status,
+                                @RequestParam int projectId, HttpSession session){
+        loginService.checkIfLoggedIn(session);
+        int memberId = (int) session.getAttribute("memberId");
+        projectService.checkIfMembersProject(
+                projectId, memberId, "You do not have permission to change this task.");
+
+        taskService.updateSubtaskStatus(subtaskId, status);
+
+        return "redirect:/taskOverview/" + projectId;
+
+
+    }
+
+    @GetMapping("/showAllocatedTasks/{memberId}")
+    public String showAllocatedTasks(@PathVariable int memberId, Model model, HttpSession session) {
+        loginService.checkIfLoggedIn(session);
+        // check om seesion.memberID fra session er == memberID fra Pathvariable
+        // int memberId = (int) session.getAttribute("memberId");
+        List<Task> tasks = projectTaskHelperService.getTasksByMemberId(memberId);
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("tasks", tasks);
+        return "showAllocatedTasks";
     }
 
 

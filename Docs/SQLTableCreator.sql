@@ -18,7 +18,7 @@ CREATE TABLE project
 (
     project_id     INT AUTO_INCREMENT PRIMARY KEY,
     title          VARCHAR(200),
-    description    VARCHAR(200),
+    description    VARCHAR(200)
 
 );
 
@@ -40,8 +40,12 @@ CREATE TABLE task
     title          VARCHAR(200),
     description    VARCHAR(200),
     estimated_time INT,
+    status         VARCHAR(200),
+    member_id      INT,
     FOREIGN KEY (project_id)
-        REFERENCES project (project_id) ON DELETE CASCADE
+        REFERENCES project (project_id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id)
+        REFERENCES member (member_id) ON DELETE CASCADE
 );
 
 CREATE TABLE subtask
@@ -51,8 +55,12 @@ CREATE TABLE subtask
     title          VARCHAR(200),
     description    VARCHAR(200),
     estimated_time INT,
+    status         VARCHAR(200),
+    member_id      INT,
     FOREIGN KEY (task_id)
-        REFERENCES task (task_id) ON DELETE CASCADE
+        REFERENCES task (task_id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id)
+        REFERENCES member (member_id) ON DELETE CASCADE
 );
 
 
