@@ -34,8 +34,10 @@
     <h3 th:text="'Estimated time for all tasks and subtasks: ' + ${overallEstimatedTime} + ' hours'"></h3>
     <ol class="tasklist" >
        <li th:each="task : ${tasks}" class="task">
-           <h3 th:text="${task.title}"/>
-           <p th:text="${task.description}"/>
+           <h3 th:text="${task.title}"></h3>
+           <p th:text="${task.description}"></p>
+           <p th:if="${task.memberName != null}"
+              th:text="'Assigned to: ' + ${task.memberName}"></p>
 
 <!--           for hver tasks skal du kunne se hvem det er -->
 
@@ -49,8 +51,10 @@
            </a>
             <ol>
                <li th:each="subtask : ${task.getSubtasks()}" class="task">
-                   <h3 th:text="${subtask.title}"/>
-                   <p th:text="${subtask.description}"/>
+                   <h3 th:text="${subtask.title}"></h3>
+                   <p th:text="${subtask.description}"></p>
+                   <p th:if="${subtask.memberName != null}"
+                      th:text="'Assigned to: ' + ${subtask.memberName}"></p>
                    <p th:text="'Estimated time: ' + ${subtask.estimatedTime} + ' hours'"/>
                    <form th:action="@{/deleteSubtask/{subtaskId}(subtaskId=${subtask.subtaskID})}"
                          method="post">

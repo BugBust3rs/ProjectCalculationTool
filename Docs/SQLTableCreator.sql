@@ -42,9 +42,9 @@ CREATE TABLE task
     estimated_time INT,
     member_id      INT,
     FOREIGN KEY (project_id)
-        REFERENCES project (project_id) ON DELETE CASCADE
-    FOREIGN KEY (member_id) ON DELETE CASCADE
-        REFERENCES member (member_id)
+        REFERENCES project (project_id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id)
+        REFERENCES member (member_id) ON DELETE CASCADE
 );
 
 CREATE TABLE subtask
@@ -56,9 +56,9 @@ CREATE TABLE subtask
     estimated_time INT,
     member_id      INT,
     FOREIGN KEY (task_id)
-        REFERENCES task (task_id) ON DELETE CASCADE
-    FOREIGN KEY (member_id) ON DELETE CASCADE
-        REFERENCES member (member_id)
+        REFERENCES task (task_id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id)
+        REFERENCES member (member_id) ON DELETE CASCADE
 );
 
 

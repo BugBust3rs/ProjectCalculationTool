@@ -6,6 +6,7 @@ public class Project {
     private String title;
     private String description;
     private int estimatedTime;
+    private String assignedMembers;
 
     public Project() {}
 
@@ -39,5 +40,12 @@ public class Project {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAssignedMembers() {
+        return assignedMembers;
+    }
+    public void setAssignedMembers(String assignedMembersSummary) {
+        this.assignedMembers = assignedMembersSummary;
     }
 }

@@ -28,6 +28,10 @@ public class MemberService {
     }
 
     public String getMemberName(int memberId) {
+        Member member = memberRepository.getMember(memberId);
+        if (member.getName() != null) {
+            return member.getName();
+        }
         return null;
     }
 
@@ -60,7 +64,7 @@ public class MemberService {
         return null;
     }
 
-    public List<Member> getMembersWithProjectId(int projectId){
+    public List<Member> getMembersWithProjectId(int projectId) {
         return memberRepository.getMembersWithProjectId(projectId);
     }
 }

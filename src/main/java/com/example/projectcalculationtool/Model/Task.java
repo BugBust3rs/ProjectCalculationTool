@@ -8,7 +8,7 @@ public class Task {
     private String description;
     private int estimatedTime;
     private int projectId;
-    private int memberId;
+    private Integer memberId;
     private String memberName;
     private List<Subtask> subtasks;
 
@@ -60,9 +60,9 @@ public class Task {
         this.estimatedTime = estimatedTime;
     }
 
-    public int getMemberId() { return memberId; }
+    public Integer getMemberId() { return memberId; }
 
-    public void setMemberId(int memberId) { this.memberId = memberId; }
+    public void setMemberId(Integer memberId) { this.memberId = memberId; }
 
     public String getMemberName() { return memberName;}
 
