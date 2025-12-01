@@ -3,6 +3,7 @@ package com.example.projectcalculationtool.Controller;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Service.LoginService;
 import com.example.projectcalculationtool.Service.ProjectService;
+import com.example.projectcalculationtool.Service.ProjectTaskHelperService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,17 +17,20 @@ public class ProjectController {
 
     private final ProjectService projectService;
     private final LoginService loginService;
+    private final ProjectTaskHelperService projectTaskHelperService;
 
-    public ProjectController(ProjectService projectService, LoginService loginService) {
+    public ProjectController(ProjectService projectService, LoginService loginService,
+                             ProjectTaskHelperService projectTaskHelperService) {
         this.projectService = projectService;
         this.loginService = loginService;
+        this.projectTaskHelperService = projectTaskHelperService;
     }
 
     @GetMapping("/dashboard")
     public String getDashboard(Model model, HttpSession session) {
         loginService.checkIfLoggedIn(session);
         int memberId = (int) session.getAttribute("memberId");
-        List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
+        List<Project> projects = projectTaskHelperService.getAllProjectsWithMemberId(memberId);
         model.addAttribute("projects", projects);
         model.addAttribute("memberId", memberId);
         return "dashboard";

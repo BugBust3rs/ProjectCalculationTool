@@ -28,4 +28,16 @@ public class ProjectTaskHelperService {
         return tasks;
     }
 
+    public List<Project> getAllProjectsWithMemberId(int memberId) {
+        List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
+        return setOverallEstimatedTimeForEveryProject(projects);
+    }
+
+    private List<Project> setOverallEstimatedTimeForEveryProject(List<Project> projects){
+        for (Project project : projects){
+            project.setEstimatedTime(taskService.getOverallEstimatedTime(project.getProjectId()));
+        }
+        return projects;
+    }
+
 }
