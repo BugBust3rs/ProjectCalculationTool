@@ -33,11 +33,11 @@ public class LoginController {
     @PostMapping("/login")
     public String handleLogin(@ModelAttribute Member member,
                               HttpSession session,
-                              Model model) {
+                              RedirectAttributes redirectAttributes) {
         Member memberFromDB = memberService.getMember(member.getEmail(), member.getPassword());
         if (memberFromDB == null) {
-            model.addAttribute("error", "Forkert email eller password");
-            return "login";
+            redirectAttributes.addFlashAttribute("error", "Wrong email or password");
+            return "redirect:/login";
         }
         session.setAttribute("memberId", memberFromDB.getMemberId());
         session.setMaxInactiveInterval(300);

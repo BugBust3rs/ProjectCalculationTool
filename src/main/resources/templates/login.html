@@ -21,8 +21,8 @@
     <div class="projects-grid">
         <div class="create-card">
 
-            <div th:if="${loginError}" class="error-msg">
-                <p th:text="${loginError}">Invalid email or password.</p>
+            <div th:if="${error}" class="error-msg">
+                <p th:text="${error}">Invalid email or password.</p>
             </div>
             <div th:if="${sessionExpiredMsg}" class="error-msg">
                 <p th:text="${sessionExpiredMsg}">Session expired</p>
