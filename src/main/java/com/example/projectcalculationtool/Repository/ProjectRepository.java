@@ -33,8 +33,8 @@ public class ProjectRepository {
 
         final String sql = """
                 Select p.project_id, p.title, p.description
-                FROM member_project mp 
-                    JOIN project p ON p.project_id = mp.project_id 
+                FROM member_project mp
+                    JOIN project p ON p.project_id = mp.project_id
                          WHERE member_id = ?
                 """;
 

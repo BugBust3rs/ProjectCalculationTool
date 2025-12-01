@@ -61,9 +61,9 @@ public class TaskRepository {
 
     public void updateTaskStatus(int taskId, Status status) {
         final String sql = """
-                UPDATE task 
-                SET status = ?  
-                WHERE task_id = ? 
+                UPDATE task
+                SET status = ?
+                WHERE task_id = ?
                 """;
 
         jdbcTemplate.update(sql,status.toString(), taskId);

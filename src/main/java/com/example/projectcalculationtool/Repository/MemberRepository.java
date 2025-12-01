@@ -75,7 +75,7 @@ public class MemberRepository {
         final String sql = """
                 Select m.member_id , m.name, m.email, m.password
                 FROM member_project mp
-                    JOIN member m ON m.member_id = mp.member_id 
+                    JOIN member m ON m.member_id = mp.member_id
                          WHERE project_id = ?
                 """;
 

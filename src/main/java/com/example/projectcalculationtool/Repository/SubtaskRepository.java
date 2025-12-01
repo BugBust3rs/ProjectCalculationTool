@@ -61,9 +61,9 @@ public class SubtaskRepository {
 
     public void updateSubtaskStatus(int subtaskId, Status status) {
         final String sql = """
-                UPDATE subtask 
-                SET status = ?  
-                WHERE subtask_id = ? 
+                UPDATE subtask
+                SET status = ?
+                WHERE subtask_id = ?
                 """;
 
         jdbcTemplate.update(sql, status.toString(), subtaskId);
