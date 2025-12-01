@@ -337,21 +337,7 @@ button.remove-task:hover {
     cursor: pointer;
 }
 
-.task-info {
-    margin-bottom: 8px;
-    gap: 16px;
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    padding: 10px;
-    align-items: center;
-}
 
-.task-info.header-row {
-    font-weight: 700;
-    background-color: #25425c;
-    border-radius: 20px;
-    padding: 10px 14px;
-}
 
 .task-header {
     list-style: none;
@@ -423,4 +409,20 @@ button.remove-task:hover {
     border: 1px solid #fff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
+}
+
+.task-info {
+    margin-bottom: 8px;
+    gap: 16px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    padding: 10px;
+    align-items: center;
+}
+
+.task-info.header-row {
+    font-weight: 700;
+    background-color: #25425c;
+    border-radius: 20px;
+    padding: 10px 14px;
 }
