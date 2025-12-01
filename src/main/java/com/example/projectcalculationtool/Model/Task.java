@@ -9,6 +9,7 @@ public class Task {
     private int estimatedTime;
     private int projectId;
     private List<Subtask> subtasks;
+    private String projectTitle;
 
     public List<Subtask> getSubtasks() {
         return subtasks;
@@ -58,5 +59,13 @@ public class Task {
 
     public void setEstimatedTime(int estimatedTime) {
         this.estimatedTime = estimatedTime;
+    }
+
+    public String getProjectTitle() {
+        return projectTitle;
+    }
+
+    public void setProjectTitle(String projectTitle) {
+        this.projectTitle = projectTitle;
     }
 }

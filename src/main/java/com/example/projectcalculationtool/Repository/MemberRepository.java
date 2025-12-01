@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.Repository;
 
 import com.example.projectcalculationtool.Model.Member;
+import com.example.projectcalculationtool.Model.Task;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.example.projectcalculationtool.Model.Member;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository

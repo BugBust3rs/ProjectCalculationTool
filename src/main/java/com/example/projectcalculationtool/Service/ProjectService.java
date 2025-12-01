@@ -46,5 +46,9 @@ public class ProjectService {
         projectRepository.addProject(project, memberId);
     }
 
+    public Project getProjectById(int projectId) {
+        return projectRepository.getProjectById(projectId);
+    }
+
 
 }

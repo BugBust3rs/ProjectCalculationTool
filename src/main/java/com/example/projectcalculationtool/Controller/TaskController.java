@@ -128,6 +128,17 @@ public class TaskController {
         return "redirect:/taskOverview/" + projectId;
     }
 
+    @GetMapping("/showAllocatedTasks/{memberId}")
+    public String showAllocatedTasks(@PathVariable int memberId, Model model, HttpSession session) {
+        if (!loginService.isLoggedIn(session)) {
+            return "redirect:/login";
+        }
+        List<Task> tasks = taskService.getTasksByMemberId(memberId);
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("tasks", tasks);
+        return "showAllocatedTasks";
+    }
+
 
 }
 

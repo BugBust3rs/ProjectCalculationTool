@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Allocated Tasks</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+
+<header>
+    <a href="/dashboard" class="header-link">
+        <h1>Project Calculation Tool</h1>
+    </a>
+</header>
+
+<!-- Navbar fragment -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="body-content">
+
+    <div class="dashboard-title">
+        <h1>Allocated Tasks</h1>
+    </div>
+
+    <!-- Tom liste -->
+    <div th:if="${#lists.isEmpty(tasks)}">
+        <p class="no-tasks-message">You have no allocated tasks.</p>
+    </div>
+
+    <!-- Task-liste -->
+    <ol class="tasklist" th:if="${!#lists.isEmpty(tasks)}">
+        <li th:each="task : ${tasks}" class="task">
+
+            <h3 th:text="${task.title}"></h3>
+            <p th:text="${task.description}"></p>
+
+            <p>
+                <strong>Estimated time:</strong>
+                <span th:text="${task.estimatedTime} + ' hours'"></span>
+            </p>
+
+            <p>
+                <strong>Project:</strong>
+                <span th:text="${task.projectTitle}"></span>
+            </p>
+
+        </li>
+    </ol>
+
+</div>
+
+</body>
+</html>

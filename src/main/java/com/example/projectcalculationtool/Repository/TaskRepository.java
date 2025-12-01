@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.Repository;
 
+import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -62,5 +63,12 @@ public class TaskRepository{
     public void deleteTaskById(int taskId) {
         final String sql = "DELETE FROM task WHERE task_id = ?";
         jdbcTemplate.update(sql, taskId);
+    }
+
+
+    public List<Task> getAllTasksWithMemberId(int memberId) {
+        final String sql = "SELECT * FROM task WHERE member_Id = ?";
+
+        return jdbcTemplate.query (sql, taskRowMapper,  memberId);
     }
 }
