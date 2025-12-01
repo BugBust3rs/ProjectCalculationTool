@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.Repository;
 
+import com.example.projectcalculationtool.Model.Status;
 import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class TaskRepository{
+public class TaskRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Task> taskRowMapper = (rs, rowNum) -> {
@@ -19,6 +20,8 @@ public class TaskRepository{
         task.setEstimatedTime(rs.getInt("estimated_time"));
         task.setTitle(rs.getString("title"));
         task.setDescription(rs.getString("description"));
+        task.setMemberId(rs.getInt("member_id"));
+        task.setStatus(Status.valueOf(rs.getString("status")));
         return task;
     };
 
@@ -28,29 +31,21 @@ public class TaskRepository{
     }
 
     public void createTask(Task task) {
-        String sql = "INSERT INTO task (title, description, estimated_time, project_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO task (title, description, estimated_time, project_id, status, member_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sql,
                 task.getTitle(),
                 task.getDescription(),
                 task.getEstimatedTime(),
-                task.getProjectId());
+                task.getProjectId(),
+                task.getMemberId(),
+                task.getStatus());
     }
 
     public List<Task> getAllTasksWithProjectId(int projectId) {
         final String sql = "SELECT * FROM task WHERE project_id = ?";
 
         return jdbcTemplate.query(sql, taskRowMapper, projectId);
-    }
-
-
-    public void update(Object o) {
-
-    }
-
-
-    public void delete(int id) {
-
     }
 
     public Task getTaskById(int taskId) {
@@ -63,6 +58,18 @@ public class TaskRepository{
     public void deleteTaskById(int taskId) {
         final String sql = "DELETE FROM task WHERE task_id = ?";
         jdbcTemplate.update(sql, taskId);
+    }
+
+    public void updateTaskStatus(int taskId, Status status) {
+        final String sql = """
+                UPDATE task 
+                SET status = ?  
+                WHERE task_id = ? 
+                """;
+
+        jdbcTemplate.update(sql,status.toString(), taskId);
+
+
     }
 
 

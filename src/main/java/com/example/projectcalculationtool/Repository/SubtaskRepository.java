@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.Repository;
 
+import com.example.projectcalculationtool.Model.Status;
 import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,6 +20,8 @@ public class SubtaskRepository {
         subtask.setEstimatedTime(rs.getInt("estimated_time"));
         subtask.setTitle(rs.getString("title"));
         subtask.setDescription(rs.getString("description"));
+        subtask.setStatus(Status.valueOf(rs.getString("status")));
+        subtask.setMemberId(rs.getInt("member_id"));
         return subtask;
     };
 
@@ -28,27 +31,21 @@ public class SubtaskRepository {
     }
 
     public void createSubTask(Subtask subtask) {
-        String sql = "INSERT INTO subtask (title, description, estimated_time, task_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO subtask (title, description, estimated_time, task_id, status, member_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sql,
                 subtask.getTitle(),
                 subtask.getDescription(),
                 subtask.getEstimatedTime(),
-                subtask.getTaskId());
+                subtask.getTaskId(),
+                subtask.getMemberId(),
+                subtask.getStatus());
     }
 
     public List<Subtask> getAllSubtasksWithTaskId(int taskId) {
         final String sql = "SELECT * FROM subTask WHERE task_id = ?";
 
         return jdbcTemplate.query(sql, subtaskRowMapper, taskId);
-    }
-
-    public void update(Object o) {
-
-    }
-
-    public void delete(int id) {
-
     }
 
     public Subtask getSubtaskById(int subtaskId) {
@@ -61,5 +58,17 @@ public class SubtaskRepository {
     public void deleteSubTaskById(int subtaskId) {
         final String sql = "DELETE FROM subtask WHERE subtask_id = ?";
         jdbcTemplate.update(sql, subtaskId);
+    }
+
+    public void updateSubtaskStatus(int subtaskId, Status status) {
+        final String sql = """
+                UPDATE subtask 
+                SET status = ?  
+                WHERE subtask_id = ? 
+                """;
+
+        jdbcTemplate.update(sql, status.toString(), subtaskId);
+
+
     }
 }

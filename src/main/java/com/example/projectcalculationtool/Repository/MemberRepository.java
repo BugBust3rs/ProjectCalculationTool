@@ -1,16 +1,22 @@
 package com.example.projectcalculationtool.Repository;
 
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Task;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
-import com.example.projectcalculationtool.Model.Member;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
+
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -36,7 +42,7 @@ public class MemberRepository {
     };
 
     public void create(Member member) {
-        String sql = "INSERT INTO member (member_id, name, email, password(?, ?, ?, ?)";
+        String sql = "INSERT INTO member (name, email, password) VALUES (?, ?, ?)";
 
         jdbcTemplate.update(sql, member.getName(), member.getEmail(), member.getPassword());
     }
@@ -53,9 +59,41 @@ public class MemberRepository {
         return jdbcTemplate.query(sql, memberRowMapper);
     }
 
+    public Member saveMember(Member member){
+        String sql = "INSERT INTO member (name, email, password) VALUES (?, ?, ?)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update((con -> {
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, member.getEmail());
+            ps.setString(2, member.getName());
+            ps.setString(3, member.getPassword());
+            return ps;
+        }), keyHolder);
+
+        member.setMemberId(keyHolder.getKey().intValue());
+        return member;
+    }
+
+    public List<Member> getMembersWithProjectId(int projectId){
+        final String sql = """
+                Select m.member_id , m.name, m.email, m.password
+                FROM member_project mp 
+                    JOIN member m ON m.member_id = mp.member_id 
+                         WHERE project_id = ?
+                """;
+
+        return jdbcTemplate.query(sql, memberRowMapper, projectId);
+    }
+
 
     public void delete(int id) {
 
     }
 
+    public Member getMember(int memberId) {
+        final String sql = "SELECT * FROM member WHERE member_id = ?";
+        return jdbcTemplate.queryForObject(sql, memberRowMapper,memberId);
+    }
 }

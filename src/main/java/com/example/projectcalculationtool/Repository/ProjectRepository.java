@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Repository
@@ -27,39 +26,39 @@ public class ProjectRepository {
         return project;
     };
 
+    private final RowMapper<Project> projectRowMapper = (rs, rowNum) -> {
+        Project project = new Project();
+        project.setProjectId(rs.getInt("project_id"));
+        project.setTitle(rs.getString("title"));
+        project.setDescription(rs.getString("description"));
+        return project;
+    };
+
     public ProjectRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
 
     }
 
-
-    public void create(Project project) {
-
-    }
-
-
     public List<Project> getAllProjectsWithMemberId(int memberId)  {
 
         final String sql = """
-                Select p.project_id, p.title, p.description, p.estimated_time
+                Select p.project_id, p.title, p.description
                 FROM member_project mp 
                     JOIN project p ON p.project_id = mp.project_id 
                          WHERE member_id = ?
                 """;
 
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            Project project = new Project();
-            project.setProjectId(rs.getInt("project_id"));
-            project.setTitle(rs.getString("title"));
-            project.setDescription(rs.getString("description"));
-            project.setEstimatedTime(rs.getInt("estimated_time"));
-            return project;
-        }, memberId);
+        return jdbcTemplate.query(sql, projectRowMapper, memberId);
     }
 
-
-    public void update(Object o) {
-
+    public void memberHasProject(int projectId,int memberId)  {
+        final String sql = """
+                Select p.project_id, p.title, p.description
+                FROM member_project mp
+                    JOIN project p ON p.project_id = mp.project_id
+                         WHERE member_id = ? AND p.project_id = ?
+                """;
+        jdbcTemplate.queryForObject(sql, projectRowMapper,memberId , projectId);
     }
 
 
@@ -69,14 +68,13 @@ public class ProjectRepository {
     }
     @Transactional
     public void addProject(Project project, int memberId){
-        String sql = "INSERT INTO project (project_id, title, description, estimated_time) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO project (project_id, title, description) VALUES (?, ?, ?)";
         KeyHolder keyholder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, project.getProjectId());
             ps.setString(2, project.getTitle());
             ps.setString(3, project.getDescription());
-            ps.setInt(4, project.getEstimatedTime());
             return ps;
         }, keyholder);
 
@@ -91,5 +89,10 @@ public class ProjectRepository {
         final String sql = "SELECT * FROM project WHERE project_id = ?";
 
         return jdbcTemplate.queryForObject(sql, projectRowMapper,  projectId);
+    }
+
+    public void addMemberToProject(int projectId, int memberId) {
+        String sql = "INSERT INTO member_project (member_id, project_id) VALUES (?, ?)";
+        jdbcTemplate.update(sql, memberId, projectId);
     }
 }
