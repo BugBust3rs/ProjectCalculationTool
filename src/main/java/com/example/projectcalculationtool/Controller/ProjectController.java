@@ -34,7 +34,7 @@ public class ProjectController {
         int memberId = (int) session.getAttribute("memberId");
         List<Project> projects = projectService.getAllProjectsWithMemberId(memberId);
         model.addAttribute("projects", projects);
-
+        model.addAttribute("memberId", memberId);
         return "dashboard";
     }
 

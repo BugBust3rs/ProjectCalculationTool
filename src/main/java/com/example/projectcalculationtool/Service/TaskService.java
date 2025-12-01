@@ -20,14 +20,13 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final SubtaskRepository subtaskRepository;
-    private final ProjectService projectService;
     private final MemberService memberService;
 
-    public TaskService(TaskRepository taskRepository, SubtaskRepository subtaskRepository, MemberService memberService, ProjectService projectService) {
+    public TaskService(TaskRepository taskRepository, SubtaskRepository subtaskRepository, MemberService memberService) {
         this.taskRepository = taskRepository;
         this.subtaskRepository = subtaskRepository;
-        this.projectService = projectService;
         this.memberService = memberService;
+
     }
 
     public List<Task> getTasksByProjectId(int projectId) {
@@ -115,15 +114,7 @@ public class TaskService {
         subtaskRepository.updateSubtaskStatus(subtaskId, status);
     }
 
-
-    public List<Task> getTasksByMemberId(int memberId) {
-        List<Task> tasks = taskRepository.getAllTasksWithMemberId(memberId);
-        for(Task task : tasks) {
-            Project project = projectService.getProjectById((task.getProjectId()));
-            if (project != null) {
-                task.setProjectTitle(project.getTitle());
-            }
-        }
-        return tasks;
+    public List<Task> getAllTasksWithMemberId(int memberId){
+        return taskRepository.getAllTasksWithMemberId(memberId);
     }
 }

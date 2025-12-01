@@ -31,12 +31,15 @@ public class TaskController {
     private final TaskService taskService;
     private final ProjectService projectService;
     private final MemberService memberService;
+    private final ProjectTaskHelperService projectTaskHelperService;
 
-    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService, MemberService memberService) {
+    public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService,
+                          MemberService memberService, ProjectTaskHelperService projectTaskHelperService) {
         this.loginService = loginService;
         this.taskService = taskService;
         this.projectService = projectService;
         this.memberService = memberService;
+        this.projectTaskHelperService = projectTaskHelperService;
     }
 
     @GetMapping("/createTask/{projectId}")
@@ -105,6 +108,7 @@ public class TaskController {
         Project project = projectService.getProject(projectId, memberId);
         model.addAttribute("projectTitle", project.getTitle());
         model.addAttribute("projectId", project.getProjectId());
+        model.addAttribute("memberId", memberId);
 
         int overallEstimatedTime = taskService.getOverallEstimatedTime(projectId);
         model.addAttribute("overallEstimatedTime", overallEstimatedTime);
@@ -119,6 +123,7 @@ public class TaskController {
 
         Member member = new Member();
         model.addAttribute("member", member);
+
         return "taskOverview";
     }
 
@@ -208,10 +213,10 @@ public class TaskController {
 
     @GetMapping("/showAllocatedTasks/{memberId}")
     public String showAllocatedTasks(@PathVariable int memberId, Model model, HttpSession session) {
-        if (!loginService.isLoggedIn(session)) {
-            return "redirect:/login";
-        }
-        List<Task> tasks = taskService.getTasksByMemberId(memberId);
+        loginService.checkIfLoggedIn(session);
+        // check om seesion.memberID fra session er == memberID fra Pathvariable
+        // int memberId = (int) session.getAttribute("memberId");
+        List<Task> tasks = projectTaskHelperService.getTasksByMemberId(memberId);
         model.addAttribute("memberId", memberId);
         model.addAttribute("tasks", tasks);
         return "showAllocatedTasks";

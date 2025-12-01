@@ -22,15 +22,6 @@ public class ProjectRepository {
         project.setProjectId(rs.getInt("project_id"));
         project.setTitle(rs.getString("title"));
         project.setDescription(rs.getString("description"));
-        project.setEstimatedTime(rs.getInt("estimated_time"));
-        return project;
-    };
-
-    private final RowMapper<Project> projectRowMapper = (rs, rowNum) -> {
-        Project project = new Project();
-        project.setProjectId(rs.getInt("project_id"));
-        project.setTitle(rs.getString("title"));
-        project.setDescription(rs.getString("description"));
         return project;
     };
 
