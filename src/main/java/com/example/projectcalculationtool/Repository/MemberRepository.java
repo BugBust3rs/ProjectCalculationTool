@@ -89,4 +89,8 @@ public class MemberRepository {
 
     }
 
+    public Member getMember(int memberId) {
+        final String sql = "SELECT * FROM member WHERE member_id = ?";
+        return jdbcTemplate.queryForObject(sql, memberRowMapper,memberId);
+    }
 }

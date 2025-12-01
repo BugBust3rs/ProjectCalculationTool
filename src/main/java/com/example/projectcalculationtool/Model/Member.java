@@ -17,7 +17,6 @@ public class Member {
         this.name = name;
     }
 
-
     public int getMemberId() {
         return memberId;
     }

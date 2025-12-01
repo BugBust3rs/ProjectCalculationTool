@@ -3,6 +3,12 @@ package com.example.projectcalculationtool.Controller;
 import com.example.projectcalculationtool.Model.*;
 import com.example.projectcalculationtool.Service.*;
 import jakarta.servlet.http.HttpSession;
+import com.example.projectcalculationtool.Model.Member;
+import com.example.projectcalculationtool.Model.Task;
+import com.example.projectcalculationtool.Service.LoginService;
+import com.example.projectcalculationtool.Service.MemberService;
+import com.example.projectcalculationtool.Service.TaskService;
+import jakarta.servlet.http.HttpSession;
 import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
@@ -25,6 +31,7 @@ public class TaskController {
     private final TaskService taskService;
     private final ProjectService projectService;
     private final MemberService memberService;
+
     public TaskController(LoginService loginService, TaskService taskService, ProjectService projectService, MemberService memberService) {
         this.loginService = loginService;
         this.taskService = taskService;
@@ -39,6 +46,10 @@ public class TaskController {
         task.setProjectId(projectId);
         task.setStatus(Status.BACKLOG);
         model.addAttribute("task", task);
+        List<Member> members = memberService.getMembersWithProjectId(projectId);
+        model.addAttribute("members", members);
+        model.addAttribute("projectId", projectId);
+
         return "createTask";
 
     }
@@ -46,6 +57,10 @@ public class TaskController {
     @PostMapping("/createTask")
     public String createTask(@ModelAttribute Task task, HttpSession session) {
         loginService.checkIfLoggedIn(session);
+
+        int memberId = (int) session.getAttribute("memberId");
+        task.setMemberId(memberId);
+
         taskService.createTask(task);
         return "redirect:/taskOverview/" + task.getProjectId();
     }
@@ -58,6 +73,10 @@ public class TaskController {
         subtask.setStatus(Status.BACKLOG);
         model.addAttribute("subtask", subtask);
         Task task = taskService.getTaskById(taskId);
+
+        model.addAttribute("projectId", task.getProjectId());
+        List<Member> members = memberService.getMembersWithProjectId(task.getProjectId());
+        model.addAttribute("members", members);
         model.addAttribute("projectId", task.getProjectId());
         return "createSubtask";
     }
@@ -66,6 +85,10 @@ public class TaskController {
     public String createSubTask(@PathVariable int projectId, @ModelAttribute Subtask subtask, HttpSession session) {
 
         loginService.checkIfLoggedIn(session);
+
+        int memberId = (int) session.getAttribute("memberId");
+        subtask.setMemberId(memberId);
+
         taskService.createSubtask(subtask);
         return "redirect:/taskOverview/" + projectId;
     }

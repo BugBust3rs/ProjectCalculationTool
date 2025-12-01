@@ -19,6 +19,7 @@ public class TaskRepository {
         task.setEstimatedTime(rs.getInt("estimated_time"));
         task.setTitle(rs.getString("title"));
         task.setDescription(rs.getString("description"));
+        task.setMemberId(rs.getInt("member_id"));
         task.setStatus(Status.valueOf(rs.getString("status")));
         return task;
     };
@@ -29,13 +30,14 @@ public class TaskRepository {
     }
 
     public void createTask(Task task) {
-        String sql = "INSERT INTO task (title, description, estimated_time, project_id, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO task (title, description, estimated_time, project_id, status, member_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sql,
                 task.getTitle(),
                 task.getDescription(),
                 task.getEstimatedTime(),
                 task.getProjectId(),
+                task.getMemberId(),
                 task.getStatus());
     }
 

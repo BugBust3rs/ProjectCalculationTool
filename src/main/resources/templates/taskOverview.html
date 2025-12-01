@@ -57,8 +57,12 @@
         <li th:each="task : ${tasks}" class="task">
             <div class="task-info">
                 <div class="task-text">
-                    <h3 th:text="${task.title}"/>
-                    <p th:text="${task.description}"/>
+                    <h3 th:text="${task.title}"></h3>
+                    <p th:text="${task.description}"></p>
+                    <p th:if="${task.memberName != null}"
+                       th:text="'Assigned to: ' + ${task.memberName}"></p>
+
+                    <!--           for hver tasks skal du kunne se hvem det er -->
                 </div>
                 <div class="task-status">
                     <p th:text="${task.estimatedTime} + ' hours'"/>
@@ -92,8 +96,10 @@
                 <li th:each="subtask : ${task.getSubtasks()}" class="task">
                     <div class="task-info">
                         <div class="task-text">
-                            <h3 th:text="${subtask.title}"/>
-                            <p th:text="${subtask.description}"/>
+                            <h3 th:text="${subtask.title}"></h3>
+                            <p th:text="${subtask.description}"></p>
+                            <p th:if="${subtask.memberName != null}"
+                               th:text="'Assigned to: ' + ${subtask.memberName}"></p>
                         </div>
                         <div class="task-status">
                             <p th:text="${subtask.estimatedTime} + ' hours'"/>

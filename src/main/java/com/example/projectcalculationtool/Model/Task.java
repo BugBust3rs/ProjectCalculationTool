@@ -8,6 +8,8 @@ public class Task {
     private String description;
     private int estimatedTime;
     private int projectId;
+    private Integer memberId;
+    private String memberName;
     private List<Subtask> subtasks;
     private Status status;
 
@@ -62,11 +64,17 @@ public class Task {
         this.description = description;
     }
 
-    public int getEstimatedTime() {
-        return estimatedTime;
-    }
+    public int getEstimatedTime() { return estimatedTime; }
 
     public void setEstimatedTime(int estimatedTime) {
         this.estimatedTime = estimatedTime;
     }
+
+    public Integer getMemberId() { return memberId; }
+
+    public void setMemberId(Integer memberId) { this.memberId = memberId; }
+
+    public String getMemberName() { return memberName;}
+
+    public void setMemberName (String memberName) { this.memberName = memberName; }
 }

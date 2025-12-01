@@ -41,8 +41,11 @@ CREATE TABLE task
     description    VARCHAR(200),
     estimated_time INT,
     status         VARCHAR(200),
+    member_id      INT,
     FOREIGN KEY (project_id)
-        REFERENCES project (project_id) ON DELETE CASCADE
+        REFERENCES project (project_id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id)
+        REFERENCES member (member_id) ON DELETE CASCADE
 );
 
 CREATE TABLE subtask
@@ -53,8 +56,11 @@ CREATE TABLE subtask
     description    VARCHAR(200),
     estimated_time INT,
     status         VARCHAR(200),
+    member_id      INT,
     FOREIGN KEY (task_id)
-        REFERENCES task (task_id) ON DELETE CASCADE
+        REFERENCES task (task_id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id)
+        REFERENCES member (member_id) ON DELETE CASCADE
 );
 
 
