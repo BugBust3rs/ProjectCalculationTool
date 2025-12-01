@@ -153,7 +153,7 @@ public class TaskController {
         Member m = memberService.getMemberWithEmail(member.getEmail());
 
         if(m == null ){
-            return "redirect:/taskOverview/";
+            return "redirect:/taskOverview/" + projectId;
         }
 
 
