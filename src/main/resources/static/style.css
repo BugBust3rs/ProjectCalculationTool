@@ -415,7 +415,7 @@ button.remove-task:hover {
     margin-bottom: 8px;
     gap: 16px;
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: repeat(4, 25%);
     padding: 10px;
     align-items: center;
 }
