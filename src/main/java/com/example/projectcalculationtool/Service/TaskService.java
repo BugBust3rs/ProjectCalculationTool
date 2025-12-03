@@ -25,12 +25,12 @@ public class TaskService {
     }
 
     public List<Task> getTasksByProjectId(int projectId) {
-        List<Task> tasks = setTasksEstimatedTime(taskRepository.getAllTasksWithProjectId(projectId));
+        List<Task> tasks = setTasksEstimatedTimeAndSetSubtasks(taskRepository.getAllTasksWithProjectId(projectId));
 
         return setMemberNameOnTasks(tasks);
     }
 
-    private List<Task> setTasksEstimatedTime(List<Task> tasks){
+    private List<Task> setTasksEstimatedTimeAndSetSubtasks(List<Task> tasks){
         for (Task task : tasks) {
             List<Subtask> subtasks = subtaskRepository.getAllSubtasksWithTaskId(task.getTaskId());
             task.setSubtasks(subtasks);

@@ -40,7 +40,7 @@ CREATE TABLE task
     title          VARCHAR(200),
     description    VARCHAR(200),
     estimated_time INT,
-    status         VARCHAR(200),
+    status         ENUM('INPROGRESS', 'DONE', 'BACKLOG'),
     member_id      INT,
     FOREIGN KEY (project_id)
         REFERENCES project (project_id) ON DELETE CASCADE,
@@ -55,7 +55,7 @@ CREATE TABLE subtask
     title          VARCHAR(200),
     description    VARCHAR(200),
     estimated_time INT,
-    status         VARCHAR(200),
+    status         ENUM('INPROGRESS', 'DONE', 'BACKLOG'),
     member_id      INT,
     FOREIGN KEY (task_id)
         REFERENCES task (task_id) ON DELETE CASCADE,
