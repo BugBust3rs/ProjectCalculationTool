@@ -27,7 +27,10 @@
                 <div th:if="${memberAlreadyAddedMsg}" class="error-msg">
                     <p th:text="${memberAlreadyAddedMsg}">Member already added</p>
                 </div>
-                <input th:field="*{email}" placeholder="Write an email" class="create-input"/>
+                <div th:if="${memberNotFoundMsg}" class="error-msg">
+                    <p th:text="${memberNotFoundMsg}">Member not found</p>
+                </div>
+                <input th:field="*{email}" placeholder="Write an email" class="create-input" type="email" required/>
                 <button type="submit" class="add-member-button">Invite member</button>
             </div>
             <br>
