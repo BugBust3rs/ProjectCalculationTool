@@ -37,7 +37,7 @@ public class SubtaskRepository {
                 subtask.getDescription(),
                 subtask.getEstimatedTime(),
                 subtask.getTaskId(),
-                subtask.getStatus().name(),
+                subtask.getStatus().toString(),
                 subtask.getMemberId());
 
     }
