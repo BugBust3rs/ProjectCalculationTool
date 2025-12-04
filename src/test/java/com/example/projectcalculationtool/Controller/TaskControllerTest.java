@@ -1,11 +1,11 @@
 package com.example.projectcalculationtool.Controller;
 
 import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
+import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Project;
+import com.example.projectcalculationtool.Model.Status;
 import com.example.projectcalculationtool.Model.Task;
-import com.example.projectcalculationtool.Service.LoginService;
-import com.example.projectcalculationtool.Service.ProjectService;
-import com.example.projectcalculationtool.Service.TaskService;
+import com.example.projectcalculationtool.Service.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +34,16 @@ class TaskControllerTest {
     private TaskService taskService;
 
     @MockitoBean
+    private MemberService memberService;
+
+    @MockitoBean
     private ProjectService projectService;
 
     @MockitoBean
     private LoginService loginService;
+
+    @MockitoBean
+    private ProjectTaskHelperService projectTaskHelperService;
 
 
     @Test
@@ -47,15 +53,22 @@ class TaskControllerTest {
         project.setProjectId(1);
         project.setTitle("Website Redesign");
         List<Task> tasks = taskService.getTasksByProjectId(1);
+        int projectId = 1;
+        int memberId = 1;
+        List<Member> members = memberService.getMembersWithProjectId(projectId);
 
-        when(projectService.getProject(1,1)).thenReturn(project);
-        when(taskService.getTasksByProjectId(1)).thenReturn(tasks);
+        when(projectService.getProject(projectId,memberId)).thenReturn(project);
+        when(taskService.getTasksByProjectId(projectId)).thenReturn(tasks);
+
+        when(memberService.getMembersWithProjectId(projectId))
+                .thenReturn(members);
+
 
         mockMvc.perform(get("/taskOverview/1")
-                        .sessionAttr("memberId", 1))
+                        .sessionAttr("memberId", memberId))
                 .andExpect(status().isOk())
                 .andExpect(view().name("taskOverview"))
-                .andExpect(model().size(4));
+                .andExpect(model().size(8));
     }
     @Test
     void ShouldDeleteTask() throws Exception {

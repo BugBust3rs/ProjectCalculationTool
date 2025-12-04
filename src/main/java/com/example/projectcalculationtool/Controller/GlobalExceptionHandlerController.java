@@ -4,6 +4,7 @@ import com.example.projectcalculationtool.Exceptions.MemberAlreadyAddedException
 import com.example.projectcalculationtool.Exceptions.MemberNotFoundException;
 import com.example.projectcalculationtool.Exceptions.NotLoggedInException;
 import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,5 +36,11 @@ public class GlobalExceptionHandlerController {
     public String handleMemberNotFoundException(MemberNotFoundException ex, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("memberNotFoundMsg", ex.getMessage());
         return "redirect:/taskOverview/" + ex.getProjectId();
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    public String handleDataAccessException(DataAccessException ex, Model model){
+        model.addAttribute("errorMessage", ex.getCause());
+        return "error/500";
     }
 }

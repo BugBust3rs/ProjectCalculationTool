@@ -37,7 +37,7 @@ public class ProjectController {
     }
 
 
-    @DeleteMapping("/deleteProject/{projectId}")
+    @PostMapping("/deleteProject/{projectId}")
     public String deleteProject(@PathVariable int projectId, HttpSession session) {
         loginService.checkIfLoggedIn(session);
         int memberId = (int) session.getAttribute("memberId");

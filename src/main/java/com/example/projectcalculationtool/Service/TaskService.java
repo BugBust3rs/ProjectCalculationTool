@@ -5,6 +5,7 @@ import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Repository.SubtaskRepository;
 import com.example.projectcalculationtool.Repository.TaskRepository;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,16 +22,15 @@ public class TaskService {
         this.taskRepository = taskRepository;
         this.subtaskRepository = subtaskRepository;
         this.memberService = memberService;
-
     }
 
     public List<Task> getTasksByProjectId(int projectId) {
-        List<Task> tasks = setTasksEstimatedTime(taskRepository.getAllTasksWithProjectId(projectId));
+        List<Task> tasks = setTasksEstimatedTimeAndSetSubtasks(taskRepository.getAllTasksWithProjectId(projectId));
 
         return setMemberNameOnTasks(tasks);
     }
 
-    private List<Task> setTasksEstimatedTime(List<Task> tasks){
+    private List<Task> setTasksEstimatedTimeAndSetSubtasks(List<Task> tasks){
         for (Task task : tasks) {
             List<Subtask> subtasks = subtaskRepository.getAllSubtasksWithTaskId(task.getTaskId());
             task.setSubtasks(subtasks);

@@ -6,12 +6,8 @@
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<header>
-    <a href="/dashboard" class="header-link">
-        <h1>Project Calculation Tool</h1>
-    </a>
-</header>
-<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div th:replace="~{fragments/navbar :: loggedInNavbarnavbar}"></div>
+
 <div class="body-content">
     <div class="dashboard-title">
         <h1 th:text="'Tasks for ' + ${projectTitle} + ' project'"></h1>
@@ -38,7 +34,7 @@
                 Members in project:
             </label>
 
-            <ol class="invte-member-list">
+            <ol class="invite-member-list">
                 <li th:each="member : ${members}">
                     <p th:text="${member.getEmail()}"></p>
                 </li>

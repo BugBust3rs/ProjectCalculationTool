@@ -8,11 +8,8 @@
 <body class="login-page">
 
 
-<header>
-    <a href="/dashboard" class="header-link">
-        <h1>Project Calculation Tool</h1>
-    </a>
-</header>
+<div th:replace="~{fragments/navbar :: loggedInNavbarnavbar}"></div>
+
 
 <div class="body-content">
     <div class="dashboard-title">
@@ -74,7 +71,7 @@
                        type="hidden"
                        th:field="*{status}">
 
-                <button type="submit" class="create-link">Create Task</button>
+                <button type="submit" class="create-link-subtask">Create Task</button>
             </form>
         </div>
     </div>

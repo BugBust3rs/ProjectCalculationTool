@@ -34,6 +34,7 @@ public class TaskController {
         task.setProjectId(projectId);
         task.setStatus(Status.BACKLOG);
         model.addAttribute("task", task);
+        model.addAttribute("memberId",session.getAttribute("memberId"));
         List<Member> members = memberService.getMembersWithProjectId(projectId);
         model.addAttribute("members", members);
         model.addAttribute("projectId", projectId);
@@ -61,7 +62,7 @@ public class TaskController {
         subtask.setStatus(Status.BACKLOG);
         model.addAttribute("subtask", subtask);
         Task task = taskService.getTaskById(taskId);
-
+        model.addAttribute("memberId",session.getAttribute("memberId"));
         model.addAttribute("projectId", task.getProjectId());
         List<Member> members = memberService.getMembersWithProjectId(task.getProjectId());
         model.addAttribute("members", members);
@@ -133,9 +134,7 @@ public class TaskController {
 
         projectService.checkIfMembersProject(
                 projectId, memberId, "You do not have permission to delete this subtask.");
-
         taskService.deleteSubtask(subtaskId);
-
         return "redirect:/taskOverview/" + projectId;
     }
 
@@ -166,9 +165,7 @@ public class TaskController {
         int memberId = (int) session.getAttribute("memberId");
         projectService.checkIfMembersProject(
                 projectId, memberId, "You do not have permission to change this task.");
-
         taskService.updateTaskStatus(taskId, status);
-
         return "redirect:/taskOverview/" + projectId;
 
 
@@ -182,9 +179,7 @@ public class TaskController {
         int memberId = (int) session.getAttribute("memberId");
         projectService.checkIfMembersProject(
                 projectId, memberId, "You do not have permission to change this task.");
-
         taskService.updateSubtaskStatus(subtaskId, status);
-
         return "redirect:/taskOverview/" + projectId;
 
 
