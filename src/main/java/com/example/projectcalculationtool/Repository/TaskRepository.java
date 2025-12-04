@@ -37,8 +37,9 @@ public class TaskRepository {
                 task.getDescription(),
                 task.getEstimatedTime(),
                 task.getProjectId(),
-                task.getMemberId(),
-                task.getStatus());
+                task.getStatus().name(),
+                task.getMemberId());
+
     }
 
     public List<Task> getAllTasksWithProjectId(int projectId) {
