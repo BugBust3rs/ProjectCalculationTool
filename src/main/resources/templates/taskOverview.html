@@ -86,13 +86,16 @@
                     </form>
                 </div>
             </div>
-            <form th:action="@{/deleteTask/{taskId}(taskId=${task.taskId})}"
-                  method="post">
-                <button type="submit" class="remove-task">Remove</button>
-            </form>
-            <a th:href="@{/createSubtask/{taskId}(taskId=${task.getTaskId()})}" class="create-subtask">
-                Create new subtask
-            </a>
+            <div class="task-actions">
+                <a th:href="@{/createSubtask/{taskId}(taskId=${task.getTaskId()})}" class="create-subtask">
+                    Create new subtask
+                </a>
+                <form th:action="@{/deleteTask/{taskId}(taskId=${task.taskId})}"
+                      method="post">
+                    <button type="submit" class="remove-task">Remove</button>
+                </form>
+
+            </div>
             <ol>
                 <li th:each="subtask : ${task.getSubtasks()}" class="task">
                     <div class="task-info">
@@ -125,10 +128,12 @@
                             </form>
                         </div>
                     </div>
-                    <form th:action="@{/deleteSubtask/{subtaskId}(subtaskId=${subtask.subtaskID})}"
-                          method="post">
-                        <button type="submit" class="remove-task">Remove</button>
-                    </form>
+                    <div class="task-actions">
+                        <form th:action="@{/deleteSubtask/{subtaskId}(subtaskId=${subtask.subtaskID})}"
+                              method="post">
+                            <button type="submit" class="remove-task">Remove</button>
+                        </form>
+                    </div>
                 </li>
             </ol>
         </li>

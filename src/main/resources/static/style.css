@@ -2,6 +2,7 @@ body {
     background-color: #162837;
     color: lightgray;
     font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
 }
 
 header {
@@ -12,7 +13,6 @@ header {
     z-index: 1;
     top: 0;
     left: 0;
-    display: flex;
     align-items: center;
 }
 
@@ -21,9 +21,8 @@ header h1 {
     color: white;
     border: 4px solid white;
     padding: 6px 12px;
-    display: inline-block;
     border-radius: 36px;
-    margin: 5px;
+    margin: 5px 0;
 }
 
 header h1:hover {
@@ -102,7 +101,6 @@ header h1:hover {
     right: 5px;
     margin-right: 100px;
 }
-
 
 .create-project {
     text-decoration: none;
@@ -206,6 +204,13 @@ button.remove-button:hover {
     margin-top: 10px;
     position: relative;
 }
+.task-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 10px;
+}
 
 .create-subtask {
     text-decoration: none;
@@ -214,10 +219,6 @@ button.remove-button:hover {
     padding: 10px;
     border-radius: 25px;
     background-color: #3B82F6;
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    margin-right: 100px;
 }
 
 .create-subtask:hover {
@@ -230,11 +231,6 @@ button.remove-task {
     border-radius: 25px;
     padding: 10px;
     color: white;
-    justify-content: end;
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    margin-right: 10px;
     font-size: 1rem;
 }
 
@@ -254,7 +250,7 @@ button.remove-task:hover {
     justify-content: center;
 }
 
-.create-cancel {
+.create-cancel{
     text-decoration: none;
     color: white;
     border: 1px solid #fff;
@@ -282,11 +278,11 @@ button.remove-task:hover {
     position: relative;
 }
 
-.error-msg {
+.error-msg{
     color: red;
 }
 
-.add-member-button {
+.add-member-button{
     color: white;
     border: 1px solid #fff;
     padding: 10px;
@@ -296,15 +292,10 @@ button.remove-task:hover {
     font-size: 1em;
 }
 
-
 .add-member-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    background-color: #2563EB;
     cursor: pointer;
+    background-color: #2563EB;
 }
-
-
 .member-list-form {
     border: 1px solid #fff;
     border-radius: 25px;
@@ -385,23 +376,35 @@ button.remove-task:hover {
     font-weight: bold;
 }
 
+.save-status:hover {
+    cursor: pointer;
+    background-color: #2563EB;
+
+}
+
 .select-status {
     font-size: 1.1em;
 }
 
-.navbar {
-    background-color: #25425c;
+.header-container,
+.navbar-container {
     width: 100%;
     display: flex;
     justify-content: center;
-    gap: 40px;
-    padding: 15px 0;
-    list-style: none;
-    margin: 0;
+}
+
+.navbar {
     position: fixed;
     top: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #25425c;
+    gap: 35px;
+    padding: 15px 10px;
+    list-style: none;
+    margin: 0 15px;
     z-index: 1000;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .navbar li a {
@@ -420,7 +423,6 @@ button.remove-task:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
-
 
 .task-info {
     margin-bottom: 8px;
