@@ -6,14 +6,16 @@ body {
 
 header {
     background-color: #25425c;
-    padding: 15px;
-    text-align: center;
+    padding: 15px 20px;
     position: fixed;
     width: 100%;
     z-index: 1;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: center;
 }
+
 
 header h1 {
     color: white;
@@ -28,9 +30,11 @@ header h1:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
+
 .header-link {
     text-decoration: none;
     color: inherit;
+    margin: 0 auto;
 }
 
 .header-link h1 {
@@ -83,7 +87,7 @@ header h1:hover {
     border-radius: 25px;
     background-color: #3B82F6;
     margin: 25px;
-    height: 25px;
+    height: 20px;
 }
 
 .create-link-subtask {
@@ -98,8 +102,6 @@ header h1:hover {
     right: 5px;
     margin-right: 100px;
 }
-
-
 
 .create-project {
     text-decoration: none;
@@ -126,7 +128,6 @@ header h1:hover {
 }
 
 
-
 button.remove-button {
     background-color: #7F2F2F;
     border: 1px solid #fff;
@@ -138,6 +139,7 @@ button.remove-button {
     bottom: 10px;
     right: 15px;
 }
+
 button.remove-button:hover {
     cursor: pointer;
     background-color: #6B1F1F;
@@ -184,7 +186,6 @@ button.remove-button:hover {
     box-shadow: 0 0 0 2px rgba(93, 169, 233, 0.25);
 }
 
-
 .login-page .project-card:hover {
     transform: none;
     box-shadow: none;
@@ -218,7 +219,6 @@ button.remove-button:hover {
     margin-right: 100px;
 }
 
-
 .create-subtask:hover {
     background-color: #2563EB;
 }
@@ -236,6 +236,7 @@ button.remove-task {
     margin-right: 10px;
     font-size: 1rem;
 }
+
 button.remove-task:hover {
     cursor: pointer;
     background-color: #6B1F1F;
@@ -300,7 +301,7 @@ button.remove-task:hover {
     padding: 15px;
 }
 
-.invte-member-list {
+.invite-member-list {
     padding-left: 25px;
     padding-top: 0;
     max-height: 100px;
@@ -337,8 +338,6 @@ button.remove-task:hover {
     cursor: pointer;
 }
 
-
-
 .task-header {
     list-style: none;
     border: none;
@@ -350,6 +349,7 @@ button.remove-task:hover {
     border-left: none;
     padding-left: 0;
 }
+
 .task-text {
     justify-content: center;
     margin-right: 0%;
@@ -371,7 +371,7 @@ button.remove-task:hover {
     border-radius: 25px;
     background-color: #3B82F6;
     margin: 0;
-    font-size: 0.6em;
+    font-size: 0.9em;
     font-weight: bold;
 }
 
@@ -425,4 +425,23 @@ button.remove-task:hover {
     background-color: #25425c;
     border-radius: 20px;
     padding: 10px 14px;
+}
+
+.logout-button {
+    background-color: #7F2F2F;
+    border: 1px solid #fff;
+    border-radius: 25px;
+    padding: 10px;
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.logout-button:hover {
+    cursor: pointer;
+    background-color: #6B1F1F;
 }
