@@ -415,7 +415,7 @@ button.remove-task:hover {
     margin-bottom: 8px;
     gap: 16px;
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: repeat(4, 25%);
     padding: 10px;
     align-items: center;
 }
@@ -427,21 +427,16 @@ button.remove-task:hover {
     padding: 10px 14px;
 }
 
-.logout-button {
-    background-color: #7F2F2F;
+.logout-button {;
     border: 1px solid #fff;
     border-radius: 25px;
     padding: 10px;
     color: white;
     font-size: 1rem;
     text-decoration: none;
-    position: absolute;
-    right: 80px;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .logout-button:hover {
     cursor: pointer;
-    background-color: #6B1F1F;
+    background-color: #7F2F2F !important;
 }

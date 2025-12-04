@@ -2,8 +2,7 @@ package com.example.projectcalculationtool.Controller;
 
 import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Project;
-import com.example.projectcalculationtool.Service.LoginService;
-import com.example.projectcalculationtool.Service.ProjectService;
+import com.example.projectcalculationtool.Service.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -40,10 +39,19 @@ class ProjectControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
+    private TaskService taskService;
+
+    @MockitoBean
+    private MemberService memberService;
+
+    @MockitoBean
     private ProjectService projectService;
 
     @MockitoBean
     private LoginService loginService;
+
+    @MockitoBean
+    private ProjectTaskHelperService projectTaskHelperService;
 
     @BeforeAll
     static void setUp(){

@@ -33,10 +33,9 @@ class ProjectRepositoryTest {
 
     @Test
     void delete() {
-        List<Project> projects = projectRepository.getAllProjectsWithMemberId(1);
         projectRepository.delete(1);
+        List<Project> projects = projectRepository.getAllProjectsWithMemberId(1);
         assertEquals(2, projects.size());
-
     }
 
     @Test
