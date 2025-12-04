@@ -10,6 +10,10 @@
     <a href="/dashboard" class="header-link">
         <h1>Project Calculation Tool</h1>
     </a>
+
+    <a href="/logout" class="logout-button">
+        Logout
+    </a>
 </header>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="body-content">
@@ -35,7 +39,7 @@
                 Members in project:
             </label>
 
-            <ol class="invte-member-list">
+            <ol class="invite-member-list">
                 <li th:each="member : ${members}">
                     <p th:text="${member.getEmail()}"></p>
                 </li>

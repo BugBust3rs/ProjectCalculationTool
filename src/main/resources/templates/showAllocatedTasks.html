@@ -3,49 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>Allocated Tasks</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
 <header>
     <a href="/dashboard" class="header-link">
         <h1>Project Calculation Tool</h1>
+    </a>
+
+    <a href="/logout" class="logout-button">
+        Logout
     </a>
 </header>
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <div class="body-content">
-
     <div class="dashboard-title">
         <h1>Allocated Tasks</h1>
     </div>
 
-    <!-- Tom liste -->
     <div th:if="${#lists.isEmpty(tasks)}">
         <p class="no-tasks-message">You have no allocated tasks.</p>
     </div>
 
-    <!-- Task-liste -->
     <ol class="tasklist" th:if="${!#lists.isEmpty(tasks)}">
+        <!-- Header row to match taskOverview styling -->
+        <li class="task task-header" aria-hidden="true">
+            <div class="task-info header-row">
+                <div class="task-text">Task</div>
+                <div class="task-text">Project</div>
+                <div class="task-status">Estimated time</div>
+            </div>
+        </li>
+
+        <!-- Allocated tasks -->
         <li th:each="task : ${tasks}" class="task">
-
-            <h3 th:text="${task.title}"></h3>
-            <p th:text="${task.description}"></p>
-
-            <p>
-                <strong>Estimated time:</strong>
-                <span th:text="${task.estimatedTime} + ' hours'"></span>
-            </p>
-
-            <p>
-                <strong>Project:</strong>
-                <span th:text="${task.projectTitle}"></span>
-            </p>
-
+            <div class="task-info">
+                <div class="task-text">
+                    <h3 th:text="${task.title}"></h3>
+                    <p th:text="${task.description}"></p>
+                </div>
+                <div class="task-text">
+                    <p th:text="${task.projectTitle}"></p>
+                </div>
+                <div class="task-status">
+                    <p th:text="${task.estimatedTime} + ' hours'"></p>
+                </div>
+            </div>
         </li>
     </ol>
-
 </div>
 
 </body>
