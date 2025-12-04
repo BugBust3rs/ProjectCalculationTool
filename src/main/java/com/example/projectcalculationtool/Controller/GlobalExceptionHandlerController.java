@@ -1,6 +1,7 @@
 package com.example.projectcalculationtool.Controller;
 
 import com.example.projectcalculationtool.Exceptions.MemberAlreadyAddedException;
+import com.example.projectcalculationtool.Exceptions.MemberNotFoundException;
 import com.example.projectcalculationtool.Exceptions.NotLoggedInException;
 import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import org.springframework.dao.DataAccessException;
@@ -28,6 +29,12 @@ public class GlobalExceptionHandlerController {
     @ExceptionHandler(MemberAlreadyAddedException.class)
     public String handleMemberAlreadyAddedException(MemberAlreadyAddedException ex, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("memberAlreadyAddedMsg", ex.getMessage());
+        return "redirect:/taskOverview/" + ex.getProjectId();
+    }
+
+    @ExceptionHandler(MemberNotFoundException.class)
+    public String handleMemberNotFoundException(MemberNotFoundException ex, RedirectAttributes redirectAttributes){
+        redirectAttributes.addFlashAttribute("memberNotFoundMsg", ex.getMessage());
         return "redirect:/taskOverview/" + ex.getProjectId();
     }
 

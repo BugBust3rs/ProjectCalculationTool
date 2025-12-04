@@ -145,16 +145,10 @@ public class TaskController {
 
         int memberId = (int) session.getAttribute("memberId");
 
+        projectService.checkIfMembersProject(
+                projectId, memberId, "You do not have permission to invite a member to this project");
 
-        // add member to the project by email
-        // hvis member er == null så return til taskoverview med en bruger findes ikke message,
-        // lav et tjek om memberen allerede har projektet.
-        Member m = memberService.getMemberWithEmail(member.getEmail());
-
-        if(m == null ){
-            return "redirect:/taskOverview/" + projectId;
-        }
-
+        Member m = memberService.getMemberWithEmail(member.getEmail(), projectId);
 
         // associate member to the chosen project
         projectService.addMemberToProject(projectId, m.getMemberId());

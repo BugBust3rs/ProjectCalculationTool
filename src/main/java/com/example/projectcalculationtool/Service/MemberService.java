@@ -1,5 +1,6 @@
 package com.example.projectcalculationtool.Service;
 
+import com.example.projectcalculationtool.Exceptions.MemberNotFoundException;
 import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class MemberService {
         memberRepository.create(member);
     }
 
-    public Member getMemberWithEmail(String email) {
+    public Member getMemberWithEmail(String email, int projectId) {
         //Find eksisterende member
         List<Member> members = memberRepository.getMembers();
 
@@ -60,7 +61,7 @@ public class MemberService {
                 return member;
             }
         }
-        return null;
+        throw new MemberNotFoundException("Member not found", projectId);
     }
 
     public List<Member> getMembersWithProjectId(int projectId) {

@@ -7,18 +7,21 @@
 
 <body>
 <div th:fragment="loggedInNavbarnavbar">
-<header>
+    <header>
+        <div class="header-container">
+            <a href="/dashboard" class="header-link">
+                <h1>Project Calculation Tool</h1>
+            </a>
+        </div>
+    </header>
 
-    <a href="/dashboard" class="header-link">
-        <h1>Project Calculation Tool</h1>
-    </a>
-
-</header>
-    <ul class="navbar">
-        <li><a th:href="@{/dashboard}">My Projects</a></li>
-        <li><a th:href="@{/showAllocatedTasks/{memberId}(memberId=${memberId})}">My Tasks</a></li>
-        <li><a th:href="@{/logout}" class="logout-button">Logout</a></li>
-    </ul>
+    <nav class="navbar-container">
+        <ul class="navbar">
+            <li><a th:href="@{/dashboard}">My Projects</a></li>
+            <li><a th:href="@{/showAllocatedTasks/{memberId}(memberId=${memberId})}">My Tasks</a></li>
+            <li><a th:href="@{/logout}" class="logout-button">Logout</a></li>
+        </ul>
+    </nav>
 </div>
 
 <div th:fragment="notLoggedInNavbar">
