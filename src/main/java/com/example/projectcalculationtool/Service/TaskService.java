@@ -46,6 +46,11 @@ public class TaskService {
         return tasks;
     }
 
+    public List<Subtask> getAllSubtasksWithTaskIdAndMemberId(int taskId, int memberId){
+        return subtaskRepository.getAllSubtasksWithTaskIdAndMemberId(memberId, taskId);
+
+    }
+
     private List<Task> setMemberNameOnTasks(List<Task> tasks) {
         for (Task task : tasks) {
             task.setMemberName(memberService.getMemberName(task.getMemberId()));
@@ -111,5 +116,9 @@ public class TaskService {
 
     public List<Task> getAllTasksWithMemberId(int memberId){
         return taskRepository.getAllTasksWithMemberId(memberId);
+    }
+
+    public List<Subtask> getSubtasksWithMemberIdWithoutParentTask(int memberId) {
+        return subtaskRepository.getSubtasksWithMemberIdWithoutParentTask(memberId);
     }
 }

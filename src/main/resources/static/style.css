@@ -3,7 +3,6 @@ body {
     color: lightgray;
     font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 0;
-    padding: 0;
 }
 
 header {
@@ -124,7 +123,12 @@ header h1:hover {
 
 .dashboard-title {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header-title {
+    display: inline-block;
 }
 
 
@@ -358,9 +362,6 @@ button.remove-task:hover {
 }
 
 .task-status {
-    /*border-left: 2px solid #fff;*/
-    /*margin-block-start: 1em;*/
-    /*margin-block-end: 1em;*/
     margin-left: 0;
     padding-left: 15px;
 
@@ -453,4 +454,8 @@ button.remove-task:hover {
 .logout-button:hover {
     cursor: pointer;
     background-color: #7F2F2F !important;
+}
+
+.estimated-time {
+    padding-left: 15px;
 }

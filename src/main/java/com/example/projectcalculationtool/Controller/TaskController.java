@@ -46,10 +46,6 @@ public class TaskController {
     @PostMapping("/createTask")
     public String createTask(@ModelAttribute Task task, HttpSession session) {
         loginService.checkIfLoggedIn(session);
-
-        int memberId = (int) session.getAttribute("memberId");
-        task.setMemberId(memberId);
-
         taskService.createTask(task);
         return "redirect:/taskOverview/" + task.getProjectId();
     }
@@ -72,12 +68,7 @@ public class TaskController {
 
     @PostMapping("/createSubtask/{projectId}")
     public String createSubTask(@PathVariable int projectId, @ModelAttribute Subtask subtask, HttpSession session) {
-
         loginService.checkIfLoggedIn(session);
-
-        int memberId = (int) session.getAttribute("memberId");
-        subtask.setMemberId(memberId);
-
         taskService.createSubtask(subtask);
         return "redirect:/taskOverview/" + projectId;
     }
@@ -167,8 +158,6 @@ public class TaskController {
                 projectId, memberId, "You do not have permission to change this task.");
         taskService.updateTaskStatus(taskId, status);
         return "redirect:/taskOverview/" + projectId;
-
-
     }
 
     @PostMapping("/saveSubtaskStatus")
@@ -181,21 +170,40 @@ public class TaskController {
                 projectId, memberId, "You do not have permission to change this task.");
         taskService.updateSubtaskStatus(subtaskId, status);
         return "redirect:/taskOverview/" + projectId;
-
-
     }
 
     @GetMapping("/showAllocatedTasks/{memberId}")
     public String showAllocatedTasks(@PathVariable int memberId, Model model, HttpSession session) {
         loginService.checkIfLoggedIn(session);
-        // check om seesion.memberID fra session er == memberID fra Pathvariable
-        // int memberId = (int) session.getAttribute("memberId");
         List<Task> tasks = projectTaskHelperService.getTasksByMemberId(memberId);
+        List<Subtask> subtasks = projectTaskHelperService.getSubtasksWithMemberIdWithoutParentTask(memberId);
         model.addAttribute("memberId", memberId);
         model.addAttribute("tasks", tasks);
+        model.addAttribute("subtasks", subtasks);
+
+        model.addAttribute("statuses", Status.values());
+
         return "showAllocatedTasks";
     }
 
+    @PostMapping("/updateTaskStatus")
+    public String updateTaskFromAllocatedTasks(@RequestParam int taskId,
+                             @RequestParam Status status, HttpSession session){
+        loginService.checkIfLoggedIn(session);
+        int memberId = (int) session.getAttribute("memberId");
+        taskService.updateTaskStatus(taskId, status);
 
+        return "redirect:/showAllocatedTasks/" + memberId;
+    }
+
+    @PostMapping("/updateSubtaskStatus")
+    public String updateSubtaskFromAllocatedTasks(@RequestParam int subtaskId,
+                                @RequestParam Status status, HttpSession session){
+        loginService.checkIfLoggedIn(session);
+        int memberId = (int) session.getAttribute("memberId");
+        taskService.updateSubtaskStatus(subtaskId, status);
+
+        return "redirect:/showAllocatedTasks/" + memberId;
+    }
 }
 
