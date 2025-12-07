@@ -9,6 +9,7 @@ public class Subtask {
     private Integer memberId;
     private String memberName;
     private Status status;
+    private String projectTitle;
 
     public Subtask () {}
 
@@ -27,6 +28,14 @@ public class Subtask {
 
     public void setSubtaskID(int subtaskID) {
         this.subtaskID = subtaskID;
+    }
+
+    public String getProjectTitle() {
+        return projectTitle;
+    }
+
+    public void setProjectTitle(String projectTitle) {
+        this.projectTitle = projectTitle;
     }
 
     public String getTitle() {

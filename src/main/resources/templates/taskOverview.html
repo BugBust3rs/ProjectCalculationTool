@@ -10,11 +10,12 @@
 
 <div class="body-content">
     <div class="dashboard-title">
-        <h1 th:text="'Tasks for ' + ${projectTitle} + ' project'"></h1>
-
-        <a th:href="@{/createTask/{projectId}(projectId=${projectId})}" class="create-link">
-            Create new task
-        </a>
+        <div>
+            <h1 th:text="'Tasks for ' + ${projectTitle} + ' project'" class="header-title"></h1>
+            <a th:href="@{/createTask/{projectId}(projectId=${projectId})}" class="create-link">
+                Create new task
+            </a>
+        </div>
 
 
         <form th:action="@{/inviteMember/{projectId}(projectId=${projectId})}" th:object="${member}" method="post"
@@ -45,8 +46,9 @@
 
 
     </div>
-    <h3 th:text="'Estimated time for all tasks and subtasks: ' + ${overallEstimatedTime} + ' hours'"></h3>
-    <ol class="tasklist">
+    <h3 th:text="'Estimated time for all tasks and subtasks: ' + ${overallEstimatedTime} + ' hours'"
+        class="estimated-time"></h3>
+    <ol class="tasklist" start="0">
         <li class="task task-header" aria-hidden="true">
             <div class="task-info header-row">
                 <div class="task-text">Task</div>
