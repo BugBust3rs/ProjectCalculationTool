@@ -72,7 +72,7 @@ class ProjectControllerTest {
     void shouldDeleteProject() throws Exception{
 
 
-        mockMvc.perform(delete("/deleteProject/{projectId}",  2)
+        mockMvc.perform(post("/deleteProject/{projectId}",  2)
                         .sessionAttr("memberId", 1))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/dashboard"));
@@ -91,7 +91,7 @@ class ProjectControllerTest {
                 .when(projectService)
                 .checkIfMembersProject(eq(2), eq(2), anyString());
 
-        mockMvc.perform(delete("/deleteProject/{projectId}",  2)
+        mockMvc.perform(post("/deleteProject/{projectId}",  2)
                         .sessionAttr("memberId", 2))
                 .andExpect(status().isOk())
                 .andExpect(view().name("error/unauthorized"));

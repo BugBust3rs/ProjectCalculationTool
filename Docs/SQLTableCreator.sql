@@ -28,7 +28,7 @@ CREATE TABLE member_project
     project_id INT,
     PRIMARY KEY (member_id, project_id),
     FOREIGN KEY (member_id)
-        REFERENCES member (member_id) ON DELETE CASCADE,
+        REFERENCES member (member_id),
     FOREIGN KEY (project_id)
         REFERENCES project (project_id) ON DELETE CASCADE
 );
@@ -45,7 +45,7 @@ CREATE TABLE task
     FOREIGN KEY (project_id)
         REFERENCES project (project_id) ON DELETE CASCADE,
     FOREIGN KEY (member_id)
-        REFERENCES member (member_id) ON DELETE CASCADE
+        REFERENCES member (member_id)
 );
 
 CREATE TABLE subtask
@@ -60,7 +60,7 @@ CREATE TABLE subtask
     FOREIGN KEY (task_id)
         REFERENCES task (task_id) ON DELETE CASCADE,
     FOREIGN KEY (member_id)
-        REFERENCES member (member_id) ON DELETE CASCADE
+        REFERENCES member (member_id)
 );
 
 
