@@ -103,7 +103,7 @@ Vi laver altid review på hinandens pull requests.
 
 Som reviewer:
 1.	Læs koden og tjek:
-   -  den forståelig og konsistent?
+   - Er den forståelig og konsistent?
    - Følger den projektets stil/struktur?
 2.	Giv feedback, hvis:
    - Koden er unødigt kompleks.
@@ -125,7 +125,7 @@ git checkout din-kollegas-branch
 ```
 
 2.	Kør relevante tests / appen:
-   - g for, at der ikke er skabt nye bugs.
+   - For at der ikke er skabt nye bugs.
    - Test de ændrede funktioner manuelt, hvis det giver mening.
 3.	Hvis du finder noget:
    - Kommentér det i PR’en.
