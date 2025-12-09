@@ -3,9 +3,9 @@
 
 ## Team 
 
-- Peter Marbell, Niinyah, developer 🫃
-- Philip raissnia, Silverspit, developer
-- Josefine Hørlin, Josefinehoerlin, scrum master sprint 1
+- Peter Marbell, Niinyah, developer, Scrum master sprint 2 🫃
+- Philip Raissnia, Silverspit, developer
+- Josefine Hørlin, Josefinehoerlin, Scrum master sprint 1
 - Adam Hoppe, AdamHoppe98, developer
 
 ---
