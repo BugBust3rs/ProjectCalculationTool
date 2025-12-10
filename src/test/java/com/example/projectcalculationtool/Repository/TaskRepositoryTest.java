@@ -1,6 +1,5 @@
 package com.example.projectcalculationtool.Repository;
 
-import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Model.Task;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ class TaskRepositoryTest {
     }
 
     @Test
-    void delete() {
+    void deleteTaskById() {
         taskRepository.deleteTaskById(1);
         List<Task> tasks = taskRepository.getAllTasksWithProjectId(1);
         assertEquals(1,tasks.size());

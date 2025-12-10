@@ -33,7 +33,7 @@ public class ProjectService {
     }
 
     public void deleteProject(int projectId) {
-        projectRepository.delete(projectId);
+        projectRepository.deleteProject(projectId);
     }
 
     public Project getProject(int projectId, int memberId) {

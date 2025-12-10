@@ -1,7 +1,6 @@
 package com.example.projectcalculationtool.Controller;
 
 import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
-import com.example.projectcalculationtool.Model.Project;
 import com.example.projectcalculationtool.Service.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -9,24 +8,15 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import java.util.List;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(ProjectController.class)
@@ -59,9 +49,6 @@ class ProjectControllerTest {
 
     @Test
     void shouldShowDashboard() throws Exception {
-        List<Project> projects = projectService.getAllProjectsWithMemberId(1);
-        when(projectService.getAllProjectsWithMemberId(1)).thenReturn(projects);
-
         mockMvc.perform(get("/dashboard")
                         .sessionAttr("memberId", 1))
                 .andExpect(status().isOk())
@@ -70,12 +57,10 @@ class ProjectControllerTest {
 
     @Test
     void shouldDeleteProject() throws Exception{
-
-
         mockMvc.perform(post("/deleteProject/{projectId}",  2)
                         .sessionAttr("memberId", 1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/dashboard"));
+                .andExpect(redirectedUrl("/dashboard"));
 
         ArgumentCaptor<Integer> captor = ArgumentCaptor.forClass(Integer.class);
         verify(projectService).deleteProject(captor.capture());
