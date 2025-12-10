@@ -52,7 +52,7 @@ public class ProjectRepository {
     }
 
 
-    public void delete(int projectId) {
+    public void deleteProject(int projectId) {
         String SQL = "DELETE FROM project WHERE project_id = ?";
         jdbcTemplate.update(SQL, projectId);
     }

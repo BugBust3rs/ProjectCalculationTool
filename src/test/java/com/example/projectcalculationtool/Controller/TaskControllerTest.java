@@ -3,7 +3,6 @@ package com.example.projectcalculationtool.Controller;
 import com.example.projectcalculationtool.Exceptions.UnauthorizedAccessException;
 import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Project;
-import com.example.projectcalculationtool.Model.Status;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Service.*;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -81,7 +79,7 @@ class TaskControllerTest {
         mockMvc.perform(post("/deleteTask/{taskId}", 1)
                         .sessionAttr("memberId", 1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/taskOverview/1"));
+                .andExpect(redirectedUrl("/taskOverview/1"));
 
         ArgumentCaptor<Integer> captor = ArgumentCaptor.forClass(Integer.class);
         verify(taskService).deleteTask(captor.capture());
@@ -99,7 +97,7 @@ class TaskControllerTest {
         mockMvc.perform(post("/deleteSubtask/{subtaskId}", 1)
                         .sessionAttr("memberId", 1))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/taskOverview/1"));
+                .andExpect(redirectedUrl("/taskOverview/1"));
 
         ArgumentCaptor<Integer> captor = ArgumentCaptor.forClass(Integer.class);
         verify(taskService).deleteSubtask(captor.capture());

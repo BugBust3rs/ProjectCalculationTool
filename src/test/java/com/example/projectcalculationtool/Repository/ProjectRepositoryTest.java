@@ -1,6 +1,5 @@
 package com.example.projectcalculationtool.Repository;
 
-import com.example.projectcalculationtool.Model.Member;
 import com.example.projectcalculationtool.Model.Project;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,8 +30,8 @@ class ProjectRepositoryTest {
     }
 
     @Test
-    void delete() {
-        projectRepository.delete(1);
+    void deleteProject() {
+        projectRepository.deleteProject(1);
         List<Project> projects = projectRepository.getAllProjectsWithMemberId(1);
         assertEquals(2, projects.size());
     }

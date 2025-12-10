@@ -5,7 +5,6 @@ import com.example.projectcalculationtool.Model.Subtask;
 import com.example.projectcalculationtool.Model.Task;
 import com.example.projectcalculationtool.Repository.SubtaskRepository;
 import com.example.projectcalculationtool.Repository.TaskRepository;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

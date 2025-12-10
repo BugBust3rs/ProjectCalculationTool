@@ -48,7 +48,7 @@ public class MemberService {
     }
 
     public void createMember(Member member) {
-        memberRepository.create(member);
+        memberRepository.createMember(member);
     }
 
     public Member getMemberWithEmail(String email, int projectId) {
