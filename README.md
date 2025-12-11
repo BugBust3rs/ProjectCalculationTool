@@ -28,6 +28,8 @@ Det kan hjælpe med at estimere hvor lang tid et projekt cirka kommer til at tag
 
  - '''DEV_DATABASE_URL=jdbc:mysql://localhost:3306/ProjectCalculationTool;DEV_USERNAME=PLACEHOLDER;DEV_PASSWORD=PLACEHOLDER'''
 
+ - Sæt active profile til dev under resources/application.properties
+
 
  - insæt ENV variabler under edit configurations... husk og erstatte PLACEHOLDER med dine egen password og med hvad din database hedder 
 ![img.png](img.png)
