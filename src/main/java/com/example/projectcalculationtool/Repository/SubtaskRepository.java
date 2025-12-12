@@ -84,9 +84,9 @@ public class SubtaskRepository {
         final String sql = """
         SELECT s.*
         FROM subtask s
-        LEFT JOIN task t ON t.task_id = s.task_id
+        JOIN task t ON t.task_id = s.task_id
         WHERE s.member_id = ?
-          AND (t.member_id IS NULL OR t.member_id <> s.member_id)
+          AND t.member_id != s.member_id
         """;
 
         return jdbcTemplate.query(sql, subtaskRowMapper, memberId);
